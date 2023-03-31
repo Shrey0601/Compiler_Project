@@ -1,0 +1,37 @@
+#!/bin/bash
+
+USAGE="Usage: "$0" [-i input_filename] [-o output_filename] [-v] [-h]"
+HELP="$USAGE\nOptions:\n\t-i\tInput filename\n\t-o\tOutput filename\n\t-v\tVerbosity: Print parser debug info\n\t-h\tDisplay this help message"
+
+help_msg() { echo -e "$HELP"; exit 0; }
+usage() { echo "$USAGE"; exit 1; }
+
+input_filename=""
+output_filename=""
+verbosity=0
+OPTS=$(getopt -o i:o:vh -- "$@")
+eval set -- "$OPTS"
+while true; do
+    case "$1" in
+        -i | --input)
+            input_filename="$2"
+            shift 2;;
+        -o | --output)
+            output_filename="$2"
+            shift 2;;
+        -v | --verbose)
+            verbosity=1
+            shift ;;
+        -h | --help) help_msg ;;
+        --) shift; break ;;
+        *) usage ;;
+    esac
+done
+
+if [ -z "$input_filename" ]; then
+    echo "Input file not provided..."
+    exit 1
+fi
+
+PARSER_EXEC="src/parser_exec.out"
+eval "$PARSER_EXEC $input_filename $output_filename $verbosity"
