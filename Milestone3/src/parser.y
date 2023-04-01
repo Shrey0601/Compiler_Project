@@ -11,6 +11,7 @@
     int issystem=0;
     int isfinal=0;
     int isreturn =0;
+    int arrayaccesscount = 0;
     string fullname;
     string newhandle = "null";
     string classname;
@@ -2567,7 +2568,8 @@ MethodHeader SEMICOLON {
   isfinal=0;
   isclassaccess=0;
     issystem=0;
-  };
+};
+
 ArrayInitializer:
 OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, strcat(($2).tempvar, strcat(($3).str, ($4).str))));
@@ -2577,7 +2579,7 @@ OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET {
   ($$).ndim=($2).ndim+1;
   shape[($$).ndim].push_back(($2).nelem);
   cout<<($$).ndim<<'\n';
-  }
+}
 |OPENCURLYBRACKET COMMA CLOSECURLYBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, strcat(($2).str, ($3).str)));
   arrinit=1;
@@ -2595,10 +2597,6 @@ OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET {
   // ($$).nelem=($2).nelem;
   ($$).ndim=($2).ndim+1;
   shape[($$).ndim].push_back(($2).nelem);
-  // cout<<"OPENCURLYBRACKET VariableInitializers CLOSECURLYBRACKET"<<($$).ndim<<'\n';
-  
-  
-  
   }
 |OPENCURLYBRACKET CLOSECURLYBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, ($2).str));
@@ -3705,8 +3703,8 @@ Literal {
   strcpy(($$).type,($1).type);
   
   strcpy(($$).tempvar, ($1).tempvar);
-  
 };
+
 ClassInstanceCreationExpression:
 NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   int pops = 0;
@@ -4211,7 +4209,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 
 ArrayAccess:
 Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
-    strcpy(($$).tempvar, newtemp().c_str());
+  strcpy(($$).tempvar, newtemp().c_str());
   string tp4;
   string tp5 = curr_table->lookup(string((char*)($1).type)).type;
   for(auto it: tp5){
@@ -4222,8 +4220,32 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
       break;
     }
   }
+
+  string array_len = curr_table->lookup(string((char*)(($1).type))).type;
+  for(char c: array_len){
+    if(c == '['){
+      arrayaccesscount ++ ;
+    }
+  }
+
   string tp7 = newtemp();
-  string tp8 = string((char*)($3).tempvar)+ "*" + to_string(4);
+  string tp8 = string((char*)(($1).type));
+  string arraytypeval = "";
+  for(auto it : tp8){
+    if(it != '['){
+      arraytypeval += it;
+    }
+    else{
+      break;
+    }
+  }
+  if(arrayaccesscount != 1){
+    tp8 = string((char*)($3).tempvar)+ "*" + to_string(8);
+    arrayaccesscount -- ;
+  }
+  else{
+    tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
+  }
   emit("=",tp8,"null",tp7,-1);
   string tp6 = "*(" + string((char*)($1).tempvar) + "+" + tp7 + ")";
   emit("=",tp6,"null",string((char*)($$).tempvar),-1);
@@ -4272,7 +4294,7 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   // yo="";
 }
 |PrimaryNoNewArray OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
- strcpy(($$).tempvar, newtemp().c_str());
+  strcpy(($$).tempvar, newtemp().c_str());
   string tp4;
   string tp5 = curr_table->lookup(string((char*)($1).type)).type;
   for(auto it: tp5){
@@ -4284,7 +4306,23 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     }
   }
   string tp7 = newtemp();
-  string tp8 = string((char*)($3).tempvar)+ "*" + to_string(4);
+  string tp8 = string((char*)(($1).type));
+  string arraytypeval = "";
+  for(auto it : tp8){
+    if(it != '['){
+      arraytypeval += it;
+    }
+    else{
+      break;
+    }
+  }
+  if(arrayaccesscount != 1){
+    tp8 = string((char*)($3).tempvar)+ "*" + to_string(8);
+    arrayaccesscount -- ;
+  }
+  else{
+    tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
+  }
   emit("=",tp8,"null",tp7,-1);
   string tp6 = "*(" + string((char*)($1).tempvar) + "+" + tp7 + ")";
   emit("=",tp6,"null",string((char*)($$).tempvar),-1);
@@ -4329,6 +4367,7 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   // }
   yo="";
 };
+
 PostfixExpression:
 Primary {
   strcpy(($$).tempvar, ($1).tempvar);
@@ -5915,6 +5954,7 @@ Name {
   ($$).sz = ($1).sz;
   arrtype="null";
 };
+
 AssignmentOperator:
 EQUAL {
   strcpy(($$).tempvar, ($1).str);
