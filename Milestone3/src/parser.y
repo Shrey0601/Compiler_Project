@@ -46,7 +46,7 @@
     vector<string> keywords = {"abstract","continue","for","new","switch","assert","default","if","package","synchronized","boolean","do","goto","private","this","break","double","implements","protected","throw","byte","else","import","public","throws","case","enum","instanceof","return","transient","catch","extends","int","SHORT","try","char","final","interface","static","void","class","finally","long","strictfp","volatile","const","float","native","super","while","_","exports","opens","requires","uses","module","permits","sealed","var","non-sealed","provides","to","with","open","record","transitive","yield"};
     vector<string> sep = {"(",")","{","}",",","[","]",";",".","...","::"};
     vector<string> dtype = {"char","byte","short","int","long","float","double","invalid"};
-    int getsize(string s)
+    int getsz(string s)
     {
       if(s=="char")
       return 1;
@@ -96,22 +96,22 @@
     }
     string getorder(string a,string b, int flag)
     {
-      int size;
+      int sz;
       if(flag==0)
-      size=5;
+      sz=5;
       else
-      size=7;
+      sz=7;
       if(a==b)
       return a;
       else
       {
         int q=7,w=7;
-        for(int i=0;i<size;i++)
+        for(int i=0;i<sz;i++)
         {
           if(a==dtype[i])
           q=i;      
         }
-        for(int i=0;i<size;i++)
+        for(int i=0;i<sz;i++)
         {
           if(b==dtype[i])
           w=i;      
@@ -137,19 +137,19 @@
       {
         return 1;
       }
-      int size;
+      int sz;
       if(flag==0)
-      size=5;
+      sz=5;
       else
-      size=7;
+      sz=7;
 
       int q=7,w=7;
-      for(int i=0;i<size;i++)
+      for(int i=0;i<sz;i++)
       {
         if(a==dtype[i])
         q=i;      
       }
-      for(int i=0;i<size;i++)
+      for(int i=0;i<sz;i++)
       {
         if(b==dtype[i])
         w=i;      
@@ -258,10 +258,10 @@
     stack<Sym_Table*> tables;
     stack<int> offsets;
     stack<string> scope_names;
-    int size; 
+    int sz = 0; 
     string type="";
     vector<Sym_Table*> list_of_Symbol_Tables(1, curr_table);
-    int array_size = 0;
+    int array_sz = 0;
     vector< pair<string,pair<string,int>> > funcparam;
     int funcargno;
     int fl = 0;
@@ -470,7 +470,7 @@
   } lex;
     struct {
         int cnt;
-        int size;
+        int sz;
         int ndim;
         int nelem;
         char argstring[10000];
@@ -750,45 +750,53 @@ CompilationUnit {
 };
 Literal:
 IntegerLiteral {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"int");
 }
 |FloatingPointLiteral  {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"float");
   
 }
 |BooleanLiteral  {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"boolean");
 }
 |CharacterLiteral  {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"char");
 }
 |StringLiteral  {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"string");
 }
 |NullLiteral  {
-  strcpy(($$).tempvar,($1).str);
+  strcpy(($$).tempvar,newtemp().c_str());
+  emit("=",($1).str,"null",($$).tempvar, -1);
   strcpy(($$).type,"null");
 };
 
 Type:
 PrimitiveType  {
   strcpy(($$).tempvar,($1).tempvar);
-  ($$).size = ($1).size;
+
+  ($$).sz = ($1).sz;
   strcpy(($$).type,($1).type);
   type = ($1).type;
-  size = ($1).size;
+  sz = ($1).sz;
 }
 |ReferenceType {
   strcpy(($$).tempvar,($1).tempvar);
-  ($$).size = ($1).size;
+
+  ($$).sz = ($1).sz;
   strcpy(($$).type,($1).type);
   type = ($1).type;
-  size = ($1).size;
+  sz = ($1).sz;
   // cout<<"RRS"<<($1).type;
   if(curr_table->lookup(string((char*)($1).type)).offset == -1 && checkobj(string((char*)($1).type)) == 0){
       string s=($1).type;
@@ -811,70 +819,71 @@ PrimitiveType  {
 PrimitiveType:
 NumericType {
   strcpy(($$).tempvar,($1).tempvar);
-  ($$).size = ($1).size;
+
+  ($$).sz = ($1).sz;
   strcpy(($$).type,($1).type);
 }
 |BOOLEAN {
   strcpy(($$).tempvar,($1).str);
   
-  ($$).size = 1;
+  ($$).sz = 1;
   strcpy(($$).type, "boolean");
 };
 NumericType:
 IntegralType {
   strcpy(($$).tempvar,($1).tempvar);
 
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
   strcpy(($$).type,($1).type);
 }
 |FloatingPointType {
   strcpy(($$).tempvar,($1).tempvar);
 
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
   strcpy(($$).type,($1).type);
 };
 IntegralType:
 BYTE {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 1;
+  ($$).sz = 1;
   strcpy(($$).type, "byte"); 
 }
 |SHORT  {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 2;
+  ($$).sz = 2;
   strcpy(($$).type, "short");
 }
 |INT  {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 4;
+  ($$).sz = 4;
   strcpy(($$).type, "int");
 }
 |LONG {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 8;
+  ($$).sz = 8;
   strcpy(($$).type, "long");
 }
 |CHAR {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 1;
+  ($$).sz = 1;
   strcpy(($$).type, "char");
 };
 FloatingPointType: 
 FLOAT {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 4;
+  ($$).sz = 4;
   strcpy(($$).type, "float");
 }
 |DOUBLE {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).size = 8;
+  ($$).sz = 8;
   strcpy(($$).type, "double");
 };
 ReferenceType:
@@ -882,34 +891,34 @@ ClassOrInterfaceType {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 }
 |ArrayType {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 ClassOrInterfaceType:
 Name {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 ClassType:
 ClassOrInterfaceType {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 InterfaceType:
 ClassOrInterfaceType {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 ArrayType:
 PrimitiveType OPENSQUAREBRACKET CLOSESQUAREBRACKET {
@@ -917,32 +926,32 @@ PrimitiveType OPENSQUAREBRACKET CLOSESQUAREBRACKET {
   strcpy(($$).type,strcat(($1).type,"[]"));
   strcpy(($$).arrtype, ($1).type);
   ($$).ndim = 1;
-  ($$).size = ($1).size*($$).ndim;
+  ($$).sz = ($1).sz*($$).ndim;
 }
 |Name OPENSQUAREBRACKET CLOSESQUAREBRACKET {
   strcpy(($$).type,strcat(($1).type,"[]"));
   strcpy(($$).arrtype, ($1).type);
   ($$).ndim =1;
-  ($$).size = ($1).size*($$).ndim;
+  ($$).sz = ($1).sz*($$).ndim;
 }
 |ArrayType OPENSQUAREBRACKET CLOSESQUAREBRACKET {
   strcpy(($$).type,strcat(($1).type,"[]"));
   strcpy(($$).arrtype, ($1).type);
   ($$).ndim = ($1).ndim+1;
-  ($$).size = ($1).size*($$).ndim;
+  ($$).sz = ($1).sz*($$).ndim;
 };
 Name:
 SimpleName {
    strcpy(($$).tempvar, ($1).tempvar);
 
    strcpy(($$).type, ($1).type);
-   ($$).size = ($1).size;
+   ($$).sz = ($1).sz;
 }
 |QualifiedName {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 SimpleName:
 Identifier {
@@ -979,7 +988,7 @@ Identifier {
   strcpy(($$).tempvar, ($1).str);
 
   strcpy(($$).type, ($1).str);
-  ($$).size = (string((char*)($1).str)).size();
+  ($$).sz = (string((char*)($1).str)).size();
 };
 QualifiedName:
 Name DOT Identifier {
@@ -1017,7 +1026,7 @@ Name DOT Identifier {
     }
     isclassaccess=0;
     // issystem=0;
-    ($$).size = ($1).size + 1 + (string((char*)(($3).str))).size();
+    ($$).sz = ($1).sz + 1 + (string((char*)(($3).str))).size();
     // cout<<"GGG"<<($$).type<<'\n';
 };
 CompilationUnit:
@@ -1435,8 +1444,8 @@ Modifiers Type VariableDeclarators SEMICOLON {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
       // if(isfieldprivate)
@@ -1479,8 +1488,8 @@ issystem=0;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -1605,8 +1614,8 @@ VariableDeclaratorId {
 
   strcpy(($$).type,"Dishay");
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
-//   offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+//   offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0; ;
   funcparam.push_back({string((char*)($1).type), {type, -1}});
 //   cout<< "VariableDeclaratorId " << string((char*)($1).type) << " " << type << " " << offset << " " << curr_scope << " " << yylineno << "\n";
@@ -1651,8 +1660,8 @@ addoff = 0; ;
 }
 |VariableDeclaratorId EQUAL VariableInitializer {  
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
-//   offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+//   offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0; ;
   // cout<<ndim <<" "<<($3).ndim<<'\n';
   // cout<<($3).type<<'\n';
@@ -1688,7 +1697,7 @@ addoff = 0; ;
     }
     // cout<<"Type1 "<<tp1<<endl;
     // cout<<"New Offset: "<<offset<<endl;
-    // offset = offset + addoff*getsize(tp1);
+    // offset = offset + addoff*getsz(tp1);
     // cout<<endl;
     // cout<<"New Offset "<<offset<<endl;
     shape.clear();
@@ -1772,13 +1781,13 @@ Identifier {
   // }
   // type=yo;
   // cout<<type<<"HI"<<endl;
-  // cout<<array_size<<'\n';
-  // if(array_size>0)
-  // type = type + to_string(array_size);
+  // cout<<array_sz<<'\n';
+  // if(array_sz>0)
+  // type = type + to_string(array_sz);
   // curr_table->entry(string((char*)($1).str), "Identifier", type, offset, curr_scope, yylineno, -1);
-  // array_size = 0;
-  // offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+  // array_sz = 0;
+  // offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
 }
 |VariableDeclaratorId {
@@ -1874,8 +1883,8 @@ emit("BeginFunc","","","",-1);
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -1925,8 +1934,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -1974,8 +1983,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2021,8 +2030,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2064,8 +2073,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2108,8 +2117,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2152,8 +2161,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2198,8 +2207,8 @@ addoff = 0;;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2245,8 +2254,8 @@ Type VariableDeclaratorId {
   ($$).ndim=ndim;
   ndim=0;
 //   curr_table->entry(string((char*)($2).type), "Identifier", type, offset, curr_scope, yylineno, -1);
-//   offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+//   offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0; ;
   // cout<<"Type: "<<type<<'\n';
   if(funcargno == -1){
@@ -2348,8 +2357,8 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -2729,8 +2738,8 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += size;
-if(addoff > 0){ offset += (addoff-1)*getsize(type);}
+      offset += sz;
+if(addoff > 0){ offset += (addoff-1)*getsz(type);}
 addoff = 0;;
       fl = 0;
     }
@@ -3529,7 +3538,7 @@ BREAK SEMICOLON {
     cout<<"Invalid use of break on line "<<yylineno<<'\n';
   }
     issystem=0;
-  // cout<<"SIZE "<<breaklabels.size()<<'\n';
+  // cout<<"sz "<<breaklabels.size()<<'\n';
   if(breaklabels.size())
   emit("Goto", breaklabels.top(), "", "", -1);
 }
@@ -3820,13 +3829,13 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
 };
 ArgumentList:
 Expression {
-  args.push({string((char*)($1).tempvar), size});
+  args.push({string((char*)($1).tempvar), sz});
   strcpy(($$).argstring, ($1).type);
   // cout<<"XXX"<<($$).argstring<<'\n';
   ($$).nelem=1;
 }
 |ArgumentList COMMA Expression {
-  args.push({string((char*)($3).tempvar), size});
+  args.push({string((char*)($3).tempvar), sz});
   strcat(($$).argstring, "$");
   strcat(($$).argstring, ($3).type);
   // cout<<"XXX"<<($$).argstring<<'\n';
@@ -3835,7 +3844,7 @@ Expression {
 
 ArrayCreationExpression:
 NEW PrimitiveType DimExprs Dims {
-  offset -= getsize(string((char*)($2).type));
+  offset -= getsz(string((char*)($2).type));
   strcpy(($$).tempvar, newtemp().c_str());
   emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
   flagyo=1;
@@ -3848,7 +3857,7 @@ NEW PrimitiveType DimExprs Dims {
   }
 }
 |NEW PrimitiveType DimExprs {
-  offset -= getsize(string((char*)($2).type));
+  offset -= getsz(string((char*)($2).type));
   strcpy(($$).tempvar, newtemp().c_str());
   emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
 
@@ -5761,7 +5770,7 @@ ConditionalExpression {
 |Assignment {
   strcpy(($$).tempvar, ($1).tempvar);
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
 };
 Assignment:
 LeftHandSide AssignmentOperator AssignmentExpression {
@@ -5886,13 +5895,13 @@ Name {
     }
   }
   strcpy(($$).type, ($1).type);
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
   isaccess=0;
 }
 |FieldAccess {
   strcpy(($$).type, ($1).type);
   // cout<<"shrey"<<($1).type<<'\n';
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
   
 }
 |ArrayAccess {
@@ -5900,7 +5909,7 @@ Name {
   // cout<<"SHUBHAN"<<($1).type<<'\n';
   strcpy(($$).type, ($1).type);
   // cout<<"GGG"<< ($1).type<<'\n';
-  ($$).size = ($1).size;
+  ($$).sz = ($1).sz;
   arrtype="null";
 };
 AssignmentOperator:
@@ -5983,19 +5992,35 @@ int main(int argc, char *argv[])
     exit(1);
   }
   yyparse();
-  // yyparse();
-  cout<<"Symbol Table\n";
-  cout<<"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+
   for(auto it: list_of_Symbol_Tables){
+    // cout<<"NEW TABLE"<<'\n';
     it->print_table();
+    cout<<'\n';
   }
-  cout<<"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
-  cout<<"3AC\n";
-  cout<<"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
-  for(auto it: code){
-    if(true)
+
+int flag=0;
+string classname,n,funcname,m;
+   for(auto it: code){
+    if(it.op=="BeginClass")
     {
-      if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass")
+      classname=n;
+    }
+    n=it.op;
+    if(it.op=="BeginFunc")
+    {
+      funcname=m;
+      flag=1;
+    }
+    m=it.op;
+    if(it.op=="EndFunc")
+    {
+      flag=0;
+      cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+    }
+    if(flag==1)
+    {
+      if(it.op=="BeginFunc")
       {
         cout<<it.op<<'\n';
       }
@@ -6050,10 +6075,9 @@ int main(int argc, char *argv[])
       {
         cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
-      }
-  }
-  cout<<"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
+      }
+    }
 
   return 0;
 }

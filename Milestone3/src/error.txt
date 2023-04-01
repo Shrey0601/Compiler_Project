@@ -1,0 +1,210 @@
+parser.y: In function ‘void emit(std::string, std::string, std::string, std::string, int)’:
+parser.y:449:39: error: ‘class std::vector<quadruple>’ has no member named ‘sz’; did you mean ‘size’?
+  449 |         if(idx == -1) temp.idx = code.size();
+      |                                       ^~
+      |                                       size
+parser.y: In function ‘int yyparse()’:
+parser.y:804:28: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+  804 |       for(int i=0;i<(int)s.sz();i++)
+      |                            ^~
+      |                            size
+parser.y:973:110: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+  973 |       if(!strcmp(curr_scope.substr(0,6).c_str(),"Method")&&curr_table->lookup(curr_scope.substr(6,curr_scope.size()-6).c_str()).isitstatic)
+      |                                                                                                              ^~
+      |                                                                                                              size
+parser.y:991:60: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+  991 |   ($$).sz = (string((char*)($1).str)).sz();
+      |                                                            ^ 
+      |                                                            size
+parser.y:1029:91: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1029 |     ($$).sz = ($1).sz + 1 + (string((char*)(($3).str))).sz();
+      |                                                                                           ^ 
+      |                                                                                           size
+parser.y:1434:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1434 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:1435:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1435 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:1479:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1479 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:1480:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1480 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:1509:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1509 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:1539:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1539 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:1553:28: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1553 |       for(int i=0;i<(int)s.sz();i++)
+      |                            ^~
+      |                            size
+parser.y:1563:29: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1563 |       for(int i=0;i<(int)s1.sz();i++)
+      |                             ^~
+      |                             size
+parser.y:1579:28: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1579 |       for(int i=0;i<(int)s.sz();i++)
+      |                            ^~
+      |                            size
+parser.y:1594:28: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1594 |       for(int i=0;i<(int)s.sz();i++)
+      |                            ^~
+      |                            size
+parser.y:1629:28: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1629 |       for(int i=0;i<(int)s.sz();i++)
+      |                            ^~
+      |                            size
+parser.y:1646:26: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1646 |     for(int i=0;i<(int)s.sz();i++)
+      |                          ^~
+      |                          size
+parser.y:1751:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 1751 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:1874:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1874 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:1875:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1875 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:1925:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1925 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:1926:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1926 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:1974:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1974 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:1975:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 1975 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2021:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2021 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2022:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2022 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2064:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2064 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2065:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2065 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2108:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2108 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2109:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2109 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2152:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2152 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2153:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2153 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2198:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2198 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2199:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2199 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2348:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2348 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2349:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2349 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:2729:16: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2729 |   if(funcparam.sz()){
+      |                ^~
+      |                size
+parser.y:2730:34: error: ‘class std::vector<std::pair<std::__cxx11::basic_string<char>, std::pair<std::__cxx11::basic_string<char>, int> > >’ has no member named ‘sz’; did you mean ‘size’?
+ 2730 |     for(int i=0;i<(int)funcparam.sz();i++){
+      |                                  ^~
+      |                                  size
+parser.y:3542:18: error: ‘class std::stack<std::__cxx11::basic_string<char> >’ has no member named ‘sz’
+ 3542 |   if(breaklabels.sz())
+      |                  ^~
+parser.y:3556:18: error: ‘class std::stack<std::__cxx11::basic_string<char> >’ has no member named ‘sz’
+ 3556 |   if(breaklabels.sz())
+      |                  ^~
+parser.y:3569:23: error: ‘class std::stack<std::__cxx11::basic_string<char> >’ has no member named ‘sz’
+ 3569 |     if(continuelabels.sz())
+      |                       ^~
+parser.y:3583:21: error: ‘class std::stack<std::__cxx11::basic_string<char> >’ has no member named ‘sz’
+ 3583 |   if(continuelabels.sz())
+      |                     ^~
+parser.y:3601:44: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 3601 |       string v = p.substr(p.find('.')+1, p.sz());
+      |                                            ^~
+      |                                            size
+parser.y:4254:26: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4254 |     for(int i=0;i<(int)s.sz();i++)
+      |                          ^~
+      |                          size
+parser.y:4256:44: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4256 |       if(s[i]=='['&&s[i+1]==']'&&i==(int)s.sz()-2)
+      |                                            ^~
+      |                                            size
+parser.y:4316:26: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4316 |     for(int i=0;i<(int)s.sz();i++)
+      |                          ^~
+      |                          size
+parser.y:4318:44: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4318 |       if(s[i]=='['&&s[i+1]==']'&&i==(int)s.sz()-2)
+      |                                            ^~
+      |                                            size
+parser.y:4389:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4389 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:4422:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4422 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:4493:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4493 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:4526:24: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 4526 |   for(int i=0;i<(int)s.sz();i++)
+      |                        ^~
+      |                        size
+parser.y:5783:44: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 5783 |       string v = p.substr(p.find('.')+1, p.sz());
+      |                                            ^~
+      |                                            size
+parser.y:5798:20: error: ‘std::string’ {aka ‘class std::__cxx11::basic_string<char>’} has no member named ‘sz’; did you mean ‘size’?
+ 5798 |     a=a.substr(0,a.sz()-1);
+      |                    ^~
+      |                    size
