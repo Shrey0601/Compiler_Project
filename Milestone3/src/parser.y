@@ -19,7 +19,6 @@
     int isaccess=0;
     int isprivate=0;
     int isstatic=0;
-    int isobject = 0;
     int isfieldprivate=0;
     string curr_class="";
     int arraccess=0;
@@ -176,7 +175,7 @@
         int isfieldprivate;
         int isitstatic;
         int isitfinal;
-        int isobject;
+        int classwidth = 0;
         map<int,vector<int>> arrshape;
         Sym_Entry(){ 
         }
@@ -193,13 +192,13 @@
           arrshape=shape;
           isitstatic=isstatic;
           isitfinal=isfinal;
-          isobject = isobject;
+          classwidth = classwidth;
           if(!strcmp(toke.c_str(),"Constructor")) isitstatic=1;
           // isstatic=0;
           // shape.clear();
         }
         void print_entry(){
-          cout << token << " " << type << " " << offset << " " << scope_name << " " << line << " "<<narg << " "<<argno<<" "<<isfieldprivate<<" "<<isitstatic<<isobject<<' '<<endl;
+          cout << token << " " << type << " " << offset << " " << scope_name << " " << line << " "<<narg << " "<<argno<<" "<<isfieldprivate<<" "<<isitstatic<<endl;
         }
     };
     class Sym_Table {
@@ -207,6 +206,7 @@
         map<string, Sym_Entry> table;
         Sym_Table* parent;
         int level_no;
+        int classwidth;
         void entry(string lexeme, string token, string type, int offset, string scope_name, int line, int argno){
           if(table.find(lexeme) != table.end()){
             
@@ -1143,7 +1143,6 @@ CLASS Identifier Super Interfaces {
   emit(($2).str,":","","",-1);
   emit("BeginClass","","","",-1);
   // code.push_back("Begin" + string((char*)($2).str));
-
   curr_table->entry(string((char*)($2).str),"Class", string((char*)($2).str), offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
   curr_table = new Sym_Table(curr_table);
@@ -1157,6 +1156,7 @@ CLASS Identifier Super Interfaces {
   offset = new_offset; 
 }
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1192,7 +1192,7 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
-  
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1228,6 +1228,7 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1251,6 +1252,7 @@ ClassBody {
   offset = new_offset;
 } 
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1274,6 +1276,7 @@ ClassBody {
   offset = new_offset;
 }
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1310,6 +1313,7 @@ ClassBody {
   isfieldprivate=0;
 } 
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1333,6 +1337,7 @@ ClassBody {
   offset = new_offset;
 }
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1369,6 +1374,7 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -5804,9 +5810,7 @@ LeftHandSide AssignmentOperator AssignmentExpression {
     string o = p.substr(0, p.find('.'));
     if(p != o){
       string v = p.substr(p.find('.')+1, p.size());
-      cout<<"I was here "<<o<<endl;
       string classname = curr_table->lookup(o).type;
-      cout<<offsetobj(classname, v)<<endl;
       int tp2 = offsetobj(classname, v);
       string tp3 = "*(" + o + "+" + to_string(tp2) + ")";
       emit("=",($3).tempvar,"null",tp3.c_str(), -1);
@@ -6022,88 +6026,89 @@ int main(int argc, char *argv[])
   for(auto it: list_of_Symbol_Tables){
     // cout<<"NEW TABLE"<<'\n';
     it->print_table();
+    cout<<"Classwidth: "<<it->classwidth<<endl;
     cout<<'\n';
   }
 
-int flag=0;
-string classname,n,funcname,m;
-   for(auto it: code){
-    if(it.op=="BeginClass")
-    {
-      classname=n;
-    }
-    n=it.op;
-    if(it.op=="BeginFunc")
-    {
-      funcname=m;
-      flag=1;
-    }
-    m=it.op;
-    if(it.op=="EndFunc")
-    {
-      flag=0;
-      cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
-    }
-    if(flag==1)
-    {
-      if(it.op=="BeginFunc")
-      {
-        cout<<it.op<<'\n';
-      }
-      else if(it.arg2=="null" && it.res=="null")
-      {
-        cout<<it.op<<" "<<it.res<<"\n";
-      }
-      else if(it.op=="Call")
-      {
-        cout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
-      }
-      else if(it.arg2=="null" && it.res!="null")
-      {
-      if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
-        {
-      cout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
-        }
-      else 
-        {
-        cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
-        }
-      }
-      else if(it.op=="Pushparams"||it.op=="Popparams")
-      {
-        cout<<it.op<<" "<<it.arg1<<'\n';
-      }
-      else if(it.res=="Ifz")
-      {
-        cout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
-      }
-      else if(it.op=="Goto")
-      {
-        cout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-      }
-      else if(it.arg1==":")
-      {
-        cout<<it.op<<it.arg1<<"\n";
-      }
-      else if(it.arg1=="new")
-      {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
-      }
-      else if(it.op=="Return")
-      {
-        cout<<it.op<<" "<<it.arg1<<"\n";
-      }
-      else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
-      {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
-      }
-      else
-      {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
-      }
+// int flag=0;
+// string classname,n,funcname,m;
+//    for(auto it: code){
+//     if(it.op=="BeginClass")
+//     {
+//       classname=n;
+//     }
+//     n=it.op;
+//     if(it.op=="BeginFunc")
+//     {
+//       funcname=m;
+//       flag=1;
+//     }
+//     m=it.op;
+//     if(it.op=="EndFunc")
+//     {
+//       flag=0;
+//       cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+//     }
+//     if(flag==1)
+//     {
+//       if(it.op=="BeginFunc")
+//       {
+//         cout<<it.op<<'\n';
+//       }
+//       else if(it.arg2=="null" && it.res=="null")
+//       {
+//         cout<<it.op<<" "<<it.res<<"\n";
+//       }
+//       else if(it.op=="Call")
+//       {
+//         cout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
+//       }
+//       else if(it.arg2=="null" && it.res!="null")
+//       {
+//       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
+//         {
+//       cout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
+//         }
+//       else 
+//         {
+//         cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
+//         }
+//       }
+//       else if(it.op=="Pushparams"||it.op=="Popparams")
+//       {
+//         cout<<it.op<<" "<<it.arg1<<'\n';
+//       }
+//       else if(it.res=="Ifz")
+//       {
+//         cout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+//       }
+//       else if(it.op=="Goto")
+//       {
+//         cout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+//       }
+//       else if(it.arg1==":")
+//       {
+//         cout<<it.op<<it.arg1<<"\n";
+//       }
+//       else if(it.arg1=="new")
+//       {
+//         cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+//       }
+//       else if(it.op=="Return")
+//       {
+//         cout<<it.op<<" "<<it.arg1<<"\n";
+//       }
+//       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
+//       {
+//         cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+//       }
+//       else
+//       {
+//         cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+//       }
 
-      }
-    }
+//       }
+//     }
 
   return 0;
 }
