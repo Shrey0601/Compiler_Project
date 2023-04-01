@@ -12,6 +12,7 @@
     int isfinal=0;
     int isreturn =0;
     string fullname;
+    string newhandle = "null";
     string classname;
     int isclassaccess=0;
     int ismainstatic=0;
@@ -1472,8 +1473,7 @@ Modifiers Type VariableDeclarators SEMICOLON {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
       // if(isfieldprivate)
       // {
@@ -1516,8 +1516,7 @@ issystem=0;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -1700,22 +1699,6 @@ addoff = 0; ;
   // emit(">=",($1).tempvar,($3).tempvar,($$).tempvar, -1);
   if(arrinit)
   {
-    // cout<<"Array "<<($1).type<<endl;
-    // cout<<"Offset: "<<offset<<endl;
-    // print_shape(curr_table->lookup(string((char*)($1).type)).arrshape);
-    for(auto it=shape.begin();it!=shape.end();it++)
-      {
-        vector<int> v=it->second;
-        for(auto yo:v)
-        {
-          addoff += yo;
-          // cout<<"Offsets ";
-          // cout<<offset<<' ';
-        }
-        cout<<endl;
-        break;
-      }
-    // cout<<"Type "<<type<<endl;
     string tp1;
     for(auto it: type){
       if(it=='[')
@@ -1799,25 +1782,6 @@ Identifier {
 
   strcpy(($$).type,($1).str);
   ndim=0;
-  // string yo=type;
-  // for(int i=0;i<(int)s.size();i++)
-  // {
-  //   if(s[i]=='[')
-  //   {
-  //     break;
-  //   }
-  //   yo+=string(1,s[i]);
-  // }
-  // type=yo;
-  // cout<<type<<"HI"<<endl;
-  // cout<<array_sz<<'\n';
-  // if(array_sz>0)
-  // type = type + to_string(array_sz);
-  // curr_table->entry(string((char*)($1).str), "Identifier", type, offset, curr_scope, yylineno, -1);
-  // array_sz = 0;
-  // offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
 }
 |VariableDeclaratorId {
   type  = type + "[]";
@@ -1914,8 +1878,6 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
       fl = 0;
     }
     funcargno = -1;
@@ -1965,8 +1927,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2014,8 +1975,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2061,8 +2021,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2104,8 +2063,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2148,8 +2106,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2192,8 +2149,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2238,8 +2194,7 @@ addoff = 0;;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2388,8 +2343,7 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+
       fl = 0;
     }
     funcargno = -1;
@@ -2769,8 +2723,11 @@ Type VariableDeclarators {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0;;
+      if(newhandle != "null"){
+        offset = offset - getsz(newhandle) + 8;
+        newhandle = "null";
+      }
+
       fl = 0;
     }
     funcargno = -1;
@@ -3874,7 +3831,7 @@ Expression {
 
 ArrayCreationExpression:
 NEW PrimitiveType DimExprs Dims {
-  offset -= getsz(string((char*)($2).type));
+  newhandle = string((char*)(($2).type));
   strcpy(($$).tempvar, newtemp().c_str());
   emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
   flagyo=1;
@@ -3887,7 +3844,7 @@ NEW PrimitiveType DimExprs Dims {
   }
 }
 |NEW PrimitiveType DimExprs {
-  offset -= getsz(string((char*)($2).type));
+  newhandle = string((char*)(($2).type));
   strcpy(($$).tempvar, newtemp().c_str());
   emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
 
@@ -3903,6 +3860,7 @@ NEW PrimitiveType DimExprs Dims {
   
 }
 |NEW ClassOrInterfaceType DimExprs Dims {
+  newhandle = string((char*)(($2).type));
   strcpy(($$).tempvar, newtemp().c_str());
   emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
   flagyo=1;
