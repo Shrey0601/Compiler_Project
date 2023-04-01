@@ -1827,6 +1827,7 @@ addoff = 0;;
   
   // ($$).ndim=ndim;
 };
+
 VariableInitializer:
 Expression {
   strcpy(($$).tempvar, ($1).tempvar);
@@ -5808,12 +5809,23 @@ LeftHandSide AssignmentOperator AssignmentExpression {
   {
     string p = string((char*)($1).tempvar);
     string o = p.substr(0, p.find('.'));
+    string p1 = string((char*)($3).tempvar);
+    string o1 = p1.substr(0, p1.find('.'));
     if(p != o){
       string v = p.substr(p.find('.')+1, p.size());
       string classname = curr_table->lookup(o).type;
       int tp2 = offsetobj(classname, v);
       string tp3 = "*(" + o + "+" + to_string(tp2) + ")";
-      emit("=",($3).tempvar,"null",tp3.c_str(), -1);
+      if(p1 != o1){
+        string v1 = p1.substr(p1.find('.')+1, p1.size());
+        string classname1 = curr_table->lookup(o1).type;
+        int tp21 = offsetobj(classname1, v1);
+        string tp31 = "*(" + o1 + "+" + to_string(tp21) + ")";
+        emit("=",tp31.c_str(),"null",tp3.c_str(), -1);
+      }
+      else{
+        emit("=",($3).tempvar,"null",tp3.c_str(), -1);
+      }
       strcpy(($$).tempvar, tp3.c_str());
     }
     else
@@ -5925,16 +5937,19 @@ Name {
     }
   }
   strcpy(($$).type, ($1).type);
+  strcpy(($$).tempvar, ($1).tempvar);
   ($$).sz = ($1).sz;
   isaccess=0;
 }
 |FieldAccess {
+  strcpy(($$).tempvar, ($1).tempvar);
   strcpy(($$).type, ($1).type);
   // cout<<"shrey"<<($1).type<<'\n';
   ($$).sz = ($1).sz;
   
 }
 |ArrayAccess {
+  strcpy(($$).tempvar, ($1).tempvar);
   // cout<<"shubhan\n";
   // cout<<"SHUBHAN"<<($1).type<<'\n';
   strcpy(($$).type, ($1).type);
@@ -6030,85 +6045,85 @@ int main(int argc, char *argv[])
     cout<<'\n';
   }
 
-// int flag=0;
-// string classname,n,funcname,m;
-//    for(auto it: code){
-//     if(it.op=="BeginClass")
-//     {
-//       classname=n;
-//     }
-//     n=it.op;
-//     if(it.op=="BeginFunc")
-//     {
-//       funcname=m;
-//       flag=1;
-//     }
-//     m=it.op;
-//     if(it.op=="EndFunc")
-//     {
-//       flag=0;
-//       cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
-//     }
-//     if(flag==1)
-//     {
-//       if(it.op=="BeginFunc")
-//       {
-//         cout<<it.op<<'\n';
-//       }
-//       else if(it.arg2=="null" && it.res=="null")
-//       {
-//         cout<<it.op<<" "<<it.res<<"\n";
-//       }
-//       else if(it.op=="Call")
-//       {
-//         cout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
-//       }
-//       else if(it.arg2=="null" && it.res!="null")
-//       {
-//       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
-//         {
-//       cout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
-//         }
-//       else 
-//         {
-//         cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
-//         }
-//       }
-//       else if(it.op=="Pushparams"||it.op=="Popparams")
-//       {
-//         cout<<it.op<<" "<<it.arg1<<'\n';
-//       }
-//       else if(it.res=="Ifz")
-//       {
-//         cout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
-//       }
-//       else if(it.op=="Goto")
-//       {
-//         cout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-//       }
-//       else if(it.arg1==":")
-//       {
-//         cout<<it.op<<it.arg1<<"\n";
-//       }
-//       else if(it.arg1=="new")
-//       {
-//         cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
-//       }
-//       else if(it.op=="Return")
-//       {
-//         cout<<it.op<<" "<<it.arg1<<"\n";
-//       }
-//       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
-//       {
-//         cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
-//       }
-//       else
-//       {
-//         cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
-//       }
+int flag=0;
+string classname,n,funcname,m;
+   for(auto it: code){
+    if(it.op=="BeginClass")
+    {
+      classname=n;
+    }
+    n=it.op;
+    if(it.op=="BeginFunc")
+    {
+      funcname=m;
+      flag=1;
+    }
+    m=it.op;
+    if(it.op=="EndFunc")
+    {
+      flag=0;
+      cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+    }
+    if(flag==1)
+    {
+      if(it.op=="BeginFunc")
+      {
+        cout<<it.op<<'\n';
+      }
+      else if(it.arg2=="null" && it.res=="null")
+      {
+        cout<<it.op<<" "<<it.res<<"\n";
+      }
+      else if(it.op=="Call")
+      {
+        cout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
+      }
+      else if(it.arg2=="null" && it.res!="null")
+      {
+      if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
+        {
+      cout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
+        }
+      else 
+        {
+        cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
+        }
+      }
+      else if(it.op=="Pushparams"||it.op=="Popparams")
+      {
+        cout<<it.op<<" "<<it.arg1<<'\n';
+      }
+      else if(it.res=="Ifz")
+      {
+        cout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+      }
+      else if(it.op=="Goto")
+      {
+        cout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+      }
+      else if(it.arg1==":")
+      {
+        cout<<it.op<<it.arg1<<"\n";
+      }
+      else if(it.arg1=="new")
+      {
+        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+      }
+      else if(it.op=="Return")
+      {
+        cout<<it.op<<" "<<it.arg1<<"\n";
+      }
+      else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
+      {
+        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+      }
+      else
+      {
+        cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+      }
 
-//       }
-//     }
+      }
+    }
 
   return 0;
 }
