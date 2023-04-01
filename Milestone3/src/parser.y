@@ -19,6 +19,7 @@
     int isaccess=0;
     int isprivate=0;
     int isstatic=0;
+    int isobject = 0;
     int isfieldprivate=0;
     string curr_class="";
     int arraccess=0;
@@ -175,6 +176,7 @@
         int isfieldprivate;
         int isitstatic;
         int isitfinal;
+        int isobject;
         map<int,vector<int>> arrshape;
         Sym_Entry(){ 
         }
@@ -191,12 +193,13 @@
           arrshape=shape;
           isitstatic=isstatic;
           isitfinal=isfinal;
+          isobject = isobject;
           if(!strcmp(toke.c_str(),"Constructor")) isitstatic=1;
           // isstatic=0;
           // shape.clear();
         }
         void print_entry(){
-          cout << token << " " << type << " " << offset << " " << scope_name << " " << line << " "<<narg << " "<<argno<<" "<<isfieldprivate<<" "<<isitstatic<<endl;
+          cout << token << " " << type << " " << offset << " " << scope_name << " " << line << " "<<narg << " "<<argno<<" "<<isfieldprivate<<" "<<isitstatic<<isobject<<' '<<endl;
         }
     };
     class Sym_Table {
@@ -339,6 +342,23 @@
             }
         }
         return 0;
+    }
+
+    int offsetobj(string classname, string lexeme){
+      for(auto it : list_of_Symbol_Tables){
+          auto tab = it->table;
+          for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
+                if(it1->second.scope_name == "Class" + classname){
+                    if(it1->first == lexeme){
+                      return it1->second.offset;
+                    }
+                }
+                else{
+                    break;
+                }
+            }
+      }
+      return -1;
     }
 
     int checkobj(string lexeme){
@@ -996,6 +1016,7 @@ Name DOT Identifier {
     string mo=curr_table->lookup(string((char*)($1).type)).type;
     string s = string((char*)($1).type) + "." + string((char*)($3).str);
     string s1 = mo + "." + string((char*)($3).str);
+    // cout<<"I was here"<<s1<<endl;
     strcpy(($$).tempvar, s.c_str());
     isaccess=1;
     fullname=s;
@@ -1658,7 +1679,9 @@ addoff = 0; ;
   // cout<<"SSS"<<s<<'\n';
   
 }
+
 |VariableDeclaratorId EQUAL VariableInitializer {  
+  // cout<<"I was here"<<($1).type<<endl;
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
 if(addoff > 0){ offset += (addoff-1)*getsz(type);}
@@ -5781,7 +5804,10 @@ LeftHandSide AssignmentOperator AssignmentExpression {
     string o = p.substr(0, p.find('.'));
     if(p != o){
       string v = p.substr(p.find('.')+1, p.size());
-      int tp2 = curr_table->lookup(v).offset;
+      cout<<"I was here "<<o<<endl;
+      string classname = curr_table->lookup(o).type;
+      cout<<offsetobj(classname, v)<<endl;
+      int tp2 = offsetobj(classname, v);
       string tp3 = "*(" + o + "+" + to_string(tp2) + ")";
       emit("=",($3).tempvar,"null",tp3.c_str(), -1);
       strcpy(($$).tempvar, tp3.c_str());
