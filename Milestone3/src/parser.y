@@ -50,6 +50,17 @@
     vector<string> dtype = {"char","byte","short","int","long","float","double","invalid"};
     int getsz(string s)
     {
+      int count = 0;
+      string t = "";
+      for(auto it: s){
+        if(count == 0 && it != '['){
+          t.push_back(it);
+        }
+        if(it == '['){
+          count++;
+        }
+      }
+      s = t;
       if(s=="char")
       return 1;
       else if(s=="byte")
@@ -268,6 +279,7 @@
     vector<Sym_Table*> list_of_Symbol_Tables(1, curr_table);
     int array_sz = 0;
     vector< pair<string,pair<string,int>> > funcparam;
+    vector <int> sizeparam;
     int funcargno;
     int fl = 0;
     vector<string> objects;
@@ -495,6 +507,45 @@
       string temp_var = "L"+to_string(counter1++);
       return temp_var;
     }
+
+    int funcargtypesz(int iscurrclass, string funcname){
+      if(iscurrclass){
+        int cnt = -1;
+        for(auto it: list_of_Symbol_Tables){
+          auto tab = it->table;
+          for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
+              if(it1->second.scope_name == "Method" + funcname){
+                if(it1->second.argno > 0 && it1->second.offset > cnt){
+                  cnt = it1->second.offset;
+                }
+              }
+              else{
+                break;
+              }
+          }
+          if(cnt != -1){
+            cout<<"HEY "<<cnt<<endl;
+            int ret = 1000000000;
+            for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
+                if(it1->second.scope_name == "Method" + funcname){
+                  if(it1->second.offset > cnt && ret > it1->second.offset){
+                    ret = it1->second.offset;
+                  }
+                }
+                else{
+                  break;
+                }
+            }
+            if(ret == 1000000000){
+              ret = it->classwidth;
+            }
+            return ret;
+          }
+        }
+      }
+      return 0;
+    }
+
 // }
 %}
 
@@ -904,6 +955,7 @@ BYTE {
   ($$).sz = 1;
   strcpy(($$).type, "char");
 };
+
 FloatingPointType: 
 FLOAT {
   strcpy(($$).tempvar,($1).str);
@@ -1482,7 +1534,7 @@ Modifiers Type VariableDeclarators SEMICOLON {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
@@ -1494,6 +1546,7 @@ curr_table->classwidth = offset;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   isfieldprivate=0;
   isstatic=0;
@@ -1526,13 +1579,14 @@ issystem=0;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   
   
@@ -1656,6 +1710,7 @@ VariableDeclaratorId {
 curr_table->classwidth = offset;
 
   funcparam.push_back({string((char*)($1).type), {type, -1}});
+  sizeparam.push_back(sz);
 //   cout<< "VariableDeclaratorId " << string((char*)($1).type) << " " << type << " " << offset << " " << curr_scope << " " << yylineno << "\n";
   string s=curr_table->lookup(string((char*)($1).type)).type;
   // cout<<"LKS"<<s<<'\n';
@@ -1736,6 +1791,8 @@ curr_table->classwidth = offset;
   }
   else ndim=0;
   funcparam.push_back({string((char*)($1).type), {type, -1}});
+  sizeparam.push_back(sz);
+
   if(curr_table->lookup(string((char*)($1).type)).offset != -1)
   {
     if(curr_table->lookup(string((char*)($3).type)).offset == -1)
@@ -1850,6 +1907,8 @@ MethodHeader MethodBody {
   isstatic=0;
 
 };
+
+
 MethodHeader:
 Modifiers Type MethodDeclarator Throws {
 emit("BeginFunc","","","",-1);
@@ -1890,12 +1949,13 @@ emit("BeginFunc","","","",-1);
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   isfieldprivate=0;
   isstatic=0;
@@ -1940,13 +2000,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   isfieldprivate=0;
   isstatic=0;
@@ -1989,13 +2050,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   
 }
@@ -2036,13 +2098,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
-curr_table->classwidth = offset;
+      offset += sizeparam[i];
+      curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
 }
 |Modifiers VOID MethodDeclarator Throws {
@@ -2079,13 +2142,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   isfieldprivate=0;
 }
@@ -2123,13 +2187,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
 }
 |Modifiers VOID MethodDeclarator  {
@@ -2167,13 +2232,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   isfieldprivate=0;
   isstatic=0;
@@ -2213,13 +2279,14 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
 };
 MethodDeclarator:
@@ -2261,7 +2328,6 @@ Type VariableDeclaratorId {
   ndim=0;
 //   curr_table->entry(string((char*)($2).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
-curr_table->classwidth = offset;
   // cout<<"Type: "<<type<<'\n';
   if(funcargno == -1){
     funcargno = 1;
@@ -2271,6 +2337,7 @@ curr_table->classwidth = offset;
   }
 //   cout<<"Funcarg: "<<funcargno<<' '<<endl;
   funcparam.push_back({string((char*)($2).type), {type, funcargno}});
+  sizeparam.push_back(sz);
 };
 Throws:
 THROWS ClassTypeList {
@@ -2362,13 +2429,14 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
 
       fl = 0;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   nelem=0;
 }
@@ -2740,7 +2808,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      offset += sz;
+      offset += sizeparam[i];
 curr_table->classwidth = offset;
       if(newhandle != "null"){
         offset = offset - getsz(newhandle) + 8;
@@ -2751,6 +2819,7 @@ curr_table->classwidth = offset;
     }
     funcargno = -1;
     funcparam.clear();
+sizeparam.clear();
   }
   };
 Statement:
@@ -3984,19 +4053,11 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  while(!args2.empty())
-  {
-    auto arg = args2.top();
-    ar = ar + arg;
-    args2.pop();
-    if(!args2.empty()) ar = ar + ",";
-  }
-  ar = string((char*)($1).tempvar) + "(" + ar + ")";
-  string s = newtemp();
-  emit("Call",ar,"null",s.c_str(),-1);
-  strcpy(($$).tempvar,s.c_str());
-  emit("Popparams",to_string(pops),"","",-1);
-  //emit("EndFunc","","","",-1);
+  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
+  emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+  emit("call", string((char*)(($1).tempvar)), "", "", -1);
+  emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
+  //emit("EndFunc","","","",-1)
 
   // if(curr_table->lookup(string((char*)($1).type))->offset == -1){
   //   cout<<"Undeclared variable on line "<< yylineno<<"\n";
@@ -4106,7 +4167,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |DummyMethodInvocation OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
-  emit("Call",string((char*)($1).tempvar) + "()","null",s.c_str(),-1);
+  emit("call",string((char*)($1).tempvar),"null",s.c_str(),-1);
   strcpy(($$).tempvar,s.c_str());
   // emit("EndFunc","","","",-1);
     if((curr_table->lookup(string((char*)($1).type)).offset == -1)&& checkobj(string((char*)($1).type)) == 0){
