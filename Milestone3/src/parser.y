@@ -4214,18 +4214,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  while(!args2.empty())
-  {
-    auto arg = args2.top();
-    ar = ar + arg;
-    args2.pop();
-    if(!args2.empty()) ar = ar + ",";
-  }
-  ar = string((char*)($1).tempvar) + string((char*)($2).str) + string((char*)($3).str) + "(" + ar + ")";
-  string s = newtemp();
-  emit("Call",ar,"null",s.c_str(),-1);
-  strcpy(($$).tempvar,s.c_str());
-  emit("Popparams",to_string(pops),"","",-1);
+  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
+  emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+  emit("call", string((char*)(($1).tempvar)), "", "", -1);
+  emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
     if(!isaccess)
@@ -4260,18 +4252,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  while(!args2.empty())
-  {
-    auto arg = args2.top();
-    ar = ar + arg;
-    args2.pop();
-    if(!args2.empty()) ar = ar + ",";
-  }
-  ar = string((char*)($1).str) + string((char*)($2).str) + string((char*)($3).str) + "(" + ar + ")";
-  string s = newtemp();
-  emit("Call",ar,"null",s.c_str(),-1);
-  strcpy(($$).tempvar,s.c_str());
-  emit("Popparams",to_string(pops),"","",-1);
+  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
+  emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+  emit("call", string((char*)(($1).tempvar)), "", "", -1);
+  emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
   if(!isaccess)
