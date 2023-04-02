@@ -346,6 +346,21 @@
         return 0;
     }
 
+    int getclasswidth(string lexeme){
+        for(auto it: list_of_Symbol_Tables){
+            auto tab = it->table;
+            for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
+                if(it1->second.scope_name == "Class" + lexeme){
+                    return it->classwidth;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        return 0;
+    }
+
     int offsetobj(string classname, string lexeme){
       for(auto it : list_of_Symbol_Tables){
           auto tab = it->table;
@@ -772,34 +787,28 @@ CompilationUnit {
 };
 Literal:
 IntegerLiteral {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"int");
 }
 |FloatingPointLiteral  {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"float");
   
 }
 |BooleanLiteral  {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"boolean");
 }
 |CharacterLiteral  {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"char");
 }
 |StringLiteral  {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"string");
 }
 |NullLiteral  {
-  strcpy(($$).tempvar,newtemp().c_str());
-  emit("=",($1).str,"null",($$).tempvar, -1);
+  strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"null");
 };
 
@@ -1474,6 +1483,7 @@ Modifiers Type VariableDeclarators SEMICOLON {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
       // if(isfieldprivate)
@@ -1517,6 +1527,7 @@ issystem=0;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -1642,8 +1653,8 @@ VariableDeclaratorId {
   strcpy(($$).type,"Dishay");
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0; ;
+curr_table->classwidth = offset;
+
   funcparam.push_back({string((char*)($1).type), {type, -1}});
 //   cout<< "VariableDeclaratorId " << string((char*)($1).type) << " " << type << " " << offset << " " << curr_scope << " " << yylineno << "\n";
   string s=curr_table->lookup(string((char*)($1).type)).type;
@@ -1690,8 +1701,8 @@ addoff = 0; ;
   // cout<<"I was here"<<($1).type<<endl;
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0; ;
+curr_table->classwidth = offset;
+
   // cout<<ndim <<" "<<($3).ndim<<'\n';
   // cout<<($3).type<<'\n';
   emit("=",($3).tempvar,"null",($1).tempvar, -1);
@@ -1825,6 +1836,7 @@ MethodHeader MethodBody {
 
 }
 |MethodBody {
+  curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -1879,6 +1891,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
       fl = 0;
     }
     funcargno = -1;
@@ -1928,6 +1941,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -1976,6 +1990,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2022,6 +2037,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2064,6 +2080,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2107,6 +2124,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2150,6 +2168,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2195,6 +2214,7 @@ emit("BeginFunc","","","",-1);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2241,8 +2261,7 @@ Type VariableDeclaratorId {
   ndim=0;
 //   curr_table->entry(string((char*)($2).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
-if(addoff > 0){ offset += (addoff-1)*getsz(type);}
-addoff = 0; ;
+curr_table->classwidth = offset;
   // cout<<"Type: "<<type<<'\n';
   if(funcargno == -1){
     funcargno = 1;
@@ -2344,6 +2363,7 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
 
       fl = 0;
     }
@@ -2721,6 +2741,7 @@ Type VariableDeclarators {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       offset += sz;
+curr_table->classwidth = offset;
       if(newhandle != "null"){
         offset = offset - getsz(newhandle) + 8;
         newhandle = "null";
@@ -3707,6 +3728,15 @@ Literal {
 
 ClassInstanceCreationExpression:
 NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
+  string tv1 = newtemp();
+  emit("=", to_string(getclasswidth(string((char*)($2).type))), "null", tv1, -1);
+  emit("param",tv1,"","",-1);
+  emit("stackpointer","+" + to_string(getclasswidth(string((char*)($2).type))),"","",-1);
+  emit("call","allocmem","1","",-1);
+  emit("stackpointer","-" + to_string(getclasswidth(string((char*)($2).type))),"","",-1);
+  string tv2 = newtemp();
+  emit("=", "popparam", "null", tv2, -1);
+  emit("param",tv2,"","",-1);
   int pops = 0;
   string ar = "";
   stack<string> args2;
@@ -3714,7 +3744,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   {
     auto arg = args.top();
     args2.push(arg.first);
-    emit("Pushparams",arg.first,"","",-1);
+    emit("param",arg.first,"","",-1);
     pops += arg.second;
     args.pop();
   }
@@ -3725,12 +3755,9 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
     args2.pop();
     if(!args2.empty()) ar = ar + ",";
   }
-  ar = string((char*)($2).tempvar) + "(" + ar + ")";
-  string s = newtemp();
-  strcpy(($$).tempvar, s.c_str());
-  emit("=", "new", ar, ($$).tempvar, -1);
-  emit("Popparams",to_string(pops),"","",-1);
 
+  emit("call",string((char*)(($2).type)), "","",-1);
+  strcpy(($$).tempvar, tv2.c_str());
 
   strcpy(($$).type,($2).type);
   // cout<<"LLL"<<($$).type<<'\n';
@@ -3953,7 +3980,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   {
     auto arg = args.top();
     args2.push(arg.first);
-    emit("Pushparams",arg.first,"","",-1);
+    emit("param",arg.first,"","",-1);
     pops += arg.second;
     args.pop();
   }
@@ -4122,7 +4149,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   {
     auto arg = args.top();
     args2.push(arg.first);
-    emit("Pushparams",arg.first,"","",-1);
+    emit("param",arg.first,"","",-1);
     pops += arg.second;
     args.pop();
   }
@@ -4168,7 +4195,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   {
     auto arg = args.top();
     args2.push(arg.first);
-    emit("Pushparams",arg.first,"","",-1);
+    emit("param",arg.first,"","",-1);
     pops += arg.second;
     args.pop();
   }
@@ -6087,9 +6114,12 @@ string classname,n,funcname,m;
         cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
         }
       }
-      else if(it.op=="Pushparams"||it.op=="Popparams")
+      else if(it.op=="param"||it.op=="Popparams"||it.op == "stackpointer")
       {
         cout<<it.op<<" "<<it.arg1<<'\n';
+      }
+      else if(it.op == "call"){
+        cout<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
       }
       else if(it.res=="Ifz")
       {
