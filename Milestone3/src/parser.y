@@ -4057,6 +4057,9 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
   emit("call", string((char*)(($1).tempvar)), "", "", -1);
   emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
+  string tv3 = newtemp();
+  emit("=", "popparam", "null", tv3.c_str(), -1);
+  strcpy(($$).tempvar, tv3.c_str());
   //emit("EndFunc","","","",-1)
 
   // if(curr_table->lookup(string((char*)($1).type))->offset == -1){
@@ -4167,9 +4170,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |DummyMethodInvocation OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
-  emit("call",string((char*)($1).tempvar),"null",s.c_str(),-1);
+  emit("call",string((char*)($1).tempvar),"","",-1);
+  emit("=", "popparam", "null", s.c_str(), -1);
   strcpy(($$).tempvar,s.c_str());
-  // emit("EndFunc","","","",-1);
+
     if((curr_table->lookup(string((char*)($1).type)).offset == -1)&& checkobj(string((char*)($1).type)) == 0){
     if(strcmp(($1).type,"System")&&!isaccess) 
     {
@@ -4214,10 +4218,12 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
-  emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
-  emit("call", string((char*)(($1).tempvar)), "", "", -1);
-  emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
+
+  //Check Left
+  // int funcargtypesz1 = funcargtypesz(1, string((char*)(($3).type)));
+  // emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+  // emit("call", string((char*)(($3).tempvar)), "", "", -1);
+  // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
     if(!isaccess)
@@ -4229,7 +4235,8 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |Primary DOT Identifier OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
-  emit("Call",string((char*)($1).tempvar) + string((char*)($2).str) + string((char*)($3).str) + "()","null",s.c_str(),-1);
+  emit("call",string((char*)($1).tempvar) + string((char*)($2).str) + string((char*)($3).str)   ,"","",-1);
+  emit("=", "popparam", "null", s.c_str(), -1);
   strcpy(($$).tempvar,s.c_str());
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
@@ -4252,10 +4259,12 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
-  emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
-  emit("call", string((char*)(($1).tempvar)), "", "", -1);
-  emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
+
+  //Check left
+  // int funcargtypesz1 = funcargtypesz(1, string((char*)(($3).type)));
+  // emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+  // emit("call", string((char*)(($3).tempvar)), "", "", -1);
+  // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
   if(!isaccess)
@@ -4267,7 +4276,8 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |SUPER DOT Identifier OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
-  emit("Call",string((char*)($1).str) + string((char*)($2).str) + string((char*)($3).str) + "()","null",s.c_str(),-1);
+  emit("call",string((char*)($1).str) + string((char*)($2).str) + string((char*)($3).str),"","",-1);
+  emit("=", "popparam", "null", s.c_str(), -1);
   strcpy(($$).tempvar,s.c_str());
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
