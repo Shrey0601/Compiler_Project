@@ -2888,6 +2888,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       emit("=", tempparam[i] , "null",  "[ebp" + to_string(offset - funcargtypesz(1, currfunc.top()) - 4) + "]" , -1);
       offset += sizeparam[i];
+      // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
       if(newhandle != "null"){
         offset = offset - getsz(newhandle) + 8;
@@ -5998,7 +5999,6 @@ ConditionalExpression {
 Assignment:
 LeftHandSide AssignmentOperator AssignmentExpression {
   // cout<<"FFF"<<($1).type<<($3).type<<arrtype<<'\n';
-  cout<<"vtrugbtugtrgrtf\n";
   if(!strcmp(($2).tempvar,"="))
   {
     string p = string((char*)($1).tempvar);

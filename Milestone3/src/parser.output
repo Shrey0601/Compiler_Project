@@ -92,35 +92,35 @@ Grammar
    63         | TRANSIENT
    64         | VOLATILE
 
-   65 $@1: %empty
+   65 $@1: ε
 
    66 ClassDeclaration: CLASS Identifier Super Interfaces $@1 ClassBody
 
-   67 $@2: %empty
+   67 $@2: ε
 
    68 ClassDeclaration: Modifiers CLASS Identifier Interfaces $@2 ClassBody
 
-   69 $@3: %empty
+   69 $@3: ε
 
    70 ClassDeclaration: Modifiers CLASS Identifier Super $@3 ClassBody
 
-   71 $@4: %empty
+   71 $@4: ε
 
    72 ClassDeclaration: CLASS Identifier Interfaces $@4 ClassBody
 
-   73 $@5: %empty
+   73 $@5: ε
 
    74 ClassDeclaration: CLASS Identifier Super $@5 ClassBody
 
-   75 $@6: %empty
+   75 $@6: ε
 
    76 ClassDeclaration: Modifiers CLASS Identifier $@6 ClassBody
 
-   77 $@7: %empty
+   77 $@7: ε
 
    78 ClassDeclaration: CLASS Identifier $@7 ClassBody
 
-   79 $@8: %empty
+   79 $@8: ε
 
    80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces $@8 ClassBody
 
@@ -155,7 +155,7 @@ Grammar
 
   100 VariableDeclaratorId: Identifier
 
-  101 $@9: %empty
+  101 $@9: ε
 
   102 VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
@@ -191,7 +191,7 @@ Grammar
   124 MethodBody: Block
   125           | SEMICOLON
 
-  126 $@10: %empty
+  126 $@10: ε
 
   127 StaticInitializer: STATIC $@10 Block
 
@@ -204,7 +204,7 @@ Grammar
 
   133 ConstructorDeclarator: ConstructorHeader FormalParameterList CLOSEBRACKET
 
-  134 $@11: %empty
+  134 $@11: ε
 
   135 ConstructorDeclarator: SimpleName OPENBRACKET $@11 CLOSEBRACKET
 
@@ -218,19 +218,19 @@ Grammar
   142                              | SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON
   143                              | SUPER OPENBRACKET CLOSEBRACKET SEMICOLON
 
-  144 $@12: %empty
+  144 $@12: ε
 
   145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody
 
-  146 $@13: %empty
+  146 $@13: ε
 
   147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 InterfaceBody
 
-  148 $@14: %empty
+  148 $@14: ε
 
   149 InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 InterfaceBody
 
-  150 $@15: %empty
+  150 $@15: ε
 
   151 InterfaceDeclaration: INTERFACE Identifier $@15 InterfaceBody
 
@@ -439,7 +439,7 @@ Grammar
   285 Catches: CatchClause
   286        | Catches CatchClause
 
-  287 $@16: %empty
+  287 $@16: ε
 
   288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block
 
@@ -1236,7 +1236,7 @@ Nonterminals, with rules where they appear
 
 State 0
 
-    0 $accept: . Goal $end
+    0 $accept: • Goal $end
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1272,92 +1272,92 @@ State 0
 
 State 1
 
-  147 InterfaceDeclaration: INTERFACE . Identifier ExtendsInterfaces $@13 InterfaceBody
-  151                     | INTERFACE . Identifier $@15 InterfaceBody
+  147 InterfaceDeclaration: INTERFACE • Identifier ExtendsInterfaces $@13 InterfaceBody
+  151                     | INTERFACE • Identifier $@15 InterfaceBody
 
     Identifier  shift, and go to state 30
 
 
 State 2
 
-   52 TypeDeclaration: SEMICOLON .
+   52 TypeDeclaration: SEMICOLON •
 
     $default  reduce using rule 52 (TypeDeclaration)
 
 
 State 3
 
-   55 Modifier: PUBLIC .
+   55 Modifier: PUBLIC •
 
     $default  reduce using rule 55 (Modifier)
 
 
 State 4
 
-   56 Modifier: PROTECTED .
+   56 Modifier: PROTECTED •
 
     $default  reduce using rule 56 (Modifier)
 
 
 State 5
 
-   57 Modifier: PRIVATE .
+   57 Modifier: PRIVATE •
 
     $default  reduce using rule 57 (Modifier)
 
 
 State 6
 
-   58 Modifier: STATIC .
+   58 Modifier: STATIC •
 
     $default  reduce using rule 58 (Modifier)
 
 
 State 7
 
-   59 Modifier: ABSTRACT .
+   59 Modifier: ABSTRACT •
 
     $default  reduce using rule 59 (Modifier)
 
 
 State 8
 
-   60 Modifier: FINAL .
+   60 Modifier: FINAL •
 
     $default  reduce using rule 60 (Modifier)
 
 
 State 9
 
-   61 Modifier: NATIVE .
+   61 Modifier: NATIVE •
 
     $default  reduce using rule 61 (Modifier)
 
 
 State 10
 
-   62 Modifier: SYNCHRONIZED .
+   62 Modifier: SYNCHRONIZED •
 
     $default  reduce using rule 62 (Modifier)
 
 
 State 11
 
-   63 Modifier: TRANSIENT .
+   63 Modifier: TRANSIENT •
 
     $default  reduce using rule 63 (Modifier)
 
 
 State 12
 
-   64 Modifier: VOLATILE .
+   64 Modifier: VOLATILE •
 
     $default  reduce using rule 64 (Modifier)
 
 
 State 13
 
-   44 PackageDeclaration: PACKAGE . Name SEMICOLON
+   44 PackageDeclaration: PACKAGE • Name SEMICOLON
 
     Identifier  shift, and go to state 31
 
@@ -1368,40 +1368,40 @@ State 13
 
 State 14
 
-   47 DummyImport: IMPORT .
+   47 DummyImport: IMPORT •
 
     $default  reduce using rule 47 (DummyImport)
 
 
 State 15
 
-   66 ClassDeclaration: CLASS . Identifier Super Interfaces $@1 ClassBody
-   72                 | CLASS . Identifier Interfaces $@4 ClassBody
-   74                 | CLASS . Identifier Super $@5 ClassBody
-   78                 | CLASS . Identifier $@7 ClassBody
+   66 ClassDeclaration: CLASS • Identifier Super Interfaces $@1 ClassBody
+   72                 | CLASS • Identifier Interfaces $@4 ClassBody
+   74                 | CLASS • Identifier Super $@5 ClassBody
+   78                 | CLASS • Identifier $@7 ClassBody
 
     Identifier  shift, and go to state 35
 
 
 State 16
 
-    0 $accept: Goal . $end
+    0 $accept: Goal • $end
 
     $end  shift, and go to state 36
 
 
 State 17
 
-    1 Goal: CompilationUnit .
+    1 Goal: CompilationUnit •
 
     $default  reduce using rule 1 (Goal)
 
 
 State 18
 
-   34 CompilationUnit: ImportDeclarations .
-   38                | ImportDeclarations . TypeDeclarations
-   41 ImportDeclarations: ImportDeclarations . ImportDeclaration
+   34 CompilationUnit: ImportDeclarations •
+   38                | ImportDeclarations • TypeDeclarations
+   41 ImportDeclarations: ImportDeclarations • ImportDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1434,8 +1434,8 @@ State 18
 
 State 19
 
-   36 CompilationUnit: TypeDeclarations .
-   43 TypeDeclarations: TypeDeclarations . TypeDeclaration
+   36 CompilationUnit: TypeDeclarations •
+   43 TypeDeclarations: TypeDeclarations • TypeDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1462,10 +1462,10 @@ State 19
 
 State 20
 
-   33 CompilationUnit: PackageDeclaration . ImportDeclarations
-   35                | PackageDeclaration . TypeDeclarations
-   37                | PackageDeclaration . ImportDeclarations TypeDeclarations
-   39                | PackageDeclaration .
+   33 CompilationUnit: PackageDeclaration • ImportDeclarations
+   35                | PackageDeclaration • TypeDeclarations
+   37                | PackageDeclaration • ImportDeclarations TypeDeclarations
+   39                | PackageDeclaration •
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1499,15 +1499,15 @@ State 20
 
 State 21
 
-   40 ImportDeclarations: ImportDeclaration .
+   40 ImportDeclarations: ImportDeclaration •
 
     $default  reduce using rule 40 (ImportDeclarations)
 
 
 State 22
 
-   48 SingleTypeImportDeclaration: DummyImport . Name SEMICOLON
-   49 TypeImportOnDemandDeclaration: DummyImport . Name DOT STAR SEMICOLON
+   48 SingleTypeImportDeclaration: DummyImport • Name SEMICOLON
+   49 TypeImportOnDemandDeclaration: DummyImport • Name DOT STAR SEMICOLON
 
     Identifier  shift, and go to state 31
 
@@ -1518,34 +1518,34 @@ State 22
 
 State 23
 
-   45 ImportDeclaration: SingleTypeImportDeclaration .
+   45 ImportDeclaration: SingleTypeImportDeclaration •
 
     $default  reduce using rule 45 (ImportDeclaration)
 
 
 State 24
 
-   46 ImportDeclaration: TypeImportOnDemandDeclaration .
+   46 ImportDeclaration: TypeImportOnDemandDeclaration •
 
     $default  reduce using rule 46 (ImportDeclaration)
 
 
 State 25
 
-   42 TypeDeclarations: TypeDeclaration .
+   42 TypeDeclarations: TypeDeclaration •
 
     $default  reduce using rule 42 (TypeDeclarations)
 
 
 State 26
 
-   54 Modifiers: Modifiers . Modifier
-   68 ClassDeclaration: Modifiers . CLASS Identifier Interfaces $@2 ClassBody
-   70                 | Modifiers . CLASS Identifier Super $@3 ClassBody
-   76                 | Modifiers . CLASS Identifier $@6 ClassBody
-   80                 | Modifiers . CLASS Identifier Super Interfaces $@8 ClassBody
-  145 InterfaceDeclaration: Modifiers . INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody
-  149                     | Modifiers . INTERFACE Identifier $@14 InterfaceBody
+   54 Modifiers: Modifiers • Modifier
+   68 ClassDeclaration: Modifiers • CLASS Identifier Interfaces $@2 ClassBody
+   70                 | Modifiers • CLASS Identifier Super $@3 ClassBody
+   76                 | Modifiers • CLASS Identifier $@6 ClassBody
+   80                 | Modifiers • CLASS Identifier Super Interfaces $@8 ClassBody
+  145 InterfaceDeclaration: Modifiers • INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody
+  149                     | Modifiers • INTERFACE Identifier $@14 InterfaceBody
 
     INTERFACE     shift, and go to state 43
     PUBLIC        shift, and go to state 3
@@ -1565,29 +1565,29 @@ State 26
 
 State 27
 
-   53 Modifiers: Modifier .
+   53 Modifiers: Modifier •
 
     $default  reduce using rule 53 (Modifiers)
 
 
 State 28
 
-   50 TypeDeclaration: ClassDeclaration .
+   50 TypeDeclaration: ClassDeclaration •
 
     $default  reduce using rule 50 (TypeDeclaration)
 
 
 State 29
 
-   51 TypeDeclaration: InterfaceDeclaration .
+   51 TypeDeclaration: InterfaceDeclaration •
 
     $default  reduce using rule 51 (TypeDeclaration)
 
 
 State 30
 
-  147 InterfaceDeclaration: INTERFACE Identifier . ExtendsInterfaces $@13 InterfaceBody
-  151                     | INTERFACE Identifier . $@15 InterfaceBody
+  147 InterfaceDeclaration: INTERFACE Identifier • ExtendsInterfaces $@13 InterfaceBody
+  151                     | INTERFACE Identifier • $@15 InterfaceBody
 
     EXTENDS  shift, and go to state 46
 
@@ -1599,15 +1599,15 @@ State 30
 
 State 31
 
-   31 SimpleName: Identifier .
+   31 SimpleName: Identifier •
 
     $default  reduce using rule 31 (SimpleName)
 
 
 State 32
 
-   32 QualifiedName: Name . DOT Identifier
-   44 PackageDeclaration: PACKAGE Name . SEMICOLON
+   32 QualifiedName: Name • DOT Identifier
+   44 PackageDeclaration: PACKAGE Name • SEMICOLON
 
     DOT        shift, and go to state 49
     SEMICOLON  shift, and go to state 50
@@ -1615,24 +1615,24 @@ State 32
 
 State 33
 
-   29 Name: SimpleName .
+   29 Name: SimpleName •
 
     $default  reduce using rule 29 (Name)
 
 
 State 34
 
-   30 Name: QualifiedName .
+   30 Name: QualifiedName •
 
     $default  reduce using rule 30 (Name)
 
 
 State 35
 
-   66 ClassDeclaration: CLASS Identifier . Super Interfaces $@1 ClassBody
-   72                 | CLASS Identifier . Interfaces $@4 ClassBody
-   74                 | CLASS Identifier . Super $@5 ClassBody
-   78                 | CLASS Identifier . $@7 ClassBody
+   66 ClassDeclaration: CLASS Identifier • Super Interfaces $@1 ClassBody
+   72                 | CLASS Identifier • Interfaces $@4 ClassBody
+   74                 | CLASS Identifier • Super $@5 ClassBody
+   78                 | CLASS Identifier • $@7 ClassBody
 
     EXTENDS     shift, and go to state 51
     IMPLEMENTS  shift, and go to state 52
@@ -1646,15 +1646,15 @@ State 35
 
 State 36
 
-    0 $accept: Goal $end .
+    0 $accept: Goal $end •
 
     $default  accept
 
 
 State 37
 
-   38 CompilationUnit: ImportDeclarations TypeDeclarations .
-   43 TypeDeclarations: TypeDeclarations . TypeDeclaration
+   38 CompilationUnit: ImportDeclarations TypeDeclarations •
+   43 TypeDeclarations: TypeDeclarations • TypeDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1681,23 +1681,23 @@ State 37
 
 State 38
 
-   41 ImportDeclarations: ImportDeclarations ImportDeclaration .
+   41 ImportDeclarations: ImportDeclarations ImportDeclaration •
 
     $default  reduce using rule 41 (ImportDeclarations)
 
 
 State 39
 
-   43 TypeDeclarations: TypeDeclarations TypeDeclaration .
+   43 TypeDeclarations: TypeDeclarations TypeDeclaration •
 
     $default  reduce using rule 43 (TypeDeclarations)
 
 
 State 40
 
-   33 CompilationUnit: PackageDeclaration ImportDeclarations .
-   37                | PackageDeclaration ImportDeclarations . TypeDeclarations
-   41 ImportDeclarations: ImportDeclarations . ImportDeclaration
+   33 CompilationUnit: PackageDeclaration ImportDeclarations •
+   37                | PackageDeclaration ImportDeclarations • TypeDeclarations
+   41 ImportDeclarations: ImportDeclarations • ImportDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1730,8 +1730,8 @@ State 40
 
 State 41
 
-   35 CompilationUnit: PackageDeclaration TypeDeclarations .
-   43 TypeDeclarations: TypeDeclarations . TypeDeclaration
+   35 CompilationUnit: PackageDeclaration TypeDeclarations •
+   43 TypeDeclarations: TypeDeclarations • TypeDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1758,9 +1758,9 @@ State 41
 
 State 42
 
-   32 QualifiedName: Name . DOT Identifier
-   48 SingleTypeImportDeclaration: DummyImport Name . SEMICOLON
-   49 TypeImportOnDemandDeclaration: DummyImport Name . DOT STAR SEMICOLON
+   32 QualifiedName: Name • DOT Identifier
+   48 SingleTypeImportDeclaration: DummyImport Name • SEMICOLON
+   49 TypeImportOnDemandDeclaration: DummyImport Name • DOT STAR SEMICOLON
 
     DOT        shift, and go to state 57
     SEMICOLON  shift, and go to state 58
@@ -1768,32 +1768,32 @@ State 42
 
 State 43
 
-  145 InterfaceDeclaration: Modifiers INTERFACE . Identifier ExtendsInterfaces $@12 InterfaceBody
-  149                     | Modifiers INTERFACE . Identifier $@14 InterfaceBody
+  145 InterfaceDeclaration: Modifiers INTERFACE • Identifier ExtendsInterfaces $@12 InterfaceBody
+  149                     | Modifiers INTERFACE • Identifier $@14 InterfaceBody
 
     Identifier  shift, and go to state 59
 
 
 State 44
 
-   68 ClassDeclaration: Modifiers CLASS . Identifier Interfaces $@2 ClassBody
-   70                 | Modifiers CLASS . Identifier Super $@3 ClassBody
-   76                 | Modifiers CLASS . Identifier $@6 ClassBody
-   80                 | Modifiers CLASS . Identifier Super Interfaces $@8 ClassBody
+   68 ClassDeclaration: Modifiers CLASS • Identifier Interfaces $@2 ClassBody
+   70                 | Modifiers CLASS • Identifier Super $@3 ClassBody
+   76                 | Modifiers CLASS • Identifier $@6 ClassBody
+   80                 | Modifiers CLASS • Identifier Super Interfaces $@8 ClassBody
 
     Identifier  shift, and go to state 60
 
 
 State 45
 
-   54 Modifiers: Modifiers Modifier .
+   54 Modifiers: Modifiers Modifier •
 
     $default  reduce using rule 54 (Modifiers)
 
 
 State 46
 
-  152 ExtendsInterfaces: EXTENDS . InterfaceType
+  152 ExtendsInterfaces: EXTENDS • InterfaceType
 
     Identifier  shift, and go to state 31
 
@@ -1806,7 +1806,7 @@ State 46
 
 State 47
 
-  151 InterfaceDeclaration: INTERFACE Identifier $@15 . InterfaceBody
+  151 InterfaceDeclaration: INTERFACE Identifier $@15 • InterfaceBody
 
     OPENCURLYBRACKET  shift, and go to state 64
 
@@ -1815,8 +1815,8 @@ State 47
 
 State 48
 
-  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces . $@13 InterfaceBody
-  153 ExtendsInterfaces: ExtendsInterfaces . COMMA InterfaceType
+  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces • $@13 InterfaceBody
+  153 ExtendsInterfaces: ExtendsInterfaces • COMMA InterfaceType
 
     COMMA  shift, and go to state 66
 
@@ -1827,21 +1827,21 @@ State 48
 
 State 49
 
-   32 QualifiedName: Name DOT . Identifier
+   32 QualifiedName: Name DOT • Identifier
 
     Identifier  shift, and go to state 68
 
 
 State 50
 
-   44 PackageDeclaration: PACKAGE Name SEMICOLON .
+   44 PackageDeclaration: PACKAGE Name SEMICOLON •
 
     $default  reduce using rule 44 (PackageDeclaration)
 
 
 State 51
 
-   81 Super: EXTENDS . ClassType
+   81 Super: EXTENDS • ClassType
 
     Identifier  shift, and go to state 31
 
@@ -1854,7 +1854,7 @@ State 51
 
 State 52
 
-   82 Interfaces: IMPLEMENTS . InterfaceTypeList
+   82 Interfaces: IMPLEMENTS • InterfaceTypeList
 
     Identifier  shift, and go to state 31
 
@@ -1868,7 +1868,7 @@ State 52
 
 State 53
 
-   78 ClassDeclaration: CLASS Identifier $@7 . ClassBody
+   78 ClassDeclaration: CLASS Identifier $@7 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -1877,8 +1877,8 @@ State 53
 
 State 54
 
-   66 ClassDeclaration: CLASS Identifier Super . Interfaces $@1 ClassBody
-   74                 | CLASS Identifier Super . $@5 ClassBody
+   66 ClassDeclaration: CLASS Identifier Super • Interfaces $@1 ClassBody
+   74                 | CLASS Identifier Super • $@5 ClassBody
 
     IMPLEMENTS  shift, and go to state 52
 
@@ -1890,7 +1890,7 @@ State 54
 
 State 55
 
-   72 ClassDeclaration: CLASS Identifier Interfaces . $@4 ClassBody
+   72 ClassDeclaration: CLASS Identifier Interfaces • $@4 ClassBody
 
     $default  reduce using rule 71 ($@4)
 
@@ -1899,8 +1899,8 @@ State 55
 
 State 56
 
-   37 CompilationUnit: PackageDeclaration ImportDeclarations TypeDeclarations .
-   43 TypeDeclarations: TypeDeclarations . TypeDeclaration
+   37 CompilationUnit: PackageDeclaration ImportDeclarations TypeDeclarations •
+   43 TypeDeclarations: TypeDeclarations • TypeDeclaration
 
     INTERFACE     shift, and go to state 1
     SEMICOLON     shift, and go to state 2
@@ -1927,8 +1927,8 @@ State 56
 
 State 57
 
-   32 QualifiedName: Name DOT . Identifier
-   49 TypeImportOnDemandDeclaration: DummyImport Name DOT . STAR SEMICOLON
+   32 QualifiedName: Name DOT • Identifier
+   49 TypeImportOnDemandDeclaration: DummyImport Name DOT • STAR SEMICOLON
 
     Identifier  shift, and go to state 68
     STAR        shift, and go to state 78
@@ -1936,15 +1936,15 @@ State 57
 
 State 58
 
-   48 SingleTypeImportDeclaration: DummyImport Name SEMICOLON .
+   48 SingleTypeImportDeclaration: DummyImport Name SEMICOLON •
 
     $default  reduce using rule 48 (SingleTypeImportDeclaration)
 
 
 State 59
 
-  145 InterfaceDeclaration: Modifiers INTERFACE Identifier . ExtendsInterfaces $@12 InterfaceBody
-  149                     | Modifiers INTERFACE Identifier . $@14 InterfaceBody
+  145 InterfaceDeclaration: Modifiers INTERFACE Identifier • ExtendsInterfaces $@12 InterfaceBody
+  149                     | Modifiers INTERFACE Identifier • $@14 InterfaceBody
 
     EXTENDS  shift, and go to state 46
 
@@ -1956,10 +1956,10 @@ State 59
 
 State 60
 
-   68 ClassDeclaration: Modifiers CLASS Identifier . Interfaces $@2 ClassBody
-   70                 | Modifiers CLASS Identifier . Super $@3 ClassBody
-   76                 | Modifiers CLASS Identifier . $@6 ClassBody
-   80                 | Modifiers CLASS Identifier . Super Interfaces $@8 ClassBody
+   68 ClassDeclaration: Modifiers CLASS Identifier • Interfaces $@2 ClassBody
+   70                 | Modifiers CLASS Identifier • Super $@3 ClassBody
+   76                 | Modifiers CLASS Identifier • $@6 ClassBody
+   80                 | Modifiers CLASS Identifier • Super Interfaces $@8 ClassBody
 
     EXTENDS     shift, and go to state 51
     IMPLEMENTS  shift, and go to state 52
@@ -1973,22 +1973,22 @@ State 60
 
 State 61
 
-   25 InterfaceType: ClassOrInterfaceType .
+   25 InterfaceType: ClassOrInterfaceType •
 
     $default  reduce using rule 25 (InterfaceType)
 
 
 State 62
 
-  152 ExtendsInterfaces: EXTENDS InterfaceType .
+  152 ExtendsInterfaces: EXTENDS InterfaceType •
 
     $default  reduce using rule 152 (ExtendsInterfaces)
 
 
 State 63
 
-   23 ClassOrInterfaceType: Name .
-   32 QualifiedName: Name . DOT Identifier
+   23 ClassOrInterfaceType: Name •
+   32 QualifiedName: Name • DOT Identifier
 
     DOT  shift, and go to state 49
 
@@ -1997,8 +1997,8 @@ State 63
 
 State 64
 
-  154 InterfaceBody: OPENCURLYBRACKET . CLOSECURLYBRACKET
-  155              | OPENCURLYBRACKET . InterfaceMemberDeclarations CLOSECURLYBRACKET
+  154 InterfaceBody: OPENCURLYBRACKET • CLOSECURLYBRACKET
+  155              | OPENCURLYBRACKET • InterfaceMemberDeclarations CLOSECURLYBRACKET
 
     BYTE               shift, and go to state 84
     SHORT              shift, and go to state 85
@@ -2045,14 +2045,14 @@ State 64
 
 State 65
 
-  151 InterfaceDeclaration: INTERFACE Identifier $@15 InterfaceBody .
+  151 InterfaceDeclaration: INTERFACE Identifier $@15 InterfaceBody •
 
     $default  reduce using rule 151 (InterfaceDeclaration)
 
 
 State 66
 
-  153 ExtendsInterfaces: ExtendsInterfaces COMMA . InterfaceType
+  153 ExtendsInterfaces: ExtendsInterfaces COMMA • InterfaceType
 
     Identifier  shift, and go to state 31
 
@@ -2065,7 +2065,7 @@ State 66
 
 State 67
 
-  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 . InterfaceBody
+  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 • InterfaceBody
 
     OPENCURLYBRACKET  shift, and go to state 64
 
@@ -2074,36 +2074,36 @@ State 67
 
 State 68
 
-   32 QualifiedName: Name DOT Identifier .
+   32 QualifiedName: Name DOT Identifier •
 
     $default  reduce using rule 32 (QualifiedName)
 
 
 State 69
 
-   24 ClassType: ClassOrInterfaceType .
+   24 ClassType: ClassOrInterfaceType •
 
     $default  reduce using rule 24 (ClassType)
 
 
 State 70
 
-   81 Super: EXTENDS ClassType .
+   81 Super: EXTENDS ClassType •
 
     $default  reduce using rule 81 (Super)
 
 
 State 71
 
-   83 InterfaceTypeList: InterfaceType .
+   83 InterfaceTypeList: InterfaceType •
 
     $default  reduce using rule 83 (InterfaceTypeList)
 
 
 State 72
 
-   82 Interfaces: IMPLEMENTS InterfaceTypeList .
-   84 InterfaceTypeList: InterfaceTypeList . COMMA InterfaceType
+   82 Interfaces: IMPLEMENTS InterfaceTypeList •
+   84 InterfaceTypeList: InterfaceTypeList • COMMA InterfaceType
 
     COMMA  shift, and go to state 112
 
@@ -2112,8 +2112,8 @@ State 72
 
 State 73
 
-   85 ClassBody: OPENCURLYBRACKET . ClassBodyDeclarations CLOSECURLYBRACKET
-   86          | OPENCURLYBRACKET . CLOSECURLYBRACKET
+   85 ClassBody: OPENCURLYBRACKET • ClassBodyDeclarations CLOSECURLYBRACKET
+   86          | OPENCURLYBRACKET • CLOSECURLYBRACKET
 
     BYTE               shift, and go to state 84
     SHORT              shift, and go to state 85
@@ -2168,14 +2168,14 @@ State 73
 
 State 74
 
-   78 ClassDeclaration: CLASS Identifier $@7 ClassBody .
+   78 ClassDeclaration: CLASS Identifier $@7 ClassBody •
 
     $default  reduce using rule 78 (ClassDeclaration)
 
 
 State 75
 
-   74 ClassDeclaration: CLASS Identifier Super $@5 . ClassBody
+   74 ClassDeclaration: CLASS Identifier Super $@5 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -2184,7 +2184,7 @@ State 75
 
 State 76
 
-   66 ClassDeclaration: CLASS Identifier Super Interfaces . $@1 ClassBody
+   66 ClassDeclaration: CLASS Identifier Super Interfaces • $@1 ClassBody
 
     $default  reduce using rule 65 ($@1)
 
@@ -2193,7 +2193,7 @@ State 76
 
 State 77
 
-   72 ClassDeclaration: CLASS Identifier Interfaces $@4 . ClassBody
+   72 ClassDeclaration: CLASS Identifier Interfaces $@4 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -2202,14 +2202,14 @@ State 77
 
 State 78
 
-   49 TypeImportOnDemandDeclaration: DummyImport Name DOT STAR . SEMICOLON
+   49 TypeImportOnDemandDeclaration: DummyImport Name DOT STAR • SEMICOLON
 
     SEMICOLON  shift, and go to state 134
 
 
 State 79
 
-  149 InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 . InterfaceBody
+  149 InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 • InterfaceBody
 
     OPENCURLYBRACKET  shift, and go to state 64
 
@@ -2218,8 +2218,8 @@ State 79
 
 State 80
 
-  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces . $@12 InterfaceBody
-  153 ExtendsInterfaces: ExtendsInterfaces . COMMA InterfaceType
+  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces • $@12 InterfaceBody
+  153 ExtendsInterfaces: ExtendsInterfaces • COMMA InterfaceType
 
     COMMA  shift, and go to state 66
 
@@ -2230,7 +2230,7 @@ State 80
 
 State 81
 
-   76 ClassDeclaration: Modifiers CLASS Identifier $@6 . ClassBody
+   76 ClassDeclaration: Modifiers CLASS Identifier $@6 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -2239,8 +2239,8 @@ State 81
 
 State 82
 
-   70 ClassDeclaration: Modifiers CLASS Identifier Super . $@3 ClassBody
-   80                 | Modifiers CLASS Identifier Super . Interfaces $@8 ClassBody
+   70 ClassDeclaration: Modifiers CLASS Identifier Super • $@3 ClassBody
+   80                 | Modifiers CLASS Identifier Super • Interfaces $@8 ClassBody
 
     IMPLEMENTS  shift, and go to state 52
 
@@ -2252,7 +2252,7 @@ State 82
 
 State 83
 
-   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces . $@2 ClassBody
+   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces • $@2 ClassBody
 
     $default  reduce using rule 67 ($@2)
 
@@ -2261,71 +2261,71 @@ State 83
 
 State 84
 
-   14 IntegralType: BYTE .
+   14 IntegralType: BYTE •
 
     $default  reduce using rule 14 (IntegralType)
 
 
 State 85
 
-   15 IntegralType: SHORT .
+   15 IntegralType: SHORT •
 
     $default  reduce using rule 15 (IntegralType)
 
 
 State 86
 
-   16 IntegralType: INT .
+   16 IntegralType: INT •
 
     $default  reduce using rule 16 (IntegralType)
 
 
 State 87
 
-   17 IntegralType: LONG .
+   17 IntegralType: LONG •
 
     $default  reduce using rule 17 (IntegralType)
 
 
 State 88
 
-   18 IntegralType: CHAR .
+   18 IntegralType: CHAR •
 
     $default  reduce using rule 18 (IntegralType)
 
 
 State 89
 
-   19 FloatingPointType: FLOAT .
+   19 FloatingPointType: FLOAT •
 
     $default  reduce using rule 19 (FloatingPointType)
 
 
 State 90
 
-   20 FloatingPointType: DOUBLE .
+   20 FloatingPointType: DOUBLE •
 
     $default  reduce using rule 20 (FloatingPointType)
 
 
 State 91
 
-   11 PrimitiveType: BOOLEAN .
+   11 PrimitiveType: BOOLEAN •
 
     $default  reduce using rule 11 (PrimitiveType)
 
 
 State 92
 
-  154 InterfaceBody: OPENCURLYBRACKET CLOSECURLYBRACKET .
+  154 InterfaceBody: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 154 (InterfaceBody)
 
 
 State 93
 
-  112 MethodHeader: VOID . MethodDeclarator Throws
-  114             | VOID . MethodDeclarator
+  112 MethodHeader: VOID • MethodDeclarator Throws
+  114             | VOID • MethodDeclarator
 
     Identifier  shift, and go to state 141
 
@@ -2334,9 +2334,9 @@ State 93
 
 State 94
 
-   95 FieldDeclaration: Type . VariableDeclarators SEMICOLON
-  109 MethodHeader: Type . MethodDeclarator Throws
-  110             | Type . MethodDeclarator
+   95 FieldDeclaration: Type • VariableDeclarators SEMICOLON
+  109 MethodHeader: Type • MethodDeclarator Throws
+  110             | Type • MethodDeclarator
 
     Identifier  shift, and go to state 143
 
@@ -2348,8 +2348,8 @@ State 94
 
 State 95
 
-    8 Type: PrimitiveType .
-   26 ArrayType: PrimitiveType . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+    8 Type: PrimitiveType •
+   26 ArrayType: PrimitiveType • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 148
 
@@ -2358,43 +2358,43 @@ State 95
 
 State 96
 
-   10 PrimitiveType: NumericType .
+   10 PrimitiveType: NumericType •
 
     $default  reduce using rule 10 (PrimitiveType)
 
 
 State 97
 
-   12 NumericType: IntegralType .
+   12 NumericType: IntegralType •
 
     $default  reduce using rule 12 (NumericType)
 
 
 State 98
 
-   13 NumericType: FloatingPointType .
+   13 NumericType: FloatingPointType •
 
     $default  reduce using rule 13 (NumericType)
 
 
 State 99
 
-    9 Type: ReferenceType .
+    9 Type: ReferenceType •
 
     $default  reduce using rule 9 (Type)
 
 
 State 100
 
-   21 ReferenceType: ClassOrInterfaceType .
+   21 ReferenceType: ClassOrInterfaceType •
 
     $default  reduce using rule 21 (ReferenceType)
 
 
 State 101
 
-   22 ReferenceType: ArrayType .
-   28 ArrayType: ArrayType . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+   22 ReferenceType: ArrayType •
+   28 ArrayType: ArrayType • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 149
 
@@ -2403,9 +2403,9 @@ State 101
 
 State 102
 
-   23 ClassOrInterfaceType: Name .
-   27 ArrayType: Name . OPENSQUAREBRACKET CLOSESQUAREBRACKET
-   32 QualifiedName: Name . DOT Identifier
+   23 ClassOrInterfaceType: Name •
+   27 ArrayType: Name • OPENSQUAREBRACKET CLOSESQUAREBRACKET
+   32 QualifiedName: Name • DOT Identifier
 
     OPENSQUAREBRACKET  shift, and go to state 150
     DOT                shift, and go to state 49
@@ -2415,12 +2415,12 @@ State 102
 
 State 103
 
-   54 Modifiers: Modifiers . Modifier
-   94 FieldDeclaration: Modifiers . Type VariableDeclarators SEMICOLON
-  107 MethodHeader: Modifiers . Type MethodDeclarator Throws
-  108             | Modifiers . Type MethodDeclarator
-  111             | Modifiers . VOID MethodDeclarator Throws
-  113             | Modifiers . VOID MethodDeclarator
+   54 Modifiers: Modifiers • Modifier
+   94 FieldDeclaration: Modifiers • Type VariableDeclarators SEMICOLON
+  107 MethodHeader: Modifiers • Type MethodDeclarator Throws
+  108             | Modifiers • Type MethodDeclarator
+  111             | Modifiers • VOID MethodDeclarator Throws
+  113             | Modifiers • VOID MethodDeclarator
 
     BYTE          shift, and go to state 84
     SHORT         shift, and go to state 85
@@ -2459,22 +2459,22 @@ State 103
 
 State 104
 
-  160 ConstantDeclaration: FieldDeclaration .
+  160 ConstantDeclaration: FieldDeclaration •
 
     $default  reduce using rule 160 (ConstantDeclaration)
 
 
 State 105
 
-  161 AbstractMethodDeclaration: MethodHeader . SEMICOLON
+  161 AbstractMethodDeclaration: MethodHeader • SEMICOLON
 
     SEMICOLON  shift, and go to state 153
 
 
 State 106
 
-  155 InterfaceBody: OPENCURLYBRACKET InterfaceMemberDeclarations . CLOSECURLYBRACKET
-  157 InterfaceMemberDeclarations: InterfaceMemberDeclarations . InterfaceMemberDeclaration
+  155 InterfaceBody: OPENCURLYBRACKET InterfaceMemberDeclarations • CLOSECURLYBRACKET
+  157 InterfaceMemberDeclarations: InterfaceMemberDeclarations • InterfaceMemberDeclaration
 
     BYTE               shift, and go to state 84
     SHORT              shift, and go to state 85
@@ -2520,42 +2520,42 @@ State 106
 
 State 107
 
-  156 InterfaceMemberDeclarations: InterfaceMemberDeclaration .
+  156 InterfaceMemberDeclarations: InterfaceMemberDeclaration •
 
     $default  reduce using rule 156 (InterfaceMemberDeclarations)
 
 
 State 108
 
-  158 InterfaceMemberDeclaration: ConstantDeclaration .
+  158 InterfaceMemberDeclaration: ConstantDeclaration •
 
     $default  reduce using rule 158 (InterfaceMemberDeclaration)
 
 
 State 109
 
-  159 InterfaceMemberDeclaration: AbstractMethodDeclaration .
+  159 InterfaceMemberDeclaration: AbstractMethodDeclaration •
 
     $default  reduce using rule 159 (InterfaceMemberDeclaration)
 
 
 State 110
 
-  153 ExtendsInterfaces: ExtendsInterfaces COMMA InterfaceType .
+  153 ExtendsInterfaces: ExtendsInterfaces COMMA InterfaceType •
 
     $default  reduce using rule 153 (ExtendsInterfaces)
 
 
 State 111
 
-  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 InterfaceBody .
+  147 InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 InterfaceBody •
 
     $default  reduce using rule 147 (InterfaceDeclaration)
 
 
 State 112
 
-   84 InterfaceTypeList: InterfaceTypeList COMMA . InterfaceType
+   84 InterfaceTypeList: InterfaceTypeList COMMA • InterfaceType
 
     Identifier  shift, and go to state 31
 
@@ -2568,8 +2568,8 @@ State 112
 
 State 113
 
-  168 Block: OPENCURLYBRACKET . BlockStatements CLOSECURLYBRACKET
-  169      | OPENCURLYBRACKET . CLOSECURLYBRACKET
+  168 Block: OPENCURLYBRACKET • BlockStatements CLOSECURLYBRACKET
+  169      | OPENCURLYBRACKET • CLOSECURLYBRACKET
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -2686,22 +2686,22 @@ State 113
 
 State 114
 
-   86 ClassBody: OPENCURLYBRACKET CLOSECURLYBRACKET .
+   86 ClassBody: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 86 (ClassBody)
 
 
 State 115
 
-  125 MethodBody: SEMICOLON .
+  125 MethodBody: SEMICOLON •
 
     $default  reduce using rule 125 (MethodBody)
 
 
 State 116
 
-   58 Modifier: STATIC .
-  127 StaticInitializer: STATIC . $@10 Block
+   58 Modifier: STATIC •
+  127 StaticInitializer: STATIC • $@10 Block
 
     OPENCURLYBRACKET  reduce using rule 126 ($@10)
     $default          reduce using rule 58 (Modifier)
@@ -2711,9 +2711,9 @@ State 116
 
 State 117
 
-   29 Name: SimpleName .
-  132 ConstructorHeader: SimpleName . OPENBRACKET
-  135 ConstructorDeclarator: SimpleName . OPENBRACKET $@11 CLOSEBRACKET
+   29 Name: SimpleName •
+  132 ConstructorHeader: SimpleName • OPENBRACKET
+  135 ConstructorDeclarator: SimpleName • OPENBRACKET $@11 CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 250
 
@@ -2722,14 +2722,14 @@ State 117
 
 State 118
 
-   54 Modifiers: Modifiers . Modifier
-   94 FieldDeclaration: Modifiers . Type VariableDeclarators SEMICOLON
-  107 MethodHeader: Modifiers . Type MethodDeclarator Throws
-  108             | Modifiers . Type MethodDeclarator
-  111             | Modifiers . VOID MethodDeclarator Throws
-  113             | Modifiers . VOID MethodDeclarator
-  128 ConstructorDeclaration: Modifiers . ConstructorDeclarator Throws ConstructorBody
-  129                       | Modifiers . ConstructorDeclarator ConstructorBody
+   54 Modifiers: Modifiers • Modifier
+   94 FieldDeclaration: Modifiers • Type VariableDeclarators SEMICOLON
+  107 MethodHeader: Modifiers • Type MethodDeclarator Throws
+  108             | Modifiers • Type MethodDeclarator
+  111             | Modifiers • VOID MethodDeclarator Throws
+  113             | Modifiers • VOID MethodDeclarator
+  128 ConstructorDeclaration: Modifiers • ConstructorDeclarator Throws ConstructorBody
+  129                       | Modifiers • ConstructorDeclarator ConstructorBody
 
     BYTE          shift, and go to state 84
     SHORT         shift, and go to state 85
@@ -2770,8 +2770,8 @@ State 118
 
 State 119
 
-   85 ClassBody: OPENCURLYBRACKET ClassBodyDeclarations . CLOSECURLYBRACKET
-   88 ClassBodyDeclarations: ClassBodyDeclarations . ClassBodyDeclaration
+   85 ClassBody: OPENCURLYBRACKET ClassBodyDeclarations • CLOSECURLYBRACKET
+   88 ClassBodyDeclarations: ClassBodyDeclarations • ClassBodyDeclaration
 
     BYTE               shift, and go to state 84
     SHORT              shift, and go to state 85
@@ -2825,35 +2825,35 @@ State 119
 
 State 120
 
-   87 ClassBodyDeclarations: ClassBodyDeclaration .
+   87 ClassBodyDeclarations: ClassBodyDeclaration •
 
     $default  reduce using rule 87 (ClassBodyDeclarations)
 
 
 State 121
 
-   89 ClassBodyDeclaration: ClassMemberDeclaration .
+   89 ClassBodyDeclaration: ClassMemberDeclaration •
 
     $default  reduce using rule 89 (ClassBodyDeclaration)
 
 
 State 122
 
-   92 ClassMemberDeclaration: FieldDeclaration .
+   92 ClassMemberDeclaration: FieldDeclaration •
 
     $default  reduce using rule 92 (ClassMemberDeclaration)
 
 
 State 123
 
-   93 ClassMemberDeclaration: MethodDeclaration .
+   93 ClassMemberDeclaration: MethodDeclaration •
 
     $default  reduce using rule 93 (ClassMemberDeclaration)
 
 
 State 124
 
-  105 MethodDeclaration: MethodHeader . MethodBody
+  105 MethodDeclaration: MethodHeader • MethodBody
 
     OPENCURLYBRACKET  shift, and go to state 113
     SEMICOLON         shift, and go to state 115
@@ -2864,28 +2864,28 @@ State 124
 
 State 125
 
-  106 MethodDeclaration: MethodBody .
+  106 MethodDeclaration: MethodBody •
 
     $default  reduce using rule 106 (MethodDeclaration)
 
 
 State 126
 
-   90 ClassBodyDeclaration: StaticInitializer .
+   90 ClassBodyDeclaration: StaticInitializer •
 
     $default  reduce using rule 90 (ClassBodyDeclaration)
 
 
 State 127
 
-   91 ClassBodyDeclaration: ConstructorDeclaration .
+   91 ClassBodyDeclaration: ConstructorDeclaration •
 
     $default  reduce using rule 91 (ClassBodyDeclaration)
 
 
 State 128
 
-  133 ConstructorDeclarator: ConstructorHeader . FormalParameterList CLOSEBRACKET
+  133 ConstructorDeclarator: ConstructorHeader • FormalParameterList CLOSEBRACKET
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -2914,8 +2914,8 @@ State 128
 
 State 129
 
-  130 ConstructorDeclaration: ConstructorDeclarator . Throws ConstructorBody
-  131                       | ConstructorDeclarator . ConstructorBody
+  130 ConstructorDeclaration: ConstructorDeclarator • Throws ConstructorBody
+  131                       | ConstructorDeclarator • ConstructorBody
 
     OPENCURLYBRACKET  shift, and go to state 258
     THROWS            shift, and go to state 259
@@ -2926,21 +2926,21 @@ State 129
 
 State 130
 
-  124 MethodBody: Block .
+  124 MethodBody: Block •
 
     $default  reduce using rule 124 (MethodBody)
 
 
 State 131
 
-   74 ClassDeclaration: CLASS Identifier Super $@5 ClassBody .
+   74 ClassDeclaration: CLASS Identifier Super $@5 ClassBody •
 
     $default  reduce using rule 74 (ClassDeclaration)
 
 
 State 132
 
-   66 ClassDeclaration: CLASS Identifier Super Interfaces $@1 . ClassBody
+   66 ClassDeclaration: CLASS Identifier Super Interfaces $@1 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -2949,28 +2949,28 @@ State 132
 
 State 133
 
-   72 ClassDeclaration: CLASS Identifier Interfaces $@4 ClassBody .
+   72 ClassDeclaration: CLASS Identifier Interfaces $@4 ClassBody •
 
     $default  reduce using rule 72 (ClassDeclaration)
 
 
 State 134
 
-   49 TypeImportOnDemandDeclaration: DummyImport Name DOT STAR SEMICOLON .
+   49 TypeImportOnDemandDeclaration: DummyImport Name DOT STAR SEMICOLON •
 
     $default  reduce using rule 49 (TypeImportOnDemandDeclaration)
 
 
 State 135
 
-  149 InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 InterfaceBody .
+  149 InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 InterfaceBody •
 
     $default  reduce using rule 149 (InterfaceDeclaration)
 
 
 State 136
 
-  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 . InterfaceBody
+  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 • InterfaceBody
 
     OPENCURLYBRACKET  shift, and go to state 64
 
@@ -2979,14 +2979,14 @@ State 136
 
 State 137
 
-   76 ClassDeclaration: Modifiers CLASS Identifier $@6 ClassBody .
+   76 ClassDeclaration: Modifiers CLASS Identifier $@6 ClassBody •
 
     $default  reduce using rule 76 (ClassDeclaration)
 
 
 State 138
 
-   70 ClassDeclaration: Modifiers CLASS Identifier Super $@3 . ClassBody
+   70 ClassDeclaration: Modifiers CLASS Identifier Super $@3 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -2995,7 +2995,7 @@ State 138
 
 State 139
 
-   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces . $@8 ClassBody
+   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces • $@8 ClassBody
 
     $default  reduce using rule 79 ($@8)
 
@@ -3004,7 +3004,7 @@ State 139
 
 State 140
 
-   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces $@2 . ClassBody
+   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces $@2 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -3013,17 +3013,17 @@ State 140
 
 State 141
 
-  115 MethodDeclarator: Identifier . OPENBRACKET CLOSEBRACKET
-  116                 | Identifier . OPENBRACKET FormalParameterList CLOSEBRACKET
+  115 MethodDeclarator: Identifier • OPENBRACKET CLOSEBRACKET
+  116                 | Identifier • OPENBRACKET FormalParameterList CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 267
 
 
 State 142
 
-  112 MethodHeader: VOID MethodDeclarator . Throws
-  114             | VOID MethodDeclarator .
-  117 MethodDeclarator: MethodDeclarator . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  112 MethodHeader: VOID MethodDeclarator • Throws
+  114             | VOID MethodDeclarator •
+  117 MethodDeclarator: MethodDeclarator • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 268
     THROWS             shift, and go to state 259
@@ -3035,9 +3035,9 @@ State 142
 
 State 143
 
-  100 VariableDeclaratorId: Identifier .
-  115 MethodDeclarator: Identifier . OPENBRACKET CLOSEBRACKET
-  116                 | Identifier . OPENBRACKET FormalParameterList CLOSEBRACKET
+  100 VariableDeclaratorId: Identifier •
+  115 MethodDeclarator: Identifier • OPENBRACKET CLOSEBRACKET
+  116                 | Identifier • OPENBRACKET FormalParameterList CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 267
 
@@ -3046,8 +3046,8 @@ State 143
 
 State 144
 
-   95 FieldDeclaration: Type VariableDeclarators . SEMICOLON
-   97 VariableDeclarators: VariableDeclarators . COMMA VariableDeclarator
+   95 FieldDeclaration: Type VariableDeclarators • SEMICOLON
+   97 VariableDeclarators: VariableDeclarators • COMMA VariableDeclarator
 
     COMMA      shift, and go to state 270
     SEMICOLON  shift, and go to state 271
@@ -3055,16 +3055,16 @@ State 144
 
 State 145
 
-   96 VariableDeclarators: VariableDeclarator .
+   96 VariableDeclarators: VariableDeclarator •
 
     $default  reduce using rule 96 (VariableDeclarators)
 
 
 State 146
 
-   98 VariableDeclarator: VariableDeclaratorId .
-   99                   | VariableDeclaratorId . EQUAL VariableInitializer
-  102 VariableDeclaratorId: VariableDeclaratorId . $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET
+   98 VariableDeclarator: VariableDeclaratorId •
+   99                   | VariableDeclaratorId • EQUAL VariableInitializer
+  102 VariableDeclaratorId: VariableDeclaratorId • $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     EQUAL  shift, and go to state 272
 
@@ -3076,9 +3076,9 @@ State 146
 
 State 147
 
-  109 MethodHeader: Type MethodDeclarator . Throws
-  110             | Type MethodDeclarator .
-  117 MethodDeclarator: MethodDeclarator . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  109 MethodHeader: Type MethodDeclarator • Throws
+  110             | Type MethodDeclarator •
+  117 MethodDeclarator: MethodDeclarator • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 268
     THROWS             shift, and go to state 259
@@ -3090,29 +3090,29 @@ State 147
 
 State 148
 
-   26 ArrayType: PrimitiveType OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+   26 ArrayType: PrimitiveType OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 275
 
 
 State 149
 
-   28 ArrayType: ArrayType OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+   28 ArrayType: ArrayType OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 276
 
 
 State 150
 
-   27 ArrayType: Name OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+   27 ArrayType: Name OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 277
 
 
 State 151
 
-  111 MethodHeader: Modifiers VOID . MethodDeclarator Throws
-  113             | Modifiers VOID . MethodDeclarator
+  111 MethodHeader: Modifiers VOID • MethodDeclarator Throws
+  113             | Modifiers VOID • MethodDeclarator
 
     Identifier  shift, and go to state 141
 
@@ -3121,9 +3121,9 @@ State 151
 
 State 152
 
-   94 FieldDeclaration: Modifiers Type . VariableDeclarators SEMICOLON
-  107 MethodHeader: Modifiers Type . MethodDeclarator Throws
-  108             | Modifiers Type . MethodDeclarator
+   94 FieldDeclaration: Modifiers Type • VariableDeclarators SEMICOLON
+  107 MethodHeader: Modifiers Type • MethodDeclarator Throws
+  108             | Modifiers Type • MethodDeclarator
 
     Identifier  shift, and go to state 143
 
@@ -3135,105 +3135,105 @@ State 152
 
 State 153
 
-  161 AbstractMethodDeclaration: MethodHeader SEMICOLON .
+  161 AbstractMethodDeclaration: MethodHeader SEMICOLON •
 
     $default  reduce using rule 161 (AbstractMethodDeclaration)
 
 
 State 154
 
-  155 InterfaceBody: OPENCURLYBRACKET InterfaceMemberDeclarations CLOSECURLYBRACKET .
+  155 InterfaceBody: OPENCURLYBRACKET InterfaceMemberDeclarations CLOSECURLYBRACKET •
 
     $default  reduce using rule 155 (InterfaceBody)
 
 
 State 155
 
-  157 InterfaceMemberDeclarations: InterfaceMemberDeclarations InterfaceMemberDeclaration .
+  157 InterfaceMemberDeclarations: InterfaceMemberDeclarations InterfaceMemberDeclaration •
 
     $default  reduce using rule 157 (InterfaceMemberDeclarations)
 
 
 State 156
 
-   84 InterfaceTypeList: InterfaceTypeList COMMA InterfaceType .
+   84 InterfaceTypeList: InterfaceTypeList COMMA InterfaceType •
 
     $default  reduce using rule 84 (InterfaceTypeList)
 
 
 State 157
 
-  210 DummyIfStatement: IF . OPENBRACKET
+  210 DummyIfStatement: IF • OPENBRACKET
 
     OPENBRACKET  shift, and go to state 281
 
 
 State 158
 
-  217 DummySwitchStatement: SWITCH .
+  217 DummySwitchStatement: SWITCH •
 
     $default  reduce using rule 217 (DummySwitchStatement)
 
 
 State 159
 
-    2 Literal: IntegerLiteral .
+    2 Literal: IntegerLiteral •
 
     $default  reduce using rule 2 (Literal)
 
 
 State 160
 
-    3 Literal: FloatingPointLiteral .
+    3 Literal: FloatingPointLiteral •
 
     $default  reduce using rule 3 (Literal)
 
 
 State 161
 
-    4 Literal: BooleanLiteral .
+    4 Literal: BooleanLiteral •
 
     $default  reduce using rule 4 (Literal)
 
 
 State 162
 
-    5 Literal: CharacterLiteral .
+    5 Literal: CharacterLiteral •
 
     $default  reduce using rule 5 (Literal)
 
 
 State 163
 
-    6 Literal: StringLiteral .
+    6 Literal: StringLiteral •
 
     $default  reduce using rule 6 (Literal)
 
 
 State 164
 
-    7 Literal: NullLiteral .
+    7 Literal: NullLiteral •
 
     $default  reduce using rule 7 (Literal)
 
 
 State 165
 
-  234 DummyDoStatement: DO .
+  234 DummyDoStatement: DO •
 
     $default  reduce using rule 234 (DummyDoStatement)
 
 
 State 166
 
-  230 DummyWhileStatement: WHILE .
+  230 DummyWhileStatement: WHILE •
 
     $default  reduce using rule 230 (DummyWhileStatement)
 
 
 State 167
 
-  294 PrimaryNoNewArray: OPENBRACKET . Expression CLOSEBRACKET
+  294 PrimaryNoNewArray: OPENBRACKET • Expression CLOSEBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3292,22 +3292,22 @@ State 167
 
 State 168
 
-  169 Block: OPENCURLYBRACKET CLOSECURLYBRACKET .
+  169 Block: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 169 (Block)
 
 
 State 169
 
-  199 EmptyStatement: SEMICOLON .
+  199 EmptyStatement: SEMICOLON •
 
     $default  reduce using rule 199 (EmptyStatement)
 
 
 State 170
 
-   31 SimpleName: Identifier .
-  200 LabeledStatement: Identifier . COLON Statement
+   31 SimpleName: Identifier •
+  200 LabeledStatement: Identifier • COLON Statement
 
     COLON  shift, and go to state 312
 
@@ -3316,7 +3316,7 @@ State 170
 
 State 171
 
-  175 LocalVariableDeclarationStatement: FINAL . LocalVariableDeclaration SEMICOLON
+  175 LocalVariableDeclarationStatement: FINAL • LocalVariableDeclaration SEMICOLON
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -3344,31 +3344,31 @@ State 171
 
 State 172
 
-  281 SynchronizedStatement: SYNCHRONIZED . OPENBRACKET Expression CLOSEBRACKET Block
+  281 SynchronizedStatement: SYNCHRONIZED • OPENBRACKET Expression CLOSEBRACKET Block
 
     OPENBRACKET  shift, and go to state 314
 
 
 State 173
 
-  293 PrimaryNoNewArray: THIS .
+  293 PrimaryNoNewArray: THIS •
 
     $default  reduce using rule 293 (PrimaryNoNewArray)
 
 
 State 174
 
-  313 FieldAccess: SUPER . DOT Identifier
-  319 MethodInvocation: SUPER . DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
-  320                 | SUPER . DOT Identifier OPENBRACKET CLOSEBRACKET
+  313 FieldAccess: SUPER • DOT Identifier
+  319 MethodInvocation: SUPER • DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
+  320                 | SUPER • DOT Identifier OPENBRACKET CLOSEBRACKET
 
     DOT  shift, and go to state 315
 
 
 State 175
 
-  274 BreakStatement: BREAK . SEMICOLON
-  275               | BREAK . Identifier SEMICOLON
+  274 BreakStatement: BREAK • SEMICOLON
+  275               | BREAK • Identifier SEMICOLON
 
     SEMICOLON   shift, and go to state 316
     Identifier  shift, and go to state 317
@@ -3376,8 +3376,8 @@ State 175
 
 State 176
 
-  278 ReturnStatement: RETURN . SEMICOLON
-  279                | RETURN . Expression SEMICOLON
+  278 ReturnStatement: RETURN • SEMICOLON
+  279                | RETURN • Expression SEMICOLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3437,16 +3437,16 @@ State 176
 
 State 177
 
-  237 DummyForStatement: FOR .
+  237 DummyForStatement: FOR •
 
     $default  reduce using rule 237 (DummyForStatement)
 
 
 State 178
 
-  282 TryStatement: TRY . Block Catches
-  283             | TRY . Block Catches Finally
-  284             | TRY . Block Finally
+  282 TryStatement: TRY • Block Catches
+  283             | TRY • Block Catches Finally
+  284             | TRY • Block Finally
 
     OPENCURLYBRACKET  shift, and go to state 113
 
@@ -3455,7 +3455,7 @@ State 178
 
 State 179
 
-  280 ThrowStatement: THROW . Expression SEMICOLON
+  280 ThrowStatement: THROW • Expression SEMICOLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3514,8 +3514,8 @@ State 179
 
 State 180
 
-  276 ContinueStatement: CONTINUE . Identifier SEMICOLON
-  277                  | CONTINUE . SEMICOLON
+  276 ContinueStatement: CONTINUE • Identifier SEMICOLON
+  277                  | CONTINUE • SEMICOLON
 
     SEMICOLON   shift, and go to state 322
     Identifier  shift, and go to state 323
@@ -3523,12 +3523,12 @@ State 180
 
 State 181
 
-  299 ClassInstanceCreationExpression: NEW . ClassType OPENBRACKET ArgumentList CLOSEBRACKET
-  300                                | NEW . ClassType OPENBRACKET CLOSEBRACKET
-  303 ArrayCreationExpression: NEW . PrimitiveType DimExprs Dims
-  304                        | NEW . PrimitiveType DimExprs
-  305                        | NEW . ClassOrInterfaceType DimExprs Dims
-  306                        | NEW . ClassOrInterfaceType DimExprs
+  299 ClassInstanceCreationExpression: NEW • ClassType OPENBRACKET ArgumentList CLOSEBRACKET
+  300                                | NEW • ClassType OPENBRACKET CLOSEBRACKET
+  303 ArrayCreationExpression: NEW • PrimitiveType DimExprs Dims
+  304                        | NEW • PrimitiveType DimExprs
+  305                        | NEW • ClassOrInterfaceType DimExprs Dims
+  306                        | NEW • ClassOrInterfaceType DimExprs
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -3553,7 +3553,7 @@ State 181
 
 State 182
 
-  334 PreIncrementExpression: PLUSPLUS . UnaryExpression
+  334 PreIncrementExpression: PLUSPLUS • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3597,7 +3597,7 @@ State 182
 
 State 183
 
-  335 PreDecrementExpression: MINUSMINUS . UnaryExpression
+  335 PreDecrementExpression: MINUSMINUS • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3641,14 +3641,14 @@ State 183
 
 State 184
 
-  292 PrimaryNoNewArray: Literal .
+  292 PrimaryNoNewArray: Literal •
 
     $default  reduce using rule 292 (PrimaryNoNewArray)
 
 
 State 185
 
-  176 LocalVariableDeclaration: Type . VariableDeclarators
+  176 LocalVariableDeclaration: Type • VariableDeclarators
 
     Identifier  shift, and go to state 332
 
@@ -3659,13 +3659,13 @@ State 185
 
 State 186
 
-   23 ClassOrInterfaceType: Name .
-   27 ArrayType: Name . OPENSQUAREBRACKET CLOSESQUAREBRACKET
-   32 QualifiedName: Name . DOT Identifier
-  314 DummyMethodInvocation: Name .
-  321 ArrayAccess: Name . OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
-  324 PostfixExpression: Name .
-  379 LeftHandSide: Name .
+   23 ClassOrInterfaceType: Name •
+   27 ArrayType: Name • OPENSQUAREBRACKET CLOSESQUAREBRACKET
+   32 QualifiedName: Name • DOT Identifier
+  314 DummyMethodInvocation: Name •
+  321 ArrayAccess: Name • OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
+  324 PostfixExpression: Name •
+  379 LeftHandSide: Name •
 
     OPENSQUAREBRACKET  shift, and go to state 334
     DOT                shift, and go to state 49
@@ -3679,15 +3679,15 @@ State 186
 
 State 187
 
-  188 StatementWithoutTrailingSubstatement: Block .
+  188 StatementWithoutTrailingSubstatement: Block •
 
     $default  reduce using rule 188 (StatementWithoutTrailingSubstatement)
 
 
 State 188
 
-  168 Block: OPENCURLYBRACKET BlockStatements . CLOSECURLYBRACKET
-  171 BlockStatements: BlockStatements . BlockStatement
+  168 Block: OPENCURLYBRACKET BlockStatements • CLOSECURLYBRACKET
+  171 BlockStatements: BlockStatements • BlockStatement
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -3803,70 +3803,70 @@ State 188
 
 State 189
 
-  170 BlockStatements: BlockStatement .
+  170 BlockStatements: BlockStatement •
 
     $default  reduce using rule 170 (BlockStatements)
 
 
 State 190
 
-  172 BlockStatement: LocalVariableDeclarationStatement .
+  172 BlockStatement: LocalVariableDeclarationStatement •
 
     $default  reduce using rule 172 (BlockStatement)
 
 
 State 191
 
-  174 LocalVariableDeclarationStatement: LocalVariableDeclaration . SEMICOLON
+  174 LocalVariableDeclarationStatement: LocalVariableDeclaration • SEMICOLON
 
     SEMICOLON  shift, and go to state 337
 
 
 State 192
 
-  173 BlockStatement: Statement .
+  173 BlockStatement: Statement •
 
     $default  reduce using rule 173 (BlockStatement)
 
 
 State 193
 
-  177 Statement: StatementWithoutTrailingSubstatement .
+  177 Statement: StatementWithoutTrailingSubstatement •
 
     $default  reduce using rule 177 (Statement)
 
 
 State 194
 
-  189 StatementWithoutTrailingSubstatement: EmptyStatement .
+  189 StatementWithoutTrailingSubstatement: EmptyStatement •
 
     $default  reduce using rule 189 (StatementWithoutTrailingSubstatement)
 
 
 State 195
 
-  178 Statement: LabeledStatement .
+  178 Statement: LabeledStatement •
 
     $default  reduce using rule 178 (Statement)
 
 
 State 196
 
-  190 StatementWithoutTrailingSubstatement: ExpressionStatement .
+  190 StatementWithoutTrailingSubstatement: ExpressionStatement •
 
     $default  reduce using rule 190 (StatementWithoutTrailingSubstatement)
 
 
 State 197
 
-  202 ExpressionStatement: StatementExpression . SEMICOLON
+  202 ExpressionStatement: StatementExpression • SEMICOLON
 
     SEMICOLON  shift, and go to state 338
 
 
 State 198
 
-  212 DummyIfStatement1: DummyIfStatement . Expression
+  212 DummyIfStatement1: DummyIfStatement • Expression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -3925,22 +3925,22 @@ State 198
 
 State 199
 
-  213 IfThenStatement: DummyIfStatement1 . CLOSEBRACKET Statement
-  214 DummyIfStatement2: DummyIfStatement1 . CLOSEBRACKET StatementNoShortIf
+  213 IfThenStatement: DummyIfStatement1 • CLOSEBRACKET Statement
+  214 DummyIfStatement2: DummyIfStatement1 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 340
 
 
 State 200
 
-  179 Statement: IfThenStatement .
+  179 Statement: IfThenStatement •
 
     $default  reduce using rule 179 (Statement)
 
 
 State 201
 
-  215 IfThenElseStatement: DummyIfStatement2 . DummyElseStatement Statement
+  215 IfThenElseStatement: DummyIfStatement2 • DummyElseStatement Statement
 
     ELSE  shift, and go to state 341
 
@@ -3949,49 +3949,49 @@ State 201
 
 State 202
 
-  180 Statement: IfThenElseStatement .
+  180 Statement: IfThenElseStatement •
 
     $default  reduce using rule 180 (Statement)
 
 
 State 203
 
-  218 SwitchStatement: DummySwitchStatement . OPENBRACKET Expression CLOSEBRACKET SwitchBlock
+  218 SwitchStatement: DummySwitchStatement • OPENBRACKET Expression CLOSEBRACKET SwitchBlock
 
     OPENBRACKET  shift, and go to state 343
 
 
 State 204
 
-  191 StatementWithoutTrailingSubstatement: SwitchStatement .
+  191 StatementWithoutTrailingSubstatement: SwitchStatement •
 
     $default  reduce using rule 191 (StatementWithoutTrailingSubstatement)
 
 
 State 205
 
-  231 DummyWhileStatement1: DummyWhileStatement . OPENBRACKET Expression
+  231 DummyWhileStatement1: DummyWhileStatement • OPENBRACKET Expression
 
     OPENBRACKET  shift, and go to state 344
 
 
 State 206
 
-  232 WhileStatement: DummyWhileStatement1 . CLOSEBRACKET Statement
+  232 WhileStatement: DummyWhileStatement1 • CLOSEBRACKET Statement
 
     CLOSEBRACKET  shift, and go to state 345
 
 
 State 207
 
-  181 Statement: WhileStatement .
+  181 Statement: WhileStatement •
 
     $default  reduce using rule 181 (Statement)
 
 
 State 208
 
-  235 DummyDoStatement1: DummyDoStatement . Statement WHILE OPENBRACKET Expression
+  235 DummyDoStatement1: DummyDoStatement • Statement WHILE OPENBRACKET Expression
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -4086,37 +4086,37 @@ State 208
 
 State 209
 
-  236 DoStatement: DummyDoStatement1 . CLOSEBRACKET SEMICOLON
+  236 DoStatement: DummyDoStatement1 • CLOSEBRACKET SEMICOLON
 
     CLOSEBRACKET  shift, and go to state 347
 
 
 State 210
 
-  192 StatementWithoutTrailingSubstatement: DoStatement .
+  192 StatementWithoutTrailingSubstatement: DoStatement •
 
     $default  reduce using rule 192 (StatementWithoutTrailingSubstatement)
 
 
 State 211
 
-  238 DummyForStatement1: DummyForStatement . OPENBRACKET ForInit
-  243 DummyForStatement15: DummyForStatement . OPENBRACKET SEMICOLON
+  238 DummyForStatement1: DummyForStatement • OPENBRACKET ForInit
+  243 DummyForStatement15: DummyForStatement • OPENBRACKET SEMICOLON
 
     OPENBRACKET  shift, and go to state 348
 
 
 State 212
 
-  239 DummyForStatement14: DummyForStatement1 . SEMICOLON
-  247 DummyForStatement8: DummyForStatement1 . SEMICOLON SEMICOLON
+  239 DummyForStatement14: DummyForStatement1 • SEMICOLON
+  247 DummyForStatement8: DummyForStatement1 • SEMICOLON SEMICOLON
 
     SEMICOLON  shift, and go to state 349
 
 
 State 213
 
-  240 DummyForStatement2: DummyForStatement14 . Expression
+  240 DummyForStatement2: DummyForStatement14 • Expression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -4175,22 +4175,22 @@ State 213
 
 State 214
 
-  241 DummyForStatement3: DummyForStatement2 . SEMICOLON ForUpdate
-  242 DummyForStatement4: DummyForStatement2 . SEMICOLON CLOSEBRACKET
+  241 DummyForStatement3: DummyForStatement2 • SEMICOLON ForUpdate
+  242 DummyForStatement4: DummyForStatement2 • SEMICOLON CLOSEBRACKET
 
     SEMICOLON  shift, and go to state 351
 
 
 State 215
 
-  260 ForStatement: DummyForStatement3 . CLOSEBRACKET Statement
+  260 ForStatement: DummyForStatement3 • CLOSEBRACKET Statement
 
     CLOSEBRACKET  shift, and go to state 352
 
 
 State 216
 
-  255 ForStatement: DummyForStatement4 . Statement
+  255 ForStatement: DummyForStatement4 • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -4285,8 +4285,8 @@ State 216
 
 State 217
 
-  244 DummyForStatement5: DummyForStatement15 . Expression
-  250 DummyForStatement11: DummyForStatement15 . SEMICOLON
+  244 DummyForStatement5: DummyForStatement15 • Expression
+  250 DummyForStatement11: DummyForStatement15 • SEMICOLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -4346,22 +4346,22 @@ State 217
 
 State 218
 
-  245 DummyForStatement6: DummyForStatement5 . SEMICOLON ForUpdate
-  246 DummyForStatement7: DummyForStatement5 . SEMICOLON CLOSEBRACKET
+  245 DummyForStatement6: DummyForStatement5 • SEMICOLON ForUpdate
+  246 DummyForStatement7: DummyForStatement5 • SEMICOLON CLOSEBRACKET
 
     SEMICOLON  shift, and go to state 356
 
 
 State 219
 
-  253 ForStatement: DummyForStatement6 . CLOSEBRACKET Statement
+  253 ForStatement: DummyForStatement6 • CLOSEBRACKET Statement
 
     CLOSEBRACKET  shift, and go to state 357
 
 
 State 220
 
-  258 ForStatement: DummyForStatement7 . Statement
+  258 ForStatement: DummyForStatement7 • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -4456,8 +4456,8 @@ State 220
 
 State 221
 
-  248 DummyForStatement9: DummyForStatement8 . ForUpdate
-  249 DummyForStatement10: DummyForStatement8 . CLOSEBRACKET
+  248 DummyForStatement9: DummyForStatement8 • ForUpdate
+  249 DummyForStatement10: DummyForStatement8 • CLOSEBRACKET
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -4500,14 +4500,14 @@ State 221
 
 State 222
 
-  254 ForStatement: DummyForStatement9 . CLOSEBRACKET Statement
+  254 ForStatement: DummyForStatement9 • CLOSEBRACKET Statement
 
     CLOSEBRACKET  shift, and go to state 363
 
 
 State 223
 
-  257 ForStatement: DummyForStatement10 . Statement
+  257 ForStatement: DummyForStatement10 • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -4602,8 +4602,8 @@ State 223
 
 State 224
 
-  251 DummyForStatement12: DummyForStatement11 . ForUpdate
-  252 DummyForStatement13: DummyForStatement11 . CLOSEBRACKET
+  251 DummyForStatement12: DummyForStatement11 • ForUpdate
+  252 DummyForStatement13: DummyForStatement11 • CLOSEBRACKET
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -4646,14 +4646,14 @@ State 224
 
 State 225
 
-  256 ForStatement: DummyForStatement12 . CLOSEBRACKET Statement
+  256 ForStatement: DummyForStatement12 • CLOSEBRACKET Statement
 
     CLOSEBRACKET  shift, and go to state 367
 
 
 State 226
 
-  259 ForStatement: DummyForStatement13 . Statement
+  259 ForStatement: DummyForStatement13 • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -4748,59 +4748,59 @@ State 226
 
 State 227
 
-  182 Statement: ForStatement .
+  182 Statement: ForStatement •
 
     $default  reduce using rule 182 (Statement)
 
 
 State 228
 
-  193 StatementWithoutTrailingSubstatement: BreakStatement .
+  193 StatementWithoutTrailingSubstatement: BreakStatement •
 
     $default  reduce using rule 193 (StatementWithoutTrailingSubstatement)
 
 
 State 229
 
-  194 StatementWithoutTrailingSubstatement: ContinueStatement .
+  194 StatementWithoutTrailingSubstatement: ContinueStatement •
 
     $default  reduce using rule 194 (StatementWithoutTrailingSubstatement)
 
 
 State 230
 
-  195 StatementWithoutTrailingSubstatement: ReturnStatement .
+  195 StatementWithoutTrailingSubstatement: ReturnStatement •
 
     $default  reduce using rule 195 (StatementWithoutTrailingSubstatement)
 
 
 State 231
 
-  197 StatementWithoutTrailingSubstatement: ThrowStatement .
+  197 StatementWithoutTrailingSubstatement: ThrowStatement •
 
     $default  reduce using rule 197 (StatementWithoutTrailingSubstatement)
 
 
 State 232
 
-  196 StatementWithoutTrailingSubstatement: SynchronizedStatement .
+  196 StatementWithoutTrailingSubstatement: SynchronizedStatement •
 
     $default  reduce using rule 196 (StatementWithoutTrailingSubstatement)
 
 
 State 233
 
-  198 StatementWithoutTrailingSubstatement: TryStatement .
+  198 StatementWithoutTrailingSubstatement: TryStatement •
 
     $default  reduce using rule 198 (StatementWithoutTrailingSubstatement)
 
 
 State 234
 
-  312 FieldAccess: Primary . DOT Identifier
-  317 MethodInvocation: Primary . DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
-  318                 | Primary . DOT Identifier OPENBRACKET CLOSEBRACKET
-  323 PostfixExpression: Primary .
+  312 FieldAccess: Primary • DOT Identifier
+  317 MethodInvocation: Primary • DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
+  318                 | Primary • DOT Identifier OPENBRACKET CLOSEBRACKET
+  323 PostfixExpression: Primary •
 
     DOT  shift, and go to state 369
 
@@ -4809,8 +4809,8 @@ State 234
 
 State 235
 
-  290 Primary: PrimaryNoNewArray .
-  322 ArrayAccess: PrimaryNoNewArray . OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
+  290 Primary: PrimaryNoNewArray •
+  322 ArrayAccess: PrimaryNoNewArray • OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 370
 
@@ -4819,8 +4819,8 @@ State 235
 
 State 236
 
-  209 StatementExpression: ClassInstanceCreationExpression .
-  295 PrimaryNoNewArray: ClassInstanceCreationExpression .
+  209 StatementExpression: ClassInstanceCreationExpression •
+  295 PrimaryNoNewArray: ClassInstanceCreationExpression •
 
     CLOSEBRACKET  reduce using rule 209 (StatementExpression)
     COMMA         reduce using rule 209 (StatementExpression)
@@ -4830,15 +4830,15 @@ State 236
 
 State 237
 
-  291 Primary: ArrayCreationExpression .
+  291 Primary: ArrayCreationExpression •
 
     $default  reduce using rule 291 (Primary)
 
 
 State 238
 
-  296 PrimaryNoNewArray: FieldAccess .
-  380 LeftHandSide: FieldAccess .
+  296 PrimaryNoNewArray: FieldAccess •
+  380 LeftHandSide: FieldAccess •
 
     EQUAL                                                           reduce using rule 380 (LeftHandSide)
     STAREQUAL                                                       reduce using rule 380 (LeftHandSide)
@@ -4856,16 +4856,16 @@ State 238
 
 State 239
 
-  315 MethodInvocation: DummyMethodInvocation . OPENBRACKET ArgumentList CLOSEBRACKET
-  316                 | DummyMethodInvocation . OPENBRACKET CLOSEBRACKET
+  315 MethodInvocation: DummyMethodInvocation • OPENBRACKET ArgumentList CLOSEBRACKET
+  316                 | DummyMethodInvocation • OPENBRACKET CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 371
 
 
 State 240
 
-  208 StatementExpression: MethodInvocation .
-  297 PrimaryNoNewArray: MethodInvocation .
+  208 StatementExpression: MethodInvocation •
+  297 PrimaryNoNewArray: MethodInvocation •
 
     CLOSEBRACKET  reduce using rule 208 (StatementExpression)
     COMMA         reduce using rule 208 (StatementExpression)
@@ -4875,8 +4875,8 @@ State 240
 
 State 241
 
-  298 PrimaryNoNewArray: ArrayAccess .
-  381 LeftHandSide: ArrayAccess .
+  298 PrimaryNoNewArray: ArrayAccess •
+  381 LeftHandSide: ArrayAccess •
 
     EQUAL                                                           reduce using rule 381 (LeftHandSide)
     STAREQUAL                                                       reduce using rule 381 (LeftHandSide)
@@ -4894,8 +4894,8 @@ State 241
 
 State 242
 
-  327 PostIncrementExpression: PostfixExpression . PLUSPLUS
-  328 PostDecrementExpression: PostfixExpression . MINUSMINUS
+  327 PostIncrementExpression: PostfixExpression • PLUSPLUS
+  328 PostDecrementExpression: PostfixExpression • MINUSMINUS
 
     PLUSPLUS    shift, and go to state 372
     MINUSMINUS  shift, and go to state 373
@@ -4903,8 +4903,8 @@ State 242
 
 State 243
 
-  206 StatementExpression: PostIncrementExpression .
-  325 PostfixExpression: PostIncrementExpression .
+  206 StatementExpression: PostIncrementExpression •
+  325 PostfixExpression: PostIncrementExpression •
 
     PLUSPLUS    reduce using rule 325 (PostfixExpression)
     MINUSMINUS  reduce using rule 325 (PostfixExpression)
@@ -4913,8 +4913,8 @@ State 243
 
 State 244
 
-  207 StatementExpression: PostDecrementExpression .
-  326 PostfixExpression: PostDecrementExpression .
+  207 StatementExpression: PostDecrementExpression •
+  326 PostfixExpression: PostDecrementExpression •
 
     PLUSPLUS    reduce using rule 326 (PostfixExpression)
     MINUSMINUS  reduce using rule 326 (PostfixExpression)
@@ -4923,28 +4923,28 @@ State 244
 
 State 245
 
-  204 StatementExpression: PreIncrementExpression .
+  204 StatementExpression: PreIncrementExpression •
 
     $default  reduce using rule 204 (StatementExpression)
 
 
 State 246
 
-  205 StatementExpression: PreDecrementExpression .
+  205 StatementExpression: PreDecrementExpression •
 
     $default  reduce using rule 205 (StatementExpression)
 
 
 State 247
 
-  203 StatementExpression: Assignment .
+  203 StatementExpression: Assignment •
 
     $default  reduce using rule 203 (StatementExpression)
 
 
 State 248
 
-  378 Assignment: LeftHandSide . AssignmentOperator AssignmentExpression
+  378 Assignment: LeftHandSide • AssignmentOperator AssignmentExpression
 
     EQUAL                                                           shift, and go to state 374
     STAREQUAL                                                       shift, and go to state 375
@@ -4963,7 +4963,7 @@ State 248
 
 State 249
 
-  127 StaticInitializer: STATIC $@10 . Block
+  127 StaticInitializer: STATIC $@10 • Block
 
     OPENCURLYBRACKET  shift, and go to state 113
 
@@ -4972,8 +4972,8 @@ State 249
 
 State 250
 
-  132 ConstructorHeader: SimpleName OPENBRACKET .
-  135 ConstructorDeclarator: SimpleName OPENBRACKET . $@11 CLOSEBRACKET
+  132 ConstructorHeader: SimpleName OPENBRACKET •
+  135 ConstructorDeclarator: SimpleName OPENBRACKET • $@11 CLOSEBRACKET
 
     CLOSEBRACKET  reduce using rule 134 ($@11)
     $default      reduce using rule 132 (ConstructorHeader)
@@ -4983,8 +4983,8 @@ State 250
 
 State 251
 
-  128 ConstructorDeclaration: Modifiers ConstructorDeclarator . Throws ConstructorBody
-  129                       | Modifiers ConstructorDeclarator . ConstructorBody
+  128 ConstructorDeclaration: Modifiers ConstructorDeclarator • Throws ConstructorBody
+  129                       | Modifiers ConstructorDeclarator • ConstructorBody
 
     OPENCURLYBRACKET  shift, and go to state 258
     THROWS            shift, and go to state 259
@@ -4995,28 +4995,28 @@ State 251
 
 State 252
 
-   85 ClassBody: OPENCURLYBRACKET ClassBodyDeclarations CLOSECURLYBRACKET .
+   85 ClassBody: OPENCURLYBRACKET ClassBodyDeclarations CLOSECURLYBRACKET •
 
     $default  reduce using rule 85 (ClassBody)
 
 
 State 253
 
-   88 ClassBodyDeclarations: ClassBodyDeclarations ClassBodyDeclaration .
+   88 ClassBodyDeclarations: ClassBodyDeclarations ClassBodyDeclaration •
 
     $default  reduce using rule 88 (ClassBodyDeclarations)
 
 
 State 254
 
-  105 MethodDeclaration: MethodHeader MethodBody .
+  105 MethodDeclaration: MethodHeader MethodBody •
 
     $default  reduce using rule 105 (MethodDeclaration)
 
 
 State 255
 
-  120 FormalParameter: Type . VariableDeclaratorId
+  120 FormalParameter: Type • VariableDeclaratorId
 
     Identifier  shift, and go to state 332
 
@@ -5025,8 +5025,8 @@ State 255
 
 State 256
 
-  119 FormalParameterList: FormalParameterList . COMMA FormalParameter
-  133 ConstructorDeclarator: ConstructorHeader FormalParameterList . CLOSEBRACKET
+  119 FormalParameterList: FormalParameterList • COMMA FormalParameter
+  133 ConstructorDeclarator: ConstructorHeader FormalParameterList • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 391
     COMMA         shift, and go to state 392
@@ -5034,17 +5034,17 @@ State 256
 
 State 257
 
-  118 FormalParameterList: FormalParameter .
+  118 FormalParameterList: FormalParameter •
 
     $default  reduce using rule 118 (FormalParameterList)
 
 
 State 258
 
-  136 ConstructorBody: OPENCURLYBRACKET . ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET
-  137                | OPENCURLYBRACKET . BlockStatements CLOSECURLYBRACKET
-  138                | OPENCURLYBRACKET . ExplicitConstructorInvocation CLOSECURLYBRACKET
-  139                | OPENCURLYBRACKET . CLOSECURLYBRACKET
+  136 ConstructorBody: OPENCURLYBRACKET • ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET
+  137                | OPENCURLYBRACKET • BlockStatements CLOSECURLYBRACKET
+  138                | OPENCURLYBRACKET • ExplicitConstructorInvocation CLOSECURLYBRACKET
+  139                | OPENCURLYBRACKET • CLOSECURLYBRACKET
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -5162,7 +5162,7 @@ State 258
 
 State 259
 
-  121 Throws: THROWS . ClassTypeList
+  121 Throws: THROWS • ClassTypeList
 
     Identifier  shift, and go to state 31
 
@@ -5176,7 +5176,7 @@ State 259
 
 State 260
 
-  130 ConstructorDeclaration: ConstructorDeclarator Throws . ConstructorBody
+  130 ConstructorDeclaration: ConstructorDeclarator Throws • ConstructorBody
 
     OPENCURLYBRACKET  shift, and go to state 258
 
@@ -5185,35 +5185,35 @@ State 260
 
 State 261
 
-  131 ConstructorDeclaration: ConstructorDeclarator ConstructorBody .
+  131 ConstructorDeclaration: ConstructorDeclarator ConstructorBody •
 
     $default  reduce using rule 131 (ConstructorDeclaration)
 
 
 State 262
 
-   66 ClassDeclaration: CLASS Identifier Super Interfaces $@1 ClassBody .
+   66 ClassDeclaration: CLASS Identifier Super Interfaces $@1 ClassBody •
 
     $default  reduce using rule 66 (ClassDeclaration)
 
 
 State 263
 
-  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody .
+  145 InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody •
 
     $default  reduce using rule 145 (InterfaceDeclaration)
 
 
 State 264
 
-   70 ClassDeclaration: Modifiers CLASS Identifier Super $@3 ClassBody .
+   70 ClassDeclaration: Modifiers CLASS Identifier Super $@3 ClassBody •
 
     $default  reduce using rule 70 (ClassDeclaration)
 
 
 State 265
 
-   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces $@8 . ClassBody
+   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces $@8 • ClassBody
 
     OPENCURLYBRACKET  shift, and go to state 73
 
@@ -5222,15 +5222,15 @@ State 265
 
 State 266
 
-   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces $@2 ClassBody .
+   68 ClassDeclaration: Modifiers CLASS Identifier Interfaces $@2 ClassBody •
 
     $default  reduce using rule 68 (ClassDeclaration)
 
 
 State 267
 
-  115 MethodDeclarator: Identifier OPENBRACKET . CLOSEBRACKET
-  116                 | Identifier OPENBRACKET . FormalParameterList CLOSEBRACKET
+  115 MethodDeclarator: Identifier OPENBRACKET • CLOSEBRACKET
+  116                 | Identifier OPENBRACKET • FormalParameterList CLOSEBRACKET
 
     BYTE          shift, and go to state 84
     SHORT         shift, and go to state 85
@@ -5260,21 +5260,21 @@ State 267
 
 State 268
 
-  117 MethodDeclarator: MethodDeclarator OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+  117 MethodDeclarator: MethodDeclarator OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 404
 
 
 State 269
 
-  112 MethodHeader: VOID MethodDeclarator Throws .
+  112 MethodHeader: VOID MethodDeclarator Throws •
 
     $default  reduce using rule 112 (MethodHeader)
 
 
 State 270
 
-   97 VariableDeclarators: VariableDeclarators COMMA . VariableDeclarator
+   97 VariableDeclarators: VariableDeclarators COMMA • VariableDeclarator
 
     Identifier  shift, and go to state 332
 
@@ -5284,14 +5284,14 @@ State 270
 
 State 271
 
-   95 FieldDeclaration: Type VariableDeclarators SEMICOLON .
+   95 FieldDeclaration: Type VariableDeclarators SEMICOLON •
 
     $default  reduce using rule 95 (FieldDeclaration)
 
 
 State 272
 
-   99 VariableDeclarator: VariableDeclaratorId EQUAL . VariableInitializer
+   99 VariableDeclarator: VariableDeclaratorId EQUAL • VariableInitializer
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -5353,44 +5353,44 @@ State 272
 
 State 273
 
-  102 VariableDeclaratorId: VariableDeclaratorId $@9 . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  102 VariableDeclaratorId: VariableDeclaratorId $@9 • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 410
 
 
 State 274
 
-  109 MethodHeader: Type MethodDeclarator Throws .
+  109 MethodHeader: Type MethodDeclarator Throws •
 
     $default  reduce using rule 109 (MethodHeader)
 
 
 State 275
 
-   26 ArrayType: PrimitiveType OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+   26 ArrayType: PrimitiveType OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 26 (ArrayType)
 
 
 State 276
 
-   28 ArrayType: ArrayType OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+   28 ArrayType: ArrayType OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 28 (ArrayType)
 
 
 State 277
 
-   27 ArrayType: Name OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+   27 ArrayType: Name OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 27 (ArrayType)
 
 
 State 278
 
-  111 MethodHeader: Modifiers VOID MethodDeclarator . Throws
-  113             | Modifiers VOID MethodDeclarator .
-  117 MethodDeclarator: MethodDeclarator . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  111 MethodHeader: Modifiers VOID MethodDeclarator • Throws
+  113             | Modifiers VOID MethodDeclarator •
+  117 MethodDeclarator: MethodDeclarator • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 268
     THROWS             shift, and go to state 259
@@ -5402,8 +5402,8 @@ State 278
 
 State 279
 
-   94 FieldDeclaration: Modifiers Type VariableDeclarators . SEMICOLON
-   97 VariableDeclarators: VariableDeclarators . COMMA VariableDeclarator
+   94 FieldDeclaration: Modifiers Type VariableDeclarators • SEMICOLON
+   97 VariableDeclarators: VariableDeclarators • COMMA VariableDeclarator
 
     COMMA      shift, and go to state 270
     SEMICOLON  shift, and go to state 412
@@ -5411,9 +5411,9 @@ State 279
 
 State 280
 
-  107 MethodHeader: Modifiers Type MethodDeclarator . Throws
-  108             | Modifiers Type MethodDeclarator .
-  117 MethodDeclarator: MethodDeclarator . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  107 MethodHeader: Modifiers Type MethodDeclarator • Throws
+  108             | Modifiers Type MethodDeclarator •
+  117 MethodDeclarator: MethodDeclarator • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 268
     THROWS             shift, and go to state 259
@@ -5425,14 +5425,14 @@ State 280
 
 State 281
 
-  210 DummyIfStatement: IF OPENBRACKET .
+  210 DummyIfStatement: IF OPENBRACKET •
 
     $default  reduce using rule 210 (DummyIfStatement)
 
 
 State 282
 
-  331 UnaryExpression: PLUS . UnaryExpression
+  331 UnaryExpression: PLUS • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -5476,11 +5476,11 @@ State 282
 
 State 283
 
-  294 PrimaryNoNewArray: OPENBRACKET . Expression CLOSEBRACKET
-  340 CastExpression: OPENBRACKET . PrimitiveType Dims CLOSEBRACKET UnaryExpression
-  341               | OPENBRACKET . PrimitiveType CLOSEBRACKET UnaryExpression
-  342               | OPENBRACKET . Expression CLOSEBRACKET UnaryExpressionNotPlusMinus
-  343               | OPENBRACKET . Name Dims CLOSEBRACKET UnaryExpressionNotPlusMinus
+  294 PrimaryNoNewArray: OPENBRACKET • Expression CLOSEBRACKET
+  340 CastExpression: OPENBRACKET • PrimitiveType Dims CLOSEBRACKET UnaryExpression
+  341               | OPENBRACKET • PrimitiveType CLOSEBRACKET UnaryExpression
+  342               | OPENBRACKET • Expression CLOSEBRACKET UnaryExpressionNotPlusMinus
+  343               | OPENBRACKET • Name Dims CLOSEBRACKET UnaryExpressionNotPlusMinus
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -5551,7 +5551,7 @@ State 283
 
 State 284
 
-  337 UnaryExpressionNotPlusMinus: TILDA . UnaryExpression
+  337 UnaryExpressionNotPlusMinus: TILDA • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -5595,7 +5595,7 @@ State 284
 
 State 285
 
-  338 UnaryExpressionNotPlusMinus: NOT . UnaryExpression
+  338 UnaryExpressionNotPlusMinus: NOT • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -5639,7 +5639,7 @@ State 285
 
 State 286
 
-  332 UnaryExpression: MINUS . UnaryExpression
+  332 UnaryExpression: MINUS • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -5683,11 +5683,11 @@ State 286
 
 State 287
 
-   32 QualifiedName: Name . DOT Identifier
-  314 DummyMethodInvocation: Name .
-  321 ArrayAccess: Name . OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
-  324 PostfixExpression: Name .
-  379 LeftHandSide: Name .
+   32 QualifiedName: Name • DOT Identifier
+  314 DummyMethodInvocation: Name •
+  321 ArrayAccess: Name • OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
+  324 PostfixExpression: Name •
+  379 LeftHandSide: Name •
 
     OPENSQUAREBRACKET  shift, and go to state 421
     DOT                shift, and go to state 49
@@ -5709,23 +5709,23 @@ State 287
 
 State 288
 
-  295 PrimaryNoNewArray: ClassInstanceCreationExpression .
+  295 PrimaryNoNewArray: ClassInstanceCreationExpression •
 
     $default  reduce using rule 295 (PrimaryNoNewArray)
 
 
 State 289
 
-  297 PrimaryNoNewArray: MethodInvocation .
+  297 PrimaryNoNewArray: MethodInvocation •
 
     $default  reduce using rule 297 (PrimaryNoNewArray)
 
 
 State 290
 
-  327 PostIncrementExpression: PostfixExpression . PLUSPLUS
-  328 PostDecrementExpression: PostfixExpression . MINUSMINUS
-  336 UnaryExpressionNotPlusMinus: PostfixExpression .
+  327 PostIncrementExpression: PostfixExpression • PLUSPLUS
+  328 PostDecrementExpression: PostfixExpression • MINUSMINUS
+  336 UnaryExpressionNotPlusMinus: PostfixExpression •
 
     PLUSPLUS    shift, and go to state 372
     MINUSMINUS  shift, and go to state 373
@@ -5735,59 +5735,59 @@ State 290
 
 State 291
 
-  325 PostfixExpression: PostIncrementExpression .
+  325 PostfixExpression: PostIncrementExpression •
 
     $default  reduce using rule 325 (PostfixExpression)
 
 
 State 292
 
-  326 PostfixExpression: PostDecrementExpression .
+  326 PostfixExpression: PostDecrementExpression •
 
     $default  reduce using rule 326 (PostfixExpression)
 
 
 State 293
 
-  344 MultiplicativeExpression: UnaryExpression .
+  344 MultiplicativeExpression: UnaryExpression •
 
     $default  reduce using rule 344 (MultiplicativeExpression)
 
 
 State 294
 
-  329 UnaryExpression: PreIncrementExpression .
+  329 UnaryExpression: PreIncrementExpression •
 
     $default  reduce using rule 329 (UnaryExpression)
 
 
 State 295
 
-  330 UnaryExpression: PreDecrementExpression .
+  330 UnaryExpression: PreDecrementExpression •
 
     $default  reduce using rule 330 (UnaryExpression)
 
 
 State 296
 
-  333 UnaryExpression: UnaryExpressionNotPlusMinus .
+  333 UnaryExpression: UnaryExpressionNotPlusMinus •
 
     $default  reduce using rule 333 (UnaryExpression)
 
 
 State 297
 
-  339 UnaryExpressionNotPlusMinus: CastExpression .
+  339 UnaryExpressionNotPlusMinus: CastExpression •
 
     $default  reduce using rule 339 (UnaryExpressionNotPlusMinus)
 
 
 State 298
 
-  345 MultiplicativeExpression: MultiplicativeExpression . STAR UnaryExpression
-  346                         | MultiplicativeExpression . FORWARDSLASH UnaryExpression
-  347                         | MultiplicativeExpression . MODULO UnaryExpression
-  348 AdditiveExpression: MultiplicativeExpression .
+  345 MultiplicativeExpression: MultiplicativeExpression • STAR UnaryExpression
+  346                         | MultiplicativeExpression • FORWARDSLASH UnaryExpression
+  347                         | MultiplicativeExpression • MODULO UnaryExpression
+  348 AdditiveExpression: MultiplicativeExpression •
 
     FORWARDSLASH  shift, and go to state 422
     MODULO        shift, and go to state 423
@@ -5798,9 +5798,9 @@ State 298
 
 State 299
 
-  349 AdditiveExpression: AdditiveExpression . PLUS MultiplicativeExpression
-  350                   | AdditiveExpression . MINUS MultiplicativeExpression
-  351 ShiftExpression: AdditiveExpression .
+  349 AdditiveExpression: AdditiveExpression • PLUS MultiplicativeExpression
+  350                   | AdditiveExpression • MINUS MultiplicativeExpression
+  351 ShiftExpression: AdditiveExpression •
 
     PLUS   shift, and go to state 425
     MINUS  shift, and go to state 426
@@ -5810,10 +5810,10 @@ State 299
 
 State 300
 
-  352 ShiftExpression: ShiftExpression . OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
-  353                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  354                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  355 RelationalExpression: ShiftExpression .
+  352 ShiftExpression: ShiftExpression • OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
+  353                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  354                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  355 RelationalExpression: ShiftExpression •
 
     OPENANGULARBRACKETOPENANGULARBRACKET                       shift, and go to state 427
     CLOSEANGULARBRACKETCLOSEANGULARBRACKET                     shift, and go to state 428
@@ -5824,12 +5824,12 @@ State 300
 
 State 301
 
-  356 RelationalExpression: RelationalExpression . OPENANGULARBRACKET ShiftExpression
-  357                     | RelationalExpression . CLOSEANGULARBRACKET ShiftExpression
-  358                     | RelationalExpression . OPENANGULARBRACKETEQUAL ShiftExpression
-  359                     | RelationalExpression . CLOSEANGULARBRACKETEQUAL ShiftExpression
-  360                     | RelationalExpression . INSTANCEOF ReferenceType
-  361 EqualityExpression: RelationalExpression .
+  356 RelationalExpression: RelationalExpression • OPENANGULARBRACKET ShiftExpression
+  357                     | RelationalExpression • CLOSEANGULARBRACKET ShiftExpression
+  358                     | RelationalExpression • OPENANGULARBRACKETEQUAL ShiftExpression
+  359                     | RelationalExpression • CLOSEANGULARBRACKETEQUAL ShiftExpression
+  360                     | RelationalExpression • INSTANCEOF ReferenceType
+  361 EqualityExpression: RelationalExpression •
 
     OPENANGULARBRACKET        shift, and go to state 430
     CLOSEANGULARBRACKET       shift, and go to state 431
@@ -5842,9 +5842,9 @@ State 301
 
 State 302
 
-  362 EqualityExpression: EqualityExpression . EQUALEQUAL RelationalExpression
-  363                   | EqualityExpression . NOTEQUAL RelationalExpression
-  364 AndExpression: EqualityExpression .
+  362 EqualityExpression: EqualityExpression • EQUALEQUAL RelationalExpression
+  363                   | EqualityExpression • NOTEQUAL RelationalExpression
+  364 AndExpression: EqualityExpression •
 
     NOTEQUAL    shift, and go to state 435
     EQUALEQUAL  shift, and go to state 436
@@ -5854,8 +5854,8 @@ State 302
 
 State 303
 
-  365 AndExpression: AndExpression . AND EqualityExpression
-  366 ExclusiveOrExpression: AndExpression .
+  365 AndExpression: AndExpression • AND EqualityExpression
+  366 ExclusiveOrExpression: AndExpression •
 
     AND  shift, and go to state 437
 
@@ -5864,8 +5864,8 @@ State 303
 
 State 304
 
-  367 ExclusiveOrExpression: ExclusiveOrExpression . XOR AndExpression
-  368 InclusiveOrExpression: ExclusiveOrExpression .
+  367 ExclusiveOrExpression: ExclusiveOrExpression • XOR AndExpression
+  368 InclusiveOrExpression: ExclusiveOrExpression •
 
     XOR  shift, and go to state 438
 
@@ -5874,8 +5874,8 @@ State 304
 
 State 305
 
-  369 InclusiveOrExpression: InclusiveOrExpression . OR ExclusiveOrExpression
-  370 ConditionalAndExpression: InclusiveOrExpression .
+  369 InclusiveOrExpression: InclusiveOrExpression • OR ExclusiveOrExpression
+  370 ConditionalAndExpression: InclusiveOrExpression •
 
     OR  shift, and go to state 439
 
@@ -5884,8 +5884,8 @@ State 305
 
 State 306
 
-  371 ConditionalAndExpression: ConditionalAndExpression . ANDAND InclusiveOrExpression
-  372 ConditionalOrExpression: ConditionalAndExpression .
+  371 ConditionalAndExpression: ConditionalAndExpression • ANDAND InclusiveOrExpression
+  372 ConditionalOrExpression: ConditionalAndExpression •
 
     ANDAND  shift, and go to state 440
 
@@ -5894,9 +5894,9 @@ State 306
 
 State 307
 
-  373 ConditionalOrExpression: ConditionalOrExpression . OROR ConditionalAndExpression
-  374 ConditionalExpression: ConditionalOrExpression .
-  375                      | ConditionalOrExpression . QUESTION Expression COLON ConditionalExpression
+  373 ConditionalOrExpression: ConditionalOrExpression • OROR ConditionalAndExpression
+  374 ConditionalExpression: ConditionalOrExpression •
+  375                      | ConditionalOrExpression • QUESTION Expression COLON ConditionalExpression
 
     OROR      shift, and go to state 441
     QUESTION  shift, and go to state 442
@@ -5906,35 +5906,35 @@ State 307
 
 State 308
 
-  376 AssignmentExpression: ConditionalExpression .
+  376 AssignmentExpression: ConditionalExpression •
 
     $default  reduce using rule 376 (AssignmentExpression)
 
 
 State 309
 
-  393 Expression: AssignmentExpression .
+  393 Expression: AssignmentExpression •
 
     $default  reduce using rule 393 (Expression)
 
 
 State 310
 
-  377 AssignmentExpression: Assignment .
+  377 AssignmentExpression: Assignment •
 
     $default  reduce using rule 377 (AssignmentExpression)
 
 
 State 311
 
-  294 PrimaryNoNewArray: OPENBRACKET Expression . CLOSEBRACKET
+  294 PrimaryNoNewArray: OPENBRACKET Expression • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 443
 
 
 State 312
 
-  200 LabeledStatement: Identifier COLON . Statement
+  200 LabeledStatement: Identifier COLON • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -6029,14 +6029,14 @@ State 312
 
 State 313
 
-  175 LocalVariableDeclarationStatement: FINAL LocalVariableDeclaration . SEMICOLON
+  175 LocalVariableDeclarationStatement: FINAL LocalVariableDeclaration • SEMICOLON
 
     SEMICOLON  shift, and go to state 445
 
 
 State 314
 
-  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET . Expression CLOSEBRACKET Block
+  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET • Expression CLOSEBRACKET Block
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -6095,46 +6095,46 @@ State 314
 
 State 315
 
-  313 FieldAccess: SUPER DOT . Identifier
-  319 MethodInvocation: SUPER DOT . Identifier OPENBRACKET ArgumentList CLOSEBRACKET
-  320                 | SUPER DOT . Identifier OPENBRACKET CLOSEBRACKET
+  313 FieldAccess: SUPER DOT • Identifier
+  319 MethodInvocation: SUPER DOT • Identifier OPENBRACKET ArgumentList CLOSEBRACKET
+  320                 | SUPER DOT • Identifier OPENBRACKET CLOSEBRACKET
 
     Identifier  shift, and go to state 447
 
 
 State 316
 
-  274 BreakStatement: BREAK SEMICOLON .
+  274 BreakStatement: BREAK SEMICOLON •
 
     $default  reduce using rule 274 (BreakStatement)
 
 
 State 317
 
-  275 BreakStatement: BREAK Identifier . SEMICOLON
+  275 BreakStatement: BREAK Identifier • SEMICOLON
 
     SEMICOLON  shift, and go to state 448
 
 
 State 318
 
-  278 ReturnStatement: RETURN SEMICOLON .
+  278 ReturnStatement: RETURN SEMICOLON •
 
     $default  reduce using rule 278 (ReturnStatement)
 
 
 State 319
 
-  279 ReturnStatement: RETURN Expression . SEMICOLON
+  279 ReturnStatement: RETURN Expression • SEMICOLON
 
     SEMICOLON  shift, and go to state 449
 
 
 State 320
 
-  282 TryStatement: TRY Block . Catches
-  283             | TRY Block . Catches Finally
-  284             | TRY Block . Finally
+  282 TryStatement: TRY Block • Catches
+  283             | TRY Block • Catches Finally
+  284             | TRY Block • Finally
 
     CATCH    shift, and go to state 450
     FINALLY  shift, and go to state 451
@@ -6146,29 +6146,29 @@ State 320
 
 State 321
 
-  280 ThrowStatement: THROW Expression . SEMICOLON
+  280 ThrowStatement: THROW Expression • SEMICOLON
 
     SEMICOLON  shift, and go to state 455
 
 
 State 322
 
-  277 ContinueStatement: CONTINUE SEMICOLON .
+  277 ContinueStatement: CONTINUE SEMICOLON •
 
     $default  reduce using rule 277 (ContinueStatement)
 
 
 State 323
 
-  276 ContinueStatement: CONTINUE Identifier . SEMICOLON
+  276 ContinueStatement: CONTINUE Identifier • SEMICOLON
 
     SEMICOLON  shift, and go to state 456
 
 
 State 324
 
-  303 ArrayCreationExpression: NEW PrimitiveType . DimExprs Dims
-  304                        | NEW PrimitiveType . DimExprs
+  303 ArrayCreationExpression: NEW PrimitiveType • DimExprs Dims
+  304                        | NEW PrimitiveType • DimExprs
 
     OPENSQUAREBRACKET  shift, and go to state 457
 
@@ -6178,9 +6178,9 @@ State 324
 
 State 325
 
-   24 ClassType: ClassOrInterfaceType .
-  305 ArrayCreationExpression: NEW ClassOrInterfaceType . DimExprs Dims
-  306                        | NEW ClassOrInterfaceType . DimExprs
+   24 ClassType: ClassOrInterfaceType •
+  305 ArrayCreationExpression: NEW ClassOrInterfaceType • DimExprs Dims
+  306                        | NEW ClassOrInterfaceType • DimExprs
 
     OPENSQUAREBRACKET  shift, and go to state 457
 
@@ -6192,18 +6192,18 @@ State 325
 
 State 326
 
-  299 ClassInstanceCreationExpression: NEW ClassType . OPENBRACKET ArgumentList CLOSEBRACKET
-  300                                | NEW ClassType . OPENBRACKET CLOSEBRACKET
+  299 ClassInstanceCreationExpression: NEW ClassType • OPENBRACKET ArgumentList CLOSEBRACKET
+  300                                | NEW ClassType • OPENBRACKET CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 461
 
 
 State 327
 
-   32 QualifiedName: Name . DOT Identifier
-  314 DummyMethodInvocation: Name .
-  321 ArrayAccess: Name . OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
-  324 PostfixExpression: Name .
+   32 QualifiedName: Name • DOT Identifier
+  314 DummyMethodInvocation: Name •
+  321 ArrayAccess: Name • OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
+  324 PostfixExpression: Name •
 
     OPENSQUAREBRACKET  shift, and go to state 421
     DOT                shift, and go to state 49
@@ -6214,43 +6214,43 @@ State 327
 
 State 328
 
-  296 PrimaryNoNewArray: FieldAccess .
+  296 PrimaryNoNewArray: FieldAccess •
 
     $default  reduce using rule 296 (PrimaryNoNewArray)
 
 
 State 329
 
-  298 PrimaryNoNewArray: ArrayAccess .
+  298 PrimaryNoNewArray: ArrayAccess •
 
     $default  reduce using rule 298 (PrimaryNoNewArray)
 
 
 State 330
 
-  334 PreIncrementExpression: PLUSPLUS UnaryExpression .
+  334 PreIncrementExpression: PLUSPLUS UnaryExpression •
 
     $default  reduce using rule 334 (PreIncrementExpression)
 
 
 State 331
 
-  335 PreDecrementExpression: MINUSMINUS UnaryExpression .
+  335 PreDecrementExpression: MINUSMINUS UnaryExpression •
 
     $default  reduce using rule 335 (PreDecrementExpression)
 
 
 State 332
 
-  100 VariableDeclaratorId: Identifier .
+  100 VariableDeclaratorId: Identifier •
 
     $default  reduce using rule 100 (VariableDeclaratorId)
 
 
 State 333
 
-   97 VariableDeclarators: VariableDeclarators . COMMA VariableDeclarator
-  176 LocalVariableDeclaration: Type VariableDeclarators .
+   97 VariableDeclarators: VariableDeclarators • COMMA VariableDeclarator
+  176 LocalVariableDeclaration: Type VariableDeclarators •
 
     COMMA  shift, and go to state 270
 
@@ -6259,8 +6259,8 @@ State 333
 
 State 334
 
-   27 ArrayType: Name OPENSQUAREBRACKET . CLOSESQUAREBRACKET
-  321 ArrayAccess: Name OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
+   27 ArrayType: Name OPENSQUAREBRACKET • CLOSESQUAREBRACKET
+  321 ArrayAccess: Name OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -6320,43 +6320,43 @@ State 334
 
 State 335
 
-  168 Block: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET .
+  168 Block: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET •
 
     $default  reduce using rule 168 (Block)
 
 
 State 336
 
-  171 BlockStatements: BlockStatements BlockStatement .
+  171 BlockStatements: BlockStatements BlockStatement •
 
     $default  reduce using rule 171 (BlockStatements)
 
 
 State 337
 
-  174 LocalVariableDeclarationStatement: LocalVariableDeclaration SEMICOLON .
+  174 LocalVariableDeclarationStatement: LocalVariableDeclaration SEMICOLON •
 
     $default  reduce using rule 174 (LocalVariableDeclarationStatement)
 
 
 State 338
 
-  202 ExpressionStatement: StatementExpression SEMICOLON .
+  202 ExpressionStatement: StatementExpression SEMICOLON •
 
     $default  reduce using rule 202 (ExpressionStatement)
 
 
 State 339
 
-  212 DummyIfStatement1: DummyIfStatement Expression .
+  212 DummyIfStatement1: DummyIfStatement Expression •
 
     $default  reduce using rule 212 (DummyIfStatement1)
 
 
 State 340
 
-  213 IfThenStatement: DummyIfStatement1 CLOSEBRACKET . Statement
-  214 DummyIfStatement2: DummyIfStatement1 CLOSEBRACKET . StatementNoShortIf
+  213 IfThenStatement: DummyIfStatement1 CLOSEBRACKET • Statement
+  214 DummyIfStatement2: DummyIfStatement1 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -6456,14 +6456,14 @@ State 340
 
 State 341
 
-  211 DummyElseStatement: ELSE .
+  211 DummyElseStatement: ELSE •
 
     $default  reduce using rule 211 (DummyElseStatement)
 
 
 State 342
 
-  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement . Statement
+  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -6558,7 +6558,7 @@ State 342
 
 State 343
 
-  218 SwitchStatement: DummySwitchStatement OPENBRACKET . Expression CLOSEBRACKET SwitchBlock
+  218 SwitchStatement: DummySwitchStatement OPENBRACKET • Expression CLOSEBRACKET SwitchBlock
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -6617,7 +6617,7 @@ State 343
 
 State 344
 
-  231 DummyWhileStatement1: DummyWhileStatement OPENBRACKET . Expression
+  231 DummyWhileStatement1: DummyWhileStatement OPENBRACKET • Expression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -6676,7 +6676,7 @@ State 344
 
 State 345
 
-  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET . Statement
+  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -6771,22 +6771,22 @@ State 345
 
 State 346
 
-  235 DummyDoStatement1: DummyDoStatement Statement . WHILE OPENBRACKET Expression
+  235 DummyDoStatement1: DummyDoStatement Statement • WHILE OPENBRACKET Expression
 
     WHILE  shift, and go to state 485
 
 
 State 347
 
-  236 DoStatement: DummyDoStatement1 CLOSEBRACKET . SEMICOLON
+  236 DoStatement: DummyDoStatement1 CLOSEBRACKET • SEMICOLON
 
     SEMICOLON  shift, and go to state 486
 
 
 State 348
 
-  238 DummyForStatement1: DummyForStatement OPENBRACKET . ForInit
-  243 DummyForStatement15: DummyForStatement OPENBRACKET . SEMICOLON
+  238 DummyForStatement1: DummyForStatement OPENBRACKET • ForInit
+  243 DummyForStatement15: DummyForStatement OPENBRACKET • SEMICOLON
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -6846,8 +6846,8 @@ State 348
 
 State 349
 
-  239 DummyForStatement14: DummyForStatement1 SEMICOLON .
-  247 DummyForStatement8: DummyForStatement1 SEMICOLON . SEMICOLON
+  239 DummyForStatement14: DummyForStatement1 SEMICOLON •
+  247 DummyForStatement8: DummyForStatement1 SEMICOLON • SEMICOLON
 
     SEMICOLON  shift, and go to state 491
 
@@ -6856,15 +6856,15 @@ State 349
 
 State 350
 
-  240 DummyForStatement2: DummyForStatement14 Expression .
+  240 DummyForStatement2: DummyForStatement14 Expression •
 
     $default  reduce using rule 240 (DummyForStatement2)
 
 
 State 351
 
-  241 DummyForStatement3: DummyForStatement2 SEMICOLON . ForUpdate
-  242 DummyForStatement4: DummyForStatement2 SEMICOLON . CLOSEBRACKET
+  241 DummyForStatement3: DummyForStatement2 SEMICOLON • ForUpdate
+  242 DummyForStatement4: DummyForStatement2 SEMICOLON • CLOSEBRACKET
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -6907,7 +6907,7 @@ State 351
 
 State 352
 
-  260 ForStatement: DummyForStatement3 CLOSEBRACKET . Statement
+  260 ForStatement: DummyForStatement3 CLOSEBRACKET • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -7002,29 +7002,29 @@ State 352
 
 State 353
 
-  255 ForStatement: DummyForStatement4 Statement .
+  255 ForStatement: DummyForStatement4 Statement •
 
     $default  reduce using rule 255 (ForStatement)
 
 
 State 354
 
-  250 DummyForStatement11: DummyForStatement15 SEMICOLON .
+  250 DummyForStatement11: DummyForStatement15 SEMICOLON •
 
     $default  reduce using rule 250 (DummyForStatement11)
 
 
 State 355
 
-  244 DummyForStatement5: DummyForStatement15 Expression .
+  244 DummyForStatement5: DummyForStatement15 Expression •
 
     $default  reduce using rule 244 (DummyForStatement5)
 
 
 State 356
 
-  245 DummyForStatement6: DummyForStatement5 SEMICOLON . ForUpdate
-  246 DummyForStatement7: DummyForStatement5 SEMICOLON . CLOSEBRACKET
+  245 DummyForStatement6: DummyForStatement5 SEMICOLON • ForUpdate
+  246 DummyForStatement7: DummyForStatement5 SEMICOLON • CLOSEBRACKET
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -7067,7 +7067,7 @@ State 356
 
 State 357
 
-  253 ForStatement: DummyForStatement6 CLOSEBRACKET . Statement
+  253 ForStatement: DummyForStatement6 CLOSEBRACKET • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -7162,36 +7162,36 @@ State 357
 
 State 358
 
-  258 ForStatement: DummyForStatement7 Statement .
+  258 ForStatement: DummyForStatement7 Statement •
 
     $default  reduce using rule 258 (ForStatement)
 
 
 State 359
 
-  249 DummyForStatement10: DummyForStatement8 CLOSEBRACKET .
+  249 DummyForStatement10: DummyForStatement8 CLOSEBRACKET •
 
     $default  reduce using rule 249 (DummyForStatement10)
 
 
 State 360
 
-  272 StatementExpressionList: StatementExpression .
+  272 StatementExpressionList: StatementExpression •
 
     $default  reduce using rule 272 (StatementExpressionList)
 
 
 State 361
 
-  248 DummyForStatement9: DummyForStatement8 ForUpdate .
+  248 DummyForStatement9: DummyForStatement8 ForUpdate •
 
     $default  reduce using rule 248 (DummyForStatement9)
 
 
 State 362
 
-  271 ForUpdate: StatementExpressionList .
-  273 StatementExpressionList: StatementExpressionList . COMMA StatementExpression
+  271 ForUpdate: StatementExpressionList •
+  273 StatementExpressionList: StatementExpressionList • COMMA StatementExpression
 
     COMMA  shift, and go to state 498
 
@@ -7200,7 +7200,7 @@ State 362
 
 State 363
 
-  254 ForStatement: DummyForStatement9 CLOSEBRACKET . Statement
+  254 ForStatement: DummyForStatement9 CLOSEBRACKET • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -7295,28 +7295,28 @@ State 363
 
 State 364
 
-  257 ForStatement: DummyForStatement10 Statement .
+  257 ForStatement: DummyForStatement10 Statement •
 
     $default  reduce using rule 257 (ForStatement)
 
 
 State 365
 
-  252 DummyForStatement13: DummyForStatement11 CLOSEBRACKET .
+  252 DummyForStatement13: DummyForStatement11 CLOSEBRACKET •
 
     $default  reduce using rule 252 (DummyForStatement13)
 
 
 State 366
 
-  251 DummyForStatement12: DummyForStatement11 ForUpdate .
+  251 DummyForStatement12: DummyForStatement11 ForUpdate •
 
     $default  reduce using rule 251 (DummyForStatement12)
 
 
 State 367
 
-  256 ForStatement: DummyForStatement12 CLOSEBRACKET . Statement
+  256 ForStatement: DummyForStatement12 CLOSEBRACKET • Statement
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -7411,23 +7411,23 @@ State 367
 
 State 368
 
-  259 ForStatement: DummyForStatement13 Statement .
+  259 ForStatement: DummyForStatement13 Statement •
 
     $default  reduce using rule 259 (ForStatement)
 
 
 State 369
 
-  312 FieldAccess: Primary DOT . Identifier
-  317 MethodInvocation: Primary DOT . Identifier OPENBRACKET ArgumentList CLOSEBRACKET
-  318                 | Primary DOT . Identifier OPENBRACKET CLOSEBRACKET
+  312 FieldAccess: Primary DOT • Identifier
+  317 MethodInvocation: Primary DOT • Identifier OPENBRACKET ArgumentList CLOSEBRACKET
+  318                 | Primary DOT • Identifier OPENBRACKET CLOSEBRACKET
 
     Identifier  shift, and go to state 501
 
 
 State 370
 
-  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
+  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -7486,8 +7486,8 @@ State 370
 
 State 371
 
-  315 MethodInvocation: DummyMethodInvocation OPENBRACKET . ArgumentList CLOSEBRACKET
-  316                 | DummyMethodInvocation OPENBRACKET . CLOSEBRACKET
+  315 MethodInvocation: DummyMethodInvocation OPENBRACKET • ArgumentList CLOSEBRACKET
+  316                 | DummyMethodInvocation OPENBRACKET • CLOSEBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -7548,98 +7548,98 @@ State 371
 
 State 372
 
-  327 PostIncrementExpression: PostfixExpression PLUSPLUS .
+  327 PostIncrementExpression: PostfixExpression PLUSPLUS •
 
     $default  reduce using rule 327 (PostIncrementExpression)
 
 
 State 373
 
-  328 PostDecrementExpression: PostfixExpression MINUSMINUS .
+  328 PostDecrementExpression: PostfixExpression MINUSMINUS •
 
     $default  reduce using rule 328 (PostDecrementExpression)
 
 
 State 374
 
-  382 AssignmentOperator: EQUAL .
+  382 AssignmentOperator: EQUAL •
 
     $default  reduce using rule 382 (AssignmentOperator)
 
 
 State 375
 
-  383 AssignmentOperator: STAREQUAL .
+  383 AssignmentOperator: STAREQUAL •
 
     $default  reduce using rule 383 (AssignmentOperator)
 
 
 State 376
 
-  384 AssignmentOperator: FORWARDSLASHEQUAL .
+  384 AssignmentOperator: FORWARDSLASHEQUAL •
 
     $default  reduce using rule 384 (AssignmentOperator)
 
 
 State 377
 
-  385 AssignmentOperator: PLUSEQUAL .
+  385 AssignmentOperator: PLUSEQUAL •
 
     $default  reduce using rule 385 (AssignmentOperator)
 
 
 State 378
 
-  386 AssignmentOperator: MINUSEQUAL .
+  386 AssignmentOperator: MINUSEQUAL •
 
     $default  reduce using rule 386 (AssignmentOperator)
 
 
 State 379
 
-  387 AssignmentOperator: OPENANGULARBRACKETOPENANGULARBRACKETEQUAL .
+  387 AssignmentOperator: OPENANGULARBRACKETOPENANGULARBRACKETEQUAL •
 
     $default  reduce using rule 387 (AssignmentOperator)
 
 
 State 380
 
-  388 AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL .
+  388 AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL •
 
     $default  reduce using rule 388 (AssignmentOperator)
 
 
 State 381
 
-  389 AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL .
+  389 AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL •
 
     $default  reduce using rule 389 (AssignmentOperator)
 
 
 State 382
 
-  390 AssignmentOperator: ANDEQUAL .
+  390 AssignmentOperator: ANDEQUAL •
 
     $default  reduce using rule 390 (AssignmentOperator)
 
 
 State 383
 
-  391 AssignmentOperator: XOREQUAL .
+  391 AssignmentOperator: XOREQUAL •
 
     $default  reduce using rule 391 (AssignmentOperator)
 
 
 State 384
 
-  392 AssignmentOperator: OREQUAL .
+  392 AssignmentOperator: OREQUAL •
 
     $default  reduce using rule 392 (AssignmentOperator)
 
 
 State 385
 
-  378 Assignment: LeftHandSide AssignmentOperator . AssignmentExpression
+  378 Assignment: LeftHandSide AssignmentOperator • AssignmentExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -7697,21 +7697,21 @@ State 385
 
 State 386
 
-  127 StaticInitializer: STATIC $@10 Block .
+  127 StaticInitializer: STATIC $@10 Block •
 
     $default  reduce using rule 127 (StaticInitializer)
 
 
 State 387
 
-  135 ConstructorDeclarator: SimpleName OPENBRACKET $@11 . CLOSEBRACKET
+  135 ConstructorDeclarator: SimpleName OPENBRACKET $@11 • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 507
 
 
 State 388
 
-  128 ConstructorDeclaration: Modifiers ConstructorDeclarator Throws . ConstructorBody
+  128 ConstructorDeclaration: Modifiers ConstructorDeclarator Throws • ConstructorBody
 
     OPENCURLYBRACKET  shift, and go to state 258
 
@@ -7720,15 +7720,15 @@ State 388
 
 State 389
 
-  129 ConstructorDeclaration: Modifiers ConstructorDeclarator ConstructorBody .
+  129 ConstructorDeclaration: Modifiers ConstructorDeclarator ConstructorBody •
 
     $default  reduce using rule 129 (ConstructorDeclaration)
 
 
 State 390
 
-  102 VariableDeclaratorId: VariableDeclaratorId . $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET
-  120 FormalParameter: Type VariableDeclaratorId .
+  102 VariableDeclaratorId: VariableDeclaratorId • $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  120 FormalParameter: Type VariableDeclaratorId •
 
     OPENSQUAREBRACKET  reduce using rule 101 ($@9)
     $default           reduce using rule 120 (FormalParameter)
@@ -7738,14 +7738,14 @@ State 390
 
 State 391
 
-  133 ConstructorDeclarator: ConstructorHeader FormalParameterList CLOSEBRACKET .
+  133 ConstructorDeclarator: ConstructorHeader FormalParameterList CLOSEBRACKET •
 
     $default  reduce using rule 133 (ConstructorDeclarator)
 
 
 State 392
 
-  119 FormalParameterList: FormalParameterList COMMA . FormalParameter
+  119 FormalParameterList: FormalParameterList COMMA • FormalParameter
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -7773,16 +7773,16 @@ State 392
 
 State 393
 
-  139 ConstructorBody: OPENCURLYBRACKET CLOSECURLYBRACKET .
+  139 ConstructorBody: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 139 (ConstructorBody)
 
 
 State 394
 
-  140 ExplicitConstructorInvocation: THIS . OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON
-  141                              | THIS . OPENBRACKET CLOSEBRACKET SEMICOLON
-  293 PrimaryNoNewArray: THIS .
+  140 ExplicitConstructorInvocation: THIS • OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON
+  141                              | THIS • OPENBRACKET CLOSEBRACKET SEMICOLON
+  293 PrimaryNoNewArray: THIS •
 
     OPENBRACKET  shift, and go to state 510
 
@@ -7791,11 +7791,11 @@ State 394
 
 State 395
 
-  142 ExplicitConstructorInvocation: SUPER . OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON
-  143                              | SUPER . OPENBRACKET CLOSEBRACKET SEMICOLON
-  313 FieldAccess: SUPER . DOT Identifier
-  319 MethodInvocation: SUPER . DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
-  320                 | SUPER . DOT Identifier OPENBRACKET CLOSEBRACKET
+  142 ExplicitConstructorInvocation: SUPER • OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON
+  143                              | SUPER • OPENBRACKET CLOSEBRACKET SEMICOLON
+  313 FieldAccess: SUPER • DOT Identifier
+  319 MethodInvocation: SUPER • DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET
+  320                 | SUPER • DOT Identifier OPENBRACKET CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 511
     DOT          shift, and go to state 315
@@ -7803,8 +7803,8 @@ State 395
 
 State 396
 
-  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation . BlockStatements CLOSECURLYBRACKET
-  138                | OPENCURLYBRACKET ExplicitConstructorInvocation . CLOSECURLYBRACKET
+  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation • BlockStatements CLOSECURLYBRACKET
+  138                | OPENCURLYBRACKET ExplicitConstructorInvocation • CLOSECURLYBRACKET
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -7921,8 +7921,8 @@ State 396
 
 State 397
 
-  137 ConstructorBody: OPENCURLYBRACKET BlockStatements . CLOSECURLYBRACKET
-  171 BlockStatements: BlockStatements . BlockStatement
+  137 ConstructorBody: OPENCURLYBRACKET BlockStatements • CLOSECURLYBRACKET
+  171 BlockStatements: BlockStatements • BlockStatement
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -8038,15 +8038,15 @@ State 397
 
 State 398
 
-  122 ClassTypeList: ClassType .
+  122 ClassTypeList: ClassType •
 
     $default  reduce using rule 122 (ClassTypeList)
 
 
 State 399
 
-  121 Throws: THROWS ClassTypeList .
-  123 ClassTypeList: ClassTypeList . COMMA ClassType
+  121 Throws: THROWS ClassTypeList •
+  123 ClassTypeList: ClassTypeList • COMMA ClassType
 
     COMMA  shift, and go to state 515
 
@@ -8055,29 +8055,29 @@ State 399
 
 State 400
 
-  130 ConstructorDeclaration: ConstructorDeclarator Throws ConstructorBody .
+  130 ConstructorDeclaration: ConstructorDeclarator Throws ConstructorBody •
 
     $default  reduce using rule 130 (ConstructorDeclaration)
 
 
 State 401
 
-   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces $@8 ClassBody .
+   80 ClassDeclaration: Modifiers CLASS Identifier Super Interfaces $@8 ClassBody •
 
     $default  reduce using rule 80 (ClassDeclaration)
 
 
 State 402
 
-  115 MethodDeclarator: Identifier OPENBRACKET CLOSEBRACKET .
+  115 MethodDeclarator: Identifier OPENBRACKET CLOSEBRACKET •
 
     $default  reduce using rule 115 (MethodDeclarator)
 
 
 State 403
 
-  116 MethodDeclarator: Identifier OPENBRACKET FormalParameterList . CLOSEBRACKET
-  119 FormalParameterList: FormalParameterList . COMMA FormalParameter
+  116 MethodDeclarator: Identifier OPENBRACKET FormalParameterList • CLOSEBRACKET
+  119 FormalParameterList: FormalParameterList • COMMA FormalParameter
 
     CLOSEBRACKET  shift, and go to state 516
     COMMA         shift, and go to state 392
@@ -8085,24 +8085,24 @@ State 403
 
 State 404
 
-  117 MethodDeclarator: MethodDeclarator OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+  117 MethodDeclarator: MethodDeclarator OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 117 (MethodDeclarator)
 
 
 State 405
 
-   97 VariableDeclarators: VariableDeclarators COMMA VariableDeclarator .
+   97 VariableDeclarators: VariableDeclarators COMMA VariableDeclarator •
 
     $default  reduce using rule 97 (VariableDeclarators)
 
 
 State 406
 
-  162 ArrayInitializer: OPENCURLYBRACKET . VariableInitializers COMMA CLOSECURLYBRACKET
-  163                 | OPENCURLYBRACKET . COMMA CLOSECURLYBRACKET
-  164                 | OPENCURLYBRACKET . VariableInitializers CLOSECURLYBRACKET
-  165                 | OPENCURLYBRACKET . CLOSECURLYBRACKET
+  162 ArrayInitializer: OPENCURLYBRACKET • VariableInitializers COMMA CLOSECURLYBRACKET
+  163                 | OPENCURLYBRACKET • COMMA CLOSECURLYBRACKET
+  164                 | OPENCURLYBRACKET • VariableInitializers CLOSECURLYBRACKET
+  165                 | OPENCURLYBRACKET • CLOSECURLYBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8167,64 +8167,64 @@ State 406
 
 State 407
 
-   99 VariableDeclarator: VariableDeclaratorId EQUAL VariableInitializer .
+   99 VariableDeclarator: VariableDeclaratorId EQUAL VariableInitializer •
 
     $default  reduce using rule 99 (VariableDeclarator)
 
 
 State 408
 
-  104 VariableInitializer: ArrayInitializer .
+  104 VariableInitializer: ArrayInitializer •
 
     $default  reduce using rule 104 (VariableInitializer)
 
 
 State 409
 
-  103 VariableInitializer: Expression .
+  103 VariableInitializer: Expression •
 
     $default  reduce using rule 103 (VariableInitializer)
 
 
 State 410
 
-  102 VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+  102 VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 521
 
 
 State 411
 
-  111 MethodHeader: Modifiers VOID MethodDeclarator Throws .
+  111 MethodHeader: Modifiers VOID MethodDeclarator Throws •
 
     $default  reduce using rule 111 (MethodHeader)
 
 
 State 412
 
-   94 FieldDeclaration: Modifiers Type VariableDeclarators SEMICOLON .
+   94 FieldDeclaration: Modifiers Type VariableDeclarators SEMICOLON •
 
     $default  reduce using rule 94 (FieldDeclaration)
 
 
 State 413
 
-  107 MethodHeader: Modifiers Type MethodDeclarator Throws .
+  107 MethodHeader: Modifiers Type MethodDeclarator Throws •
 
     $default  reduce using rule 107 (MethodHeader)
 
 
 State 414
 
-  331 UnaryExpression: PLUS UnaryExpression .
+  331 UnaryExpression: PLUS UnaryExpression •
 
     $default  reduce using rule 331 (UnaryExpression)
 
 
 State 415
 
-  340 CastExpression: OPENBRACKET PrimitiveType . Dims CLOSEBRACKET UnaryExpression
-  341               | OPENBRACKET PrimitiveType . CLOSEBRACKET UnaryExpression
+  340 CastExpression: OPENBRACKET PrimitiveType • Dims CLOSEBRACKET UnaryExpression
+  341               | OPENBRACKET PrimitiveType • CLOSEBRACKET UnaryExpression
 
     CLOSEBRACKET       shift, and go to state 522
     OPENSQUAREBRACKET  shift, and go to state 523
@@ -8234,12 +8234,12 @@ State 415
 
 State 416
 
-   32 QualifiedName: Name . DOT Identifier
-  314 DummyMethodInvocation: Name .
-  321 ArrayAccess: Name . OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
-  324 PostfixExpression: Name .
-  343 CastExpression: OPENBRACKET Name . Dims CLOSEBRACKET UnaryExpressionNotPlusMinus
-  379 LeftHandSide: Name .
+   32 QualifiedName: Name • DOT Identifier
+  314 DummyMethodInvocation: Name •
+  321 ArrayAccess: Name • OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET
+  324 PostfixExpression: Name •
+  343 CastExpression: OPENBRACKET Name • Dims CLOSEBRACKET UnaryExpressionNotPlusMinus
+  379 LeftHandSide: Name •
 
     OPENSQUAREBRACKET  shift, and go to state 525
     DOT                shift, and go to state 49
@@ -8263,36 +8263,36 @@ State 416
 
 State 417
 
-  294 PrimaryNoNewArray: OPENBRACKET Expression . CLOSEBRACKET
-  342 CastExpression: OPENBRACKET Expression . CLOSEBRACKET UnaryExpressionNotPlusMinus
+  294 PrimaryNoNewArray: OPENBRACKET Expression • CLOSEBRACKET
+  342 CastExpression: OPENBRACKET Expression • CLOSEBRACKET UnaryExpressionNotPlusMinus
 
     CLOSEBRACKET  shift, and go to state 527
 
 
 State 418
 
-  337 UnaryExpressionNotPlusMinus: TILDA UnaryExpression .
+  337 UnaryExpressionNotPlusMinus: TILDA UnaryExpression •
 
     $default  reduce using rule 337 (UnaryExpressionNotPlusMinus)
 
 
 State 419
 
-  338 UnaryExpressionNotPlusMinus: NOT UnaryExpression .
+  338 UnaryExpressionNotPlusMinus: NOT UnaryExpression •
 
     $default  reduce using rule 338 (UnaryExpressionNotPlusMinus)
 
 
 State 420
 
-  332 UnaryExpression: MINUS UnaryExpression .
+  332 UnaryExpression: MINUS UnaryExpression •
 
     $default  reduce using rule 332 (UnaryExpression)
 
 
 State 421
 
-  321 ArrayAccess: Name OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
+  321 ArrayAccess: Name OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8351,7 +8351,7 @@ State 421
 
 State 422
 
-  346 MultiplicativeExpression: MultiplicativeExpression FORWARDSLASH . UnaryExpression
+  346 MultiplicativeExpression: MultiplicativeExpression FORWARDSLASH • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8395,7 +8395,7 @@ State 422
 
 State 423
 
-  347 MultiplicativeExpression: MultiplicativeExpression MODULO . UnaryExpression
+  347 MultiplicativeExpression: MultiplicativeExpression MODULO • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8439,7 +8439,7 @@ State 423
 
 State 424
 
-  345 MultiplicativeExpression: MultiplicativeExpression STAR . UnaryExpression
+  345 MultiplicativeExpression: MultiplicativeExpression STAR • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8483,7 +8483,7 @@ State 424
 
 State 425
 
-  349 AdditiveExpression: AdditiveExpression PLUS . MultiplicativeExpression
+  349 AdditiveExpression: AdditiveExpression PLUS • MultiplicativeExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8528,7 +8528,7 @@ State 425
 
 State 426
 
-  350 AdditiveExpression: AdditiveExpression MINUS . MultiplicativeExpression
+  350 AdditiveExpression: AdditiveExpression MINUS • MultiplicativeExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8573,7 +8573,7 @@ State 426
 
 State 427
 
-  352 ShiftExpression: ShiftExpression OPENANGULARBRACKETOPENANGULARBRACKET . AdditiveExpression
+  352 ShiftExpression: ShiftExpression OPENANGULARBRACKETOPENANGULARBRACKET • AdditiveExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8619,7 +8619,7 @@ State 427
 
 State 428
 
-  353 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKET . AdditiveExpression
+  353 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKET • AdditiveExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8665,7 +8665,7 @@ State 428
 
 State 429
 
-  354 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET . AdditiveExpression
+  354 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET • AdditiveExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8711,7 +8711,7 @@ State 429
 
 State 430
 
-  356 RelationalExpression: RelationalExpression OPENANGULARBRACKET . ShiftExpression
+  356 RelationalExpression: RelationalExpression OPENANGULARBRACKET • ShiftExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8758,7 +8758,7 @@ State 430
 
 State 431
 
-  357 RelationalExpression: RelationalExpression CLOSEANGULARBRACKET . ShiftExpression
+  357 RelationalExpression: RelationalExpression CLOSEANGULARBRACKET • ShiftExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8805,7 +8805,7 @@ State 431
 
 State 432
 
-  360 RelationalExpression: RelationalExpression INSTANCEOF . ReferenceType
+  360 RelationalExpression: RelationalExpression INSTANCEOF • ReferenceType
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -8831,7 +8831,7 @@ State 432
 
 State 433
 
-  358 RelationalExpression: RelationalExpression OPENANGULARBRACKETEQUAL . ShiftExpression
+  358 RelationalExpression: RelationalExpression OPENANGULARBRACKETEQUAL • ShiftExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8878,7 +8878,7 @@ State 433
 
 State 434
 
-  359 RelationalExpression: RelationalExpression CLOSEANGULARBRACKETEQUAL . ShiftExpression
+  359 RelationalExpression: RelationalExpression CLOSEANGULARBRACKETEQUAL • ShiftExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8925,7 +8925,7 @@ State 434
 
 State 435
 
-  363 EqualityExpression: EqualityExpression NOTEQUAL . RelationalExpression
+  363 EqualityExpression: EqualityExpression NOTEQUAL • RelationalExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -8973,7 +8973,7 @@ State 435
 
 State 436
 
-  362 EqualityExpression: EqualityExpression EQUALEQUAL . RelationalExpression
+  362 EqualityExpression: EqualityExpression EQUALEQUAL • RelationalExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9021,7 +9021,7 @@ State 436
 
 State 437
 
-  365 AndExpression: AndExpression AND . EqualityExpression
+  365 AndExpression: AndExpression AND • EqualityExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9070,7 +9070,7 @@ State 437
 
 State 438
 
-  367 ExclusiveOrExpression: ExclusiveOrExpression XOR . AndExpression
+  367 ExclusiveOrExpression: ExclusiveOrExpression XOR • AndExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9120,7 +9120,7 @@ State 438
 
 State 439
 
-  369 InclusiveOrExpression: InclusiveOrExpression OR . ExclusiveOrExpression
+  369 InclusiveOrExpression: InclusiveOrExpression OR • ExclusiveOrExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9171,7 +9171,7 @@ State 439
 
 State 440
 
-  371 ConditionalAndExpression: ConditionalAndExpression ANDAND . InclusiveOrExpression
+  371 ConditionalAndExpression: ConditionalAndExpression ANDAND • InclusiveOrExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9223,7 +9223,7 @@ State 440
 
 State 441
 
-  373 ConditionalOrExpression: ConditionalOrExpression OROR . ConditionalAndExpression
+  373 ConditionalOrExpression: ConditionalOrExpression OROR • ConditionalAndExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9276,7 +9276,7 @@ State 441
 
 State 442
 
-  375 ConditionalExpression: ConditionalOrExpression QUESTION . Expression COLON ConditionalExpression
+  375 ConditionalExpression: ConditionalOrExpression QUESTION • Expression COLON ConditionalExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9335,37 +9335,37 @@ State 442
 
 State 443
 
-  294 PrimaryNoNewArray: OPENBRACKET Expression CLOSEBRACKET .
+  294 PrimaryNoNewArray: OPENBRACKET Expression CLOSEBRACKET •
 
     $default  reduce using rule 294 (PrimaryNoNewArray)
 
 
 State 444
 
-  200 LabeledStatement: Identifier COLON Statement .
+  200 LabeledStatement: Identifier COLON Statement •
 
     $default  reduce using rule 200 (LabeledStatement)
 
 
 State 445
 
-  175 LocalVariableDeclarationStatement: FINAL LocalVariableDeclaration SEMICOLON .
+  175 LocalVariableDeclarationStatement: FINAL LocalVariableDeclaration SEMICOLON •
 
     $default  reduce using rule 175 (LocalVariableDeclarationStatement)
 
 
 State 446
 
-  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression . CLOSEBRACKET Block
+  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression • CLOSEBRACKET Block
 
     CLOSEBRACKET  shift, and go to state 550
 
 
 State 447
 
-  313 FieldAccess: SUPER DOT Identifier .
-  319 MethodInvocation: SUPER DOT Identifier . OPENBRACKET ArgumentList CLOSEBRACKET
-  320                 | SUPER DOT Identifier . OPENBRACKET CLOSEBRACKET
+  313 FieldAccess: SUPER DOT Identifier •
+  319 MethodInvocation: SUPER DOT Identifier • OPENBRACKET ArgumentList CLOSEBRACKET
+  320                 | SUPER DOT Identifier • OPENBRACKET CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 551
 
@@ -9374,21 +9374,21 @@ State 447
 
 State 448
 
-  275 BreakStatement: BREAK Identifier SEMICOLON .
+  275 BreakStatement: BREAK Identifier SEMICOLON •
 
     $default  reduce using rule 275 (BreakStatement)
 
 
 State 449
 
-  279 ReturnStatement: RETURN Expression SEMICOLON .
+  279 ReturnStatement: RETURN Expression SEMICOLON •
 
     $default  reduce using rule 279 (ReturnStatement)
 
 
 State 450
 
-  288 CatchClause: CATCH . $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block
+  288 CatchClause: CATCH • $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block
 
     $default  reduce using rule 287 ($@16)
 
@@ -9397,7 +9397,7 @@ State 450
 
 State 451
 
-  289 Finally: FINALLY . Block
+  289 Finally: FINALLY • Block
 
     OPENCURLYBRACKET  shift, and go to state 113
 
@@ -9406,9 +9406,9 @@ State 451
 
 State 452
 
-  282 TryStatement: TRY Block Catches .
-  283             | TRY Block Catches . Finally
-  286 Catches: Catches . CatchClause
+  282 TryStatement: TRY Block Catches •
+  283             | TRY Block Catches • Finally
+  286 Catches: Catches • CatchClause
 
     CATCH    shift, and go to state 450
     FINALLY  shift, and go to state 451
@@ -9421,35 +9421,35 @@ State 452
 
 State 453
 
-  285 Catches: CatchClause .
+  285 Catches: CatchClause •
 
     $default  reduce using rule 285 (Catches)
 
 
 State 454
 
-  284 TryStatement: TRY Block Finally .
+  284 TryStatement: TRY Block Finally •
 
     $default  reduce using rule 284 (TryStatement)
 
 
 State 455
 
-  280 ThrowStatement: THROW Expression SEMICOLON .
+  280 ThrowStatement: THROW Expression SEMICOLON •
 
     $default  reduce using rule 280 (ThrowStatement)
 
 
 State 456
 
-  276 ContinueStatement: CONTINUE Identifier SEMICOLON .
+  276 ContinueStatement: CONTINUE Identifier SEMICOLON •
 
     $default  reduce using rule 276 (ContinueStatement)
 
 
 State 457
 
-  309 DimExpr: OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
+  309 DimExpr: OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9508,9 +9508,9 @@ State 457
 
 State 458
 
-  303 ArrayCreationExpression: NEW PrimitiveType DimExprs . Dims
-  304                        | NEW PrimitiveType DimExprs .
-  308 DimExprs: DimExprs . DimExpr
+  303 ArrayCreationExpression: NEW PrimitiveType DimExprs • Dims
+  304                        | NEW PrimitiveType DimExprs •
+  308 DimExprs: DimExprs • DimExpr
 
     OPENSQUAREBRACKET  shift, and go to state 557
 
@@ -9522,16 +9522,16 @@ State 458
 
 State 459
 
-  307 DimExprs: DimExpr .
+  307 DimExprs: DimExpr •
 
     $default  reduce using rule 307 (DimExprs)
 
 
 State 460
 
-  305 ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs . Dims
-  306                        | NEW ClassOrInterfaceType DimExprs .
-  308 DimExprs: DimExprs . DimExpr
+  305 ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs • Dims
+  306                        | NEW ClassOrInterfaceType DimExprs •
+  308 DimExprs: DimExprs • DimExpr
 
     OPENSQUAREBRACKET  shift, and go to state 557
 
@@ -9543,8 +9543,8 @@ State 460
 
 State 461
 
-  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET . ArgumentList CLOSEBRACKET
-  300                                | NEW ClassType OPENBRACKET . CLOSEBRACKET
+  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET • ArgumentList CLOSEBRACKET
+  300                                | NEW ClassType OPENBRACKET • CLOSEBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -9605,16 +9605,16 @@ State 461
 
 State 462
 
-  321 ArrayAccess: Name OPENSQUAREBRACKET Expression . CLOSESQUAREBRACKET
+  321 ArrayAccess: Name OPENSQUAREBRACKET Expression • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 563
 
 
 State 463
 
-   31 SimpleName: Identifier .
-  200 LabeledStatement: Identifier . COLON Statement
-  201 LabeledStatementNoShortIf: Identifier . COLON StatementNoShortIf
+   31 SimpleName: Identifier •
+  200 LabeledStatement: Identifier • COLON Statement
+  201 LabeledStatementNoShortIf: Identifier • COLON StatementNoShortIf
 
     COLON  shift, and go to state 564
 
@@ -9623,22 +9623,22 @@ State 463
 
 State 464
 
-  213 IfThenStatement: DummyIfStatement1 CLOSEBRACKET Statement .
+  213 IfThenStatement: DummyIfStatement1 CLOSEBRACKET Statement •
 
     $default  reduce using rule 213 (IfThenStatement)
 
 
 State 465
 
-  214 DummyIfStatement2: DummyIfStatement1 CLOSEBRACKET StatementNoShortIf .
+  214 DummyIfStatement2: DummyIfStatement1 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 214 (DummyIfStatement2)
 
 
 State 466
 
-  177 Statement: StatementWithoutTrailingSubstatement .
-  183 StatementNoShortIf: StatementWithoutTrailingSubstatement .
+  177 Statement: StatementWithoutTrailingSubstatement •
+  183 StatementNoShortIf: StatementWithoutTrailingSubstatement •
 
     ELSE      reduce using rule 183 (StatementNoShortIf)
     $default  reduce using rule 177 (Statement)
@@ -9646,15 +9646,15 @@ State 466
 
 State 467
 
-  184 StatementNoShortIf: LabeledStatementNoShortIf .
+  184 StatementNoShortIf: LabeledStatementNoShortIf •
 
     $default  reduce using rule 184 (StatementNoShortIf)
 
 
 State 468
 
-  215 IfThenElseStatement: DummyIfStatement2 . DummyElseStatement Statement
-  216 IfThenElseStatementNoShortIf: DummyIfStatement2 . DummyElseStatement StatementNoShortIf
+  215 IfThenElseStatement: DummyIfStatement2 • DummyElseStatement Statement
+  216 IfThenElseStatementNoShortIf: DummyIfStatement2 • DummyElseStatement StatementNoShortIf
 
     ELSE  shift, and go to state 341
 
@@ -9663,38 +9663,38 @@ State 468
 
 State 469
 
-  185 StatementNoShortIf: IfThenElseStatementNoShortIf .
+  185 StatementNoShortIf: IfThenElseStatementNoShortIf •
 
     $default  reduce using rule 185 (StatementNoShortIf)
 
 
 State 470
 
-  232 WhileStatement: DummyWhileStatement1 . CLOSEBRACKET Statement
-  233 WhileStatementNoShortIf: DummyWhileStatement1 . CLOSEBRACKET StatementNoShortIf
+  232 WhileStatement: DummyWhileStatement1 • CLOSEBRACKET Statement
+  233 WhileStatementNoShortIf: DummyWhileStatement1 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 566
 
 
 State 471
 
-  186 StatementNoShortIf: WhileStatementNoShortIf .
+  186 StatementNoShortIf: WhileStatementNoShortIf •
 
     $default  reduce using rule 186 (StatementNoShortIf)
 
 
 State 472
 
-  260 ForStatement: DummyForStatement3 . CLOSEBRACKET Statement
-  268 ForStatementNoShortIf: DummyForStatement3 . CLOSEBRACKET StatementNoShortIf
+  260 ForStatement: DummyForStatement3 • CLOSEBRACKET Statement
+  268 ForStatementNoShortIf: DummyForStatement3 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 567
 
 
 State 473
 
-  255 ForStatement: DummyForStatement4 . Statement
-  263 ForStatementNoShortIf: DummyForStatement4 . StatementNoShortIf
+  255 ForStatement: DummyForStatement4 • Statement
+  263 ForStatementNoShortIf: DummyForStatement4 • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -9794,16 +9794,16 @@ State 473
 
 State 474
 
-  253 ForStatement: DummyForStatement6 . CLOSEBRACKET Statement
-  261 ForStatementNoShortIf: DummyForStatement6 . CLOSEBRACKET StatementNoShortIf
+  253 ForStatement: DummyForStatement6 • CLOSEBRACKET Statement
+  261 ForStatementNoShortIf: DummyForStatement6 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 569
 
 
 State 475
 
-  258 ForStatement: DummyForStatement7 . Statement
-  266 ForStatementNoShortIf: DummyForStatement7 . StatementNoShortIf
+  258 ForStatement: DummyForStatement7 • Statement
+  266 ForStatementNoShortIf: DummyForStatement7 • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -9903,16 +9903,16 @@ State 475
 
 State 476
 
-  254 ForStatement: DummyForStatement9 . CLOSEBRACKET Statement
-  262 ForStatementNoShortIf: DummyForStatement9 . CLOSEBRACKET StatementNoShortIf
+  254 ForStatement: DummyForStatement9 • CLOSEBRACKET Statement
+  262 ForStatementNoShortIf: DummyForStatement9 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 571
 
 
 State 477
 
-  257 ForStatement: DummyForStatement10 . Statement
-  265 ForStatementNoShortIf: DummyForStatement10 . StatementNoShortIf
+  257 ForStatement: DummyForStatement10 • Statement
+  265 ForStatementNoShortIf: DummyForStatement10 • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -10012,16 +10012,16 @@ State 477
 
 State 478
 
-  256 ForStatement: DummyForStatement12 . CLOSEBRACKET Statement
-  264 ForStatementNoShortIf: DummyForStatement12 . CLOSEBRACKET StatementNoShortIf
+  256 ForStatement: DummyForStatement12 • CLOSEBRACKET Statement
+  264 ForStatementNoShortIf: DummyForStatement12 • CLOSEBRACKET StatementNoShortIf
 
     CLOSEBRACKET  shift, and go to state 573
 
 
 State 479
 
-  259 ForStatement: DummyForStatement13 . Statement
-  267 ForStatementNoShortIf: DummyForStatement13 . StatementNoShortIf
+  259 ForStatement: DummyForStatement13 • Statement
+  267 ForStatementNoShortIf: DummyForStatement13 • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -10121,78 +10121,78 @@ State 479
 
 State 480
 
-  187 StatementNoShortIf: ForStatementNoShortIf .
+  187 StatementNoShortIf: ForStatementNoShortIf •
 
     $default  reduce using rule 187 (StatementNoShortIf)
 
 
 State 481
 
-  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement Statement .
+  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement Statement •
 
     $default  reduce using rule 215 (IfThenElseStatement)
 
 
 State 482
 
-  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression . CLOSEBRACKET SwitchBlock
+  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression • CLOSEBRACKET SwitchBlock
 
     CLOSEBRACKET  shift, and go to state 575
 
 
 State 483
 
-  231 DummyWhileStatement1: DummyWhileStatement OPENBRACKET Expression .
+  231 DummyWhileStatement1: DummyWhileStatement OPENBRACKET Expression •
 
     $default  reduce using rule 231 (DummyWhileStatement1)
 
 
 State 484
 
-  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET Statement .
+  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET Statement •
 
     $default  reduce using rule 232 (WhileStatement)
 
 
 State 485
 
-  235 DummyDoStatement1: DummyDoStatement Statement WHILE . OPENBRACKET Expression
+  235 DummyDoStatement1: DummyDoStatement Statement WHILE • OPENBRACKET Expression
 
     OPENBRACKET  shift, and go to state 576
 
 
 State 486
 
-  236 DoStatement: DummyDoStatement1 CLOSEBRACKET SEMICOLON .
+  236 DoStatement: DummyDoStatement1 CLOSEBRACKET SEMICOLON •
 
     $default  reduce using rule 236 (DoStatement)
 
 
 State 487
 
-  243 DummyForStatement15: DummyForStatement OPENBRACKET SEMICOLON .
+  243 DummyForStatement15: DummyForStatement OPENBRACKET SEMICOLON •
 
     $default  reduce using rule 243 (DummyForStatement15)
 
 
 State 488
 
-  270 ForInit: LocalVariableDeclaration .
+  270 ForInit: LocalVariableDeclaration •
 
     $default  reduce using rule 270 (ForInit)
 
 
 State 489
 
-  238 DummyForStatement1: DummyForStatement OPENBRACKET ForInit .
+  238 DummyForStatement1: DummyForStatement OPENBRACKET ForInit •
 
     $default  reduce using rule 238 (DummyForStatement1)
 
 
 State 490
 
-  269 ForInit: StatementExpressionList .
-  273 StatementExpressionList: StatementExpressionList . COMMA StatementExpression
+  269 ForInit: StatementExpressionList •
+  273 StatementExpressionList: StatementExpressionList • COMMA StatementExpression
 
     COMMA  shift, and go to state 498
 
@@ -10201,56 +10201,56 @@ State 490
 
 State 491
 
-  247 DummyForStatement8: DummyForStatement1 SEMICOLON SEMICOLON .
+  247 DummyForStatement8: DummyForStatement1 SEMICOLON SEMICOLON •
 
     $default  reduce using rule 247 (DummyForStatement8)
 
 
 State 492
 
-  242 DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET .
+  242 DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET •
 
     $default  reduce using rule 242 (DummyForStatement4)
 
 
 State 493
 
-  241 DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate .
+  241 DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate •
 
     $default  reduce using rule 241 (DummyForStatement3)
 
 
 State 494
 
-  260 ForStatement: DummyForStatement3 CLOSEBRACKET Statement .
+  260 ForStatement: DummyForStatement3 CLOSEBRACKET Statement •
 
     $default  reduce using rule 260 (ForStatement)
 
 
 State 495
 
-  246 DummyForStatement7: DummyForStatement5 SEMICOLON CLOSEBRACKET .
+  246 DummyForStatement7: DummyForStatement5 SEMICOLON CLOSEBRACKET •
 
     $default  reduce using rule 246 (DummyForStatement7)
 
 
 State 496
 
-  245 DummyForStatement6: DummyForStatement5 SEMICOLON ForUpdate .
+  245 DummyForStatement6: DummyForStatement5 SEMICOLON ForUpdate •
 
     $default  reduce using rule 245 (DummyForStatement6)
 
 
 State 497
 
-  253 ForStatement: DummyForStatement6 CLOSEBRACKET Statement .
+  253 ForStatement: DummyForStatement6 CLOSEBRACKET Statement •
 
     $default  reduce using rule 253 (ForStatement)
 
 
 State 498
 
-  273 StatementExpressionList: StatementExpressionList COMMA . StatementExpression
+  273 StatementExpressionList: StatementExpressionList COMMA • StatementExpression
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -10290,23 +10290,23 @@ State 498
 
 State 499
 
-  254 ForStatement: DummyForStatement9 CLOSEBRACKET Statement .
+  254 ForStatement: DummyForStatement9 CLOSEBRACKET Statement •
 
     $default  reduce using rule 254 (ForStatement)
 
 
 State 500
 
-  256 ForStatement: DummyForStatement12 CLOSEBRACKET Statement .
+  256 ForStatement: DummyForStatement12 CLOSEBRACKET Statement •
 
     $default  reduce using rule 256 (ForStatement)
 
 
 State 501
 
-  312 FieldAccess: Primary DOT Identifier .
-  317 MethodInvocation: Primary DOT Identifier . OPENBRACKET ArgumentList CLOSEBRACKET
-  318                 | Primary DOT Identifier . OPENBRACKET CLOSEBRACKET
+  312 FieldAccess: Primary DOT Identifier •
+  317 MethodInvocation: Primary DOT Identifier • OPENBRACKET ArgumentList CLOSEBRACKET
+  318                 | Primary DOT Identifier • OPENBRACKET CLOSEBRACKET
 
     OPENBRACKET  shift, and go to state 578
 
@@ -10315,22 +10315,22 @@ State 501
 
 State 502
 
-  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET Expression . CLOSESQUAREBRACKET
+  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET Expression • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 579
 
 
 State 503
 
-  316 MethodInvocation: DummyMethodInvocation OPENBRACKET CLOSEBRACKET .
+  316 MethodInvocation: DummyMethodInvocation OPENBRACKET CLOSEBRACKET •
 
     $default  reduce using rule 316 (MethodInvocation)
 
 
 State 504
 
-  302 ArgumentList: ArgumentList . COMMA Expression
-  315 MethodInvocation: DummyMethodInvocation OPENBRACKET ArgumentList . CLOSEBRACKET
+  302 ArgumentList: ArgumentList • COMMA Expression
+  315 MethodInvocation: DummyMethodInvocation OPENBRACKET ArgumentList • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 580
     COMMA         shift, and go to state 581
@@ -10338,43 +10338,43 @@ State 504
 
 State 505
 
-  301 ArgumentList: Expression .
+  301 ArgumentList: Expression •
 
     $default  reduce using rule 301 (ArgumentList)
 
 
 State 506
 
-  378 Assignment: LeftHandSide AssignmentOperator AssignmentExpression .
+  378 Assignment: LeftHandSide AssignmentOperator AssignmentExpression •
 
     $default  reduce using rule 378 (Assignment)
 
 
 State 507
 
-  135 ConstructorDeclarator: SimpleName OPENBRACKET $@11 CLOSEBRACKET .
+  135 ConstructorDeclarator: SimpleName OPENBRACKET $@11 CLOSEBRACKET •
 
     $default  reduce using rule 135 (ConstructorDeclarator)
 
 
 State 508
 
-  128 ConstructorDeclaration: Modifiers ConstructorDeclarator Throws ConstructorBody .
+  128 ConstructorDeclaration: Modifiers ConstructorDeclarator Throws ConstructorBody •
 
     $default  reduce using rule 128 (ConstructorDeclaration)
 
 
 State 509
 
-  119 FormalParameterList: FormalParameterList COMMA FormalParameter .
+  119 FormalParameterList: FormalParameterList COMMA FormalParameter •
 
     $default  reduce using rule 119 (FormalParameterList)
 
 
 State 510
 
-  140 ExplicitConstructorInvocation: THIS OPENBRACKET . ArgumentList CLOSEBRACKET SEMICOLON
-  141                              | THIS OPENBRACKET . CLOSEBRACKET SEMICOLON
+  140 ExplicitConstructorInvocation: THIS OPENBRACKET • ArgumentList CLOSEBRACKET SEMICOLON
+  141                              | THIS OPENBRACKET • CLOSEBRACKET SEMICOLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -10435,8 +10435,8 @@ State 510
 
 State 511
 
-  142 ExplicitConstructorInvocation: SUPER OPENBRACKET . ArgumentList CLOSEBRACKET SEMICOLON
-  143                              | SUPER OPENBRACKET . CLOSEBRACKET SEMICOLON
+  142 ExplicitConstructorInvocation: SUPER OPENBRACKET • ArgumentList CLOSEBRACKET SEMICOLON
+  143                              | SUPER OPENBRACKET • CLOSEBRACKET SEMICOLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -10497,15 +10497,15 @@ State 511
 
 State 512
 
-  138 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation CLOSECURLYBRACKET .
+  138 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation CLOSECURLYBRACKET •
 
     $default  reduce using rule 138 (ConstructorBody)
 
 
 State 513
 
-  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements . CLOSECURLYBRACKET
-  171 BlockStatements: BlockStatements . BlockStatement
+  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements • CLOSECURLYBRACKET
+  171 BlockStatements: BlockStatements • BlockStatement
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -10621,14 +10621,14 @@ State 513
 
 State 514
 
-  137 ConstructorBody: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET .
+  137 ConstructorBody: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET •
 
     $default  reduce using rule 137 (ConstructorBody)
 
 
 State 515
 
-  123 ClassTypeList: ClassTypeList COMMA . ClassType
+  123 ClassTypeList: ClassTypeList COMMA • ClassType
 
     Identifier  shift, and go to state 31
 
@@ -10641,37 +10641,37 @@ State 515
 
 State 516
 
-  116 MethodDeclarator: Identifier OPENBRACKET FormalParameterList CLOSEBRACKET .
+  116 MethodDeclarator: Identifier OPENBRACKET FormalParameterList CLOSEBRACKET •
 
     $default  reduce using rule 116 (MethodDeclarator)
 
 
 State 517
 
-  165 ArrayInitializer: OPENCURLYBRACKET CLOSECURLYBRACKET .
+  165 ArrayInitializer: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 165 (ArrayInitializer)
 
 
 State 518
 
-  163 ArrayInitializer: OPENCURLYBRACKET COMMA . CLOSECURLYBRACKET
+  163 ArrayInitializer: OPENCURLYBRACKET COMMA • CLOSECURLYBRACKET
 
     CLOSECURLYBRACKET  shift, and go to state 588
 
 
 State 519
 
-  166 VariableInitializers: VariableInitializer .
+  166 VariableInitializers: VariableInitializer •
 
     $default  reduce using rule 166 (VariableInitializers)
 
 
 State 520
 
-  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers . COMMA CLOSECURLYBRACKET
-  164                 | OPENCURLYBRACKET VariableInitializers . CLOSECURLYBRACKET
-  167 VariableInitializers: VariableInitializers . COMMA VariableInitializer
+  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers • COMMA CLOSECURLYBRACKET
+  164                 | OPENCURLYBRACKET VariableInitializers • CLOSECURLYBRACKET
+  167 VariableInitializers: VariableInitializers • COMMA VariableInitializer
 
     CLOSECURLYBRACKET  shift, and go to state 589
     COMMA              shift, and go to state 590
@@ -10679,14 +10679,14 @@ State 520
 
 State 521
 
-  102 VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+  102 VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 102 (VariableDeclaratorId)
 
 
 State 522
 
-  341 CastExpression: OPENBRACKET PrimitiveType CLOSEBRACKET . UnaryExpression
+  341 CastExpression: OPENBRACKET PrimitiveType CLOSEBRACKET • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -10730,15 +10730,15 @@ State 522
 
 State 523
 
-  310 Dims: OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+  310 Dims: OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 592
 
 
 State 524
 
-  311 Dims: Dims . OPENSQUAREBRACKET CLOSESQUAREBRACKET
-  340 CastExpression: OPENBRACKET PrimitiveType Dims . CLOSEBRACKET UnaryExpression
+  311 Dims: Dims • OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  340 CastExpression: OPENBRACKET PrimitiveType Dims • CLOSEBRACKET UnaryExpression
 
     CLOSEBRACKET       shift, and go to state 593
     OPENSQUAREBRACKET  shift, and go to state 594
@@ -10746,8 +10746,8 @@ State 524
 
 State 525
 
-  310 Dims: OPENSQUAREBRACKET . CLOSESQUAREBRACKET
-  321 ArrayAccess: Name OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
+  310 Dims: OPENSQUAREBRACKET • CLOSESQUAREBRACKET
+  321 ArrayAccess: Name OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -10807,8 +10807,8 @@ State 525
 
 State 526
 
-  311 Dims: Dims . OPENSQUAREBRACKET CLOSESQUAREBRACKET
-  343 CastExpression: OPENBRACKET Name Dims . CLOSEBRACKET UnaryExpressionNotPlusMinus
+  311 Dims: Dims • OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  343 CastExpression: OPENBRACKET Name Dims • CLOSEBRACKET UnaryExpressionNotPlusMinus
 
     CLOSEBRACKET       shift, and go to state 595
     OPENSQUAREBRACKET  shift, and go to state 594
@@ -10816,8 +10816,8 @@ State 526
 
 State 527
 
-  294 PrimaryNoNewArray: OPENBRACKET Expression CLOSEBRACKET .
-  342 CastExpression: OPENBRACKET Expression CLOSEBRACKET . UnaryExpressionNotPlusMinus
+  294 PrimaryNoNewArray: OPENBRACKET Expression CLOSEBRACKET •
+  342 CastExpression: OPENBRACKET Expression CLOSEBRACKET • UnaryExpressionNotPlusMinus
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -10856,31 +10856,31 @@ State 527
 
 State 528
 
-  346 MultiplicativeExpression: MultiplicativeExpression FORWARDSLASH UnaryExpression .
+  346 MultiplicativeExpression: MultiplicativeExpression FORWARDSLASH UnaryExpression •
 
     $default  reduce using rule 346 (MultiplicativeExpression)
 
 
 State 529
 
-  347 MultiplicativeExpression: MultiplicativeExpression MODULO UnaryExpression .
+  347 MultiplicativeExpression: MultiplicativeExpression MODULO UnaryExpression •
 
     $default  reduce using rule 347 (MultiplicativeExpression)
 
 
 State 530
 
-  345 MultiplicativeExpression: MultiplicativeExpression STAR UnaryExpression .
+  345 MultiplicativeExpression: MultiplicativeExpression STAR UnaryExpression •
 
     $default  reduce using rule 345 (MultiplicativeExpression)
 
 
 State 531
 
-  345 MultiplicativeExpression: MultiplicativeExpression . STAR UnaryExpression
-  346                         | MultiplicativeExpression . FORWARDSLASH UnaryExpression
-  347                         | MultiplicativeExpression . MODULO UnaryExpression
-  349 AdditiveExpression: AdditiveExpression PLUS MultiplicativeExpression .
+  345 MultiplicativeExpression: MultiplicativeExpression • STAR UnaryExpression
+  346                         | MultiplicativeExpression • FORWARDSLASH UnaryExpression
+  347                         | MultiplicativeExpression • MODULO UnaryExpression
+  349 AdditiveExpression: AdditiveExpression PLUS MultiplicativeExpression •
 
     FORWARDSLASH  shift, and go to state 422
     MODULO        shift, and go to state 423
@@ -10891,10 +10891,10 @@ State 531
 
 State 532
 
-  345 MultiplicativeExpression: MultiplicativeExpression . STAR UnaryExpression
-  346                         | MultiplicativeExpression . FORWARDSLASH UnaryExpression
-  347                         | MultiplicativeExpression . MODULO UnaryExpression
-  350 AdditiveExpression: AdditiveExpression MINUS MultiplicativeExpression .
+  345 MultiplicativeExpression: MultiplicativeExpression • STAR UnaryExpression
+  346                         | MultiplicativeExpression • FORWARDSLASH UnaryExpression
+  347                         | MultiplicativeExpression • MODULO UnaryExpression
+  350 AdditiveExpression: AdditiveExpression MINUS MultiplicativeExpression •
 
     FORWARDSLASH  shift, and go to state 422
     MODULO        shift, and go to state 423
@@ -10905,9 +10905,9 @@ State 532
 
 State 533
 
-  349 AdditiveExpression: AdditiveExpression . PLUS MultiplicativeExpression
-  350                   | AdditiveExpression . MINUS MultiplicativeExpression
-  352 ShiftExpression: ShiftExpression OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression .
+  349 AdditiveExpression: AdditiveExpression • PLUS MultiplicativeExpression
+  350                   | AdditiveExpression • MINUS MultiplicativeExpression
+  352 ShiftExpression: ShiftExpression OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression •
 
     PLUS   shift, and go to state 425
     MINUS  shift, and go to state 426
@@ -10917,9 +10917,9 @@ State 533
 
 State 534
 
-  349 AdditiveExpression: AdditiveExpression . PLUS MultiplicativeExpression
-  350                   | AdditiveExpression . MINUS MultiplicativeExpression
-  353 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression .
+  349 AdditiveExpression: AdditiveExpression • PLUS MultiplicativeExpression
+  350                   | AdditiveExpression • MINUS MultiplicativeExpression
+  353 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression •
 
     PLUS   shift, and go to state 425
     MINUS  shift, and go to state 426
@@ -10929,9 +10929,9 @@ State 534
 
 State 535
 
-  349 AdditiveExpression: AdditiveExpression . PLUS MultiplicativeExpression
-  350                   | AdditiveExpression . MINUS MultiplicativeExpression
-  354 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression .
+  349 AdditiveExpression: AdditiveExpression • PLUS MultiplicativeExpression
+  350                   | AdditiveExpression • MINUS MultiplicativeExpression
+  354 ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression •
 
     PLUS   shift, and go to state 425
     MINUS  shift, and go to state 426
@@ -10941,10 +10941,10 @@ State 535
 
 State 536
 
-  352 ShiftExpression: ShiftExpression . OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
-  353                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  354                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  356 RelationalExpression: RelationalExpression OPENANGULARBRACKET ShiftExpression .
+  352 ShiftExpression: ShiftExpression • OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
+  353                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  354                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  356 RelationalExpression: RelationalExpression OPENANGULARBRACKET ShiftExpression •
 
     OPENANGULARBRACKETOPENANGULARBRACKET                       shift, and go to state 427
     CLOSEANGULARBRACKETCLOSEANGULARBRACKET                     shift, and go to state 428
@@ -10955,10 +10955,10 @@ State 536
 
 State 537
 
-  352 ShiftExpression: ShiftExpression . OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
-  353                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  354                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  357 RelationalExpression: RelationalExpression CLOSEANGULARBRACKET ShiftExpression .
+  352 ShiftExpression: ShiftExpression • OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
+  353                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  354                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  357 RelationalExpression: RelationalExpression CLOSEANGULARBRACKET ShiftExpression •
 
     OPENANGULARBRACKETOPENANGULARBRACKET                       shift, and go to state 427
     CLOSEANGULARBRACKETCLOSEANGULARBRACKET                     shift, and go to state 428
@@ -10969,24 +10969,24 @@ State 537
 
 State 538
 
-   26 ArrayType: PrimitiveType . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+   26 ArrayType: PrimitiveType • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 148
 
 
 State 539
 
-  360 RelationalExpression: RelationalExpression INSTANCEOF ReferenceType .
+  360 RelationalExpression: RelationalExpression INSTANCEOF ReferenceType •
 
     $default  reduce using rule 360 (RelationalExpression)
 
 
 State 540
 
-  352 ShiftExpression: ShiftExpression . OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
-  353                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  354                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  358 RelationalExpression: RelationalExpression OPENANGULARBRACKETEQUAL ShiftExpression .
+  352 ShiftExpression: ShiftExpression • OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
+  353                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  354                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  358 RelationalExpression: RelationalExpression OPENANGULARBRACKETEQUAL ShiftExpression •
 
     OPENANGULARBRACKETOPENANGULARBRACKET                       shift, and go to state 427
     CLOSEANGULARBRACKETCLOSEANGULARBRACKET                     shift, and go to state 428
@@ -10997,10 +10997,10 @@ State 540
 
 State 541
 
-  352 ShiftExpression: ShiftExpression . OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
-  353                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  354                | ShiftExpression . CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
-  359 RelationalExpression: RelationalExpression CLOSEANGULARBRACKETEQUAL ShiftExpression .
+  352 ShiftExpression: ShiftExpression • OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression
+  353                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  354                | ShiftExpression • CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression
+  359 RelationalExpression: RelationalExpression CLOSEANGULARBRACKETEQUAL ShiftExpression •
 
     OPENANGULARBRACKETOPENANGULARBRACKET                       shift, and go to state 427
     CLOSEANGULARBRACKETCLOSEANGULARBRACKET                     shift, and go to state 428
@@ -11011,12 +11011,12 @@ State 541
 
 State 542
 
-  356 RelationalExpression: RelationalExpression . OPENANGULARBRACKET ShiftExpression
-  357                     | RelationalExpression . CLOSEANGULARBRACKET ShiftExpression
-  358                     | RelationalExpression . OPENANGULARBRACKETEQUAL ShiftExpression
-  359                     | RelationalExpression . CLOSEANGULARBRACKETEQUAL ShiftExpression
-  360                     | RelationalExpression . INSTANCEOF ReferenceType
-  363 EqualityExpression: EqualityExpression NOTEQUAL RelationalExpression .
+  356 RelationalExpression: RelationalExpression • OPENANGULARBRACKET ShiftExpression
+  357                     | RelationalExpression • CLOSEANGULARBRACKET ShiftExpression
+  358                     | RelationalExpression • OPENANGULARBRACKETEQUAL ShiftExpression
+  359                     | RelationalExpression • CLOSEANGULARBRACKETEQUAL ShiftExpression
+  360                     | RelationalExpression • INSTANCEOF ReferenceType
+  363 EqualityExpression: EqualityExpression NOTEQUAL RelationalExpression •
 
     OPENANGULARBRACKET        shift, and go to state 430
     CLOSEANGULARBRACKET       shift, and go to state 431
@@ -11029,12 +11029,12 @@ State 542
 
 State 543
 
-  356 RelationalExpression: RelationalExpression . OPENANGULARBRACKET ShiftExpression
-  357                     | RelationalExpression . CLOSEANGULARBRACKET ShiftExpression
-  358                     | RelationalExpression . OPENANGULARBRACKETEQUAL ShiftExpression
-  359                     | RelationalExpression . CLOSEANGULARBRACKETEQUAL ShiftExpression
-  360                     | RelationalExpression . INSTANCEOF ReferenceType
-  362 EqualityExpression: EqualityExpression EQUALEQUAL RelationalExpression .
+  356 RelationalExpression: RelationalExpression • OPENANGULARBRACKET ShiftExpression
+  357                     | RelationalExpression • CLOSEANGULARBRACKET ShiftExpression
+  358                     | RelationalExpression • OPENANGULARBRACKETEQUAL ShiftExpression
+  359                     | RelationalExpression • CLOSEANGULARBRACKETEQUAL ShiftExpression
+  360                     | RelationalExpression • INSTANCEOF ReferenceType
+  362 EqualityExpression: EqualityExpression EQUALEQUAL RelationalExpression •
 
     OPENANGULARBRACKET        shift, and go to state 430
     CLOSEANGULARBRACKET       shift, and go to state 431
@@ -11047,9 +11047,9 @@ State 543
 
 State 544
 
-  362 EqualityExpression: EqualityExpression . EQUALEQUAL RelationalExpression
-  363                   | EqualityExpression . NOTEQUAL RelationalExpression
-  365 AndExpression: AndExpression AND EqualityExpression .
+  362 EqualityExpression: EqualityExpression • EQUALEQUAL RelationalExpression
+  363                   | EqualityExpression • NOTEQUAL RelationalExpression
+  365 AndExpression: AndExpression AND EqualityExpression •
 
     NOTEQUAL    shift, and go to state 435
     EQUALEQUAL  shift, and go to state 436
@@ -11059,8 +11059,8 @@ State 544
 
 State 545
 
-  365 AndExpression: AndExpression . AND EqualityExpression
-  367 ExclusiveOrExpression: ExclusiveOrExpression XOR AndExpression .
+  365 AndExpression: AndExpression • AND EqualityExpression
+  367 ExclusiveOrExpression: ExclusiveOrExpression XOR AndExpression •
 
     AND  shift, and go to state 437
 
@@ -11069,8 +11069,8 @@ State 545
 
 State 546
 
-  367 ExclusiveOrExpression: ExclusiveOrExpression . XOR AndExpression
-  369 InclusiveOrExpression: InclusiveOrExpression OR ExclusiveOrExpression .
+  367 ExclusiveOrExpression: ExclusiveOrExpression • XOR AndExpression
+  369 InclusiveOrExpression: InclusiveOrExpression OR ExclusiveOrExpression •
 
     XOR  shift, and go to state 438
 
@@ -11079,8 +11079,8 @@ State 546
 
 State 547
 
-  369 InclusiveOrExpression: InclusiveOrExpression . OR ExclusiveOrExpression
-  371 ConditionalAndExpression: ConditionalAndExpression ANDAND InclusiveOrExpression .
+  369 InclusiveOrExpression: InclusiveOrExpression • OR ExclusiveOrExpression
+  371 ConditionalAndExpression: ConditionalAndExpression ANDAND InclusiveOrExpression •
 
     OR  shift, and go to state 439
 
@@ -11089,8 +11089,8 @@ State 547
 
 State 548
 
-  371 ConditionalAndExpression: ConditionalAndExpression . ANDAND InclusiveOrExpression
-  373 ConditionalOrExpression: ConditionalOrExpression OROR ConditionalAndExpression .
+  371 ConditionalAndExpression: ConditionalAndExpression • ANDAND InclusiveOrExpression
+  373 ConditionalOrExpression: ConditionalOrExpression OROR ConditionalAndExpression •
 
     ANDAND  shift, and go to state 440
 
@@ -11099,14 +11099,14 @@ State 548
 
 State 549
 
-  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression . COLON ConditionalExpression
+  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression • COLON ConditionalExpression
 
     COLON  shift, and go to state 597
 
 
 State 550
 
-  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression CLOSEBRACKET . Block
+  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression CLOSEBRACKET • Block
 
     OPENCURLYBRACKET  shift, and go to state 113
 
@@ -11115,8 +11115,8 @@ State 550
 
 State 551
 
-  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET . ArgumentList CLOSEBRACKET
-  320                 | SUPER DOT Identifier OPENBRACKET . CLOSEBRACKET
+  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET • ArgumentList CLOSEBRACKET
+  320                 | SUPER DOT Identifier OPENBRACKET • CLOSEBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -11177,43 +11177,43 @@ State 551
 
 State 552
 
-  288 CatchClause: CATCH $@16 . OPENBRACKET FormalParameter CLOSEBRACKET Block
+  288 CatchClause: CATCH $@16 • OPENBRACKET FormalParameter CLOSEBRACKET Block
 
     OPENBRACKET  shift, and go to state 601
 
 
 State 553
 
-  289 Finally: FINALLY Block .
+  289 Finally: FINALLY Block •
 
     $default  reduce using rule 289 (Finally)
 
 
 State 554
 
-  286 Catches: Catches CatchClause .
+  286 Catches: Catches CatchClause •
 
     $default  reduce using rule 286 (Catches)
 
 
 State 555
 
-  283 TryStatement: TRY Block Catches Finally .
+  283 TryStatement: TRY Block Catches Finally •
 
     $default  reduce using rule 283 (TryStatement)
 
 
 State 556
 
-  309 DimExpr: OPENSQUAREBRACKET Expression . CLOSESQUAREBRACKET
+  309 DimExpr: OPENSQUAREBRACKET Expression • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 602
 
 
 State 557
 
-  309 DimExpr: OPENSQUAREBRACKET . Expression CLOSESQUAREBRACKET
-  310 Dims: OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+  309 DimExpr: OPENSQUAREBRACKET • Expression CLOSESQUAREBRACKET
+  310 Dims: OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -11273,15 +11273,15 @@ State 557
 
 State 558
 
-  308 DimExprs: DimExprs DimExpr .
+  308 DimExprs: DimExprs DimExpr •
 
     $default  reduce using rule 308 (DimExprs)
 
 
 State 559
 
-  303 ArrayCreationExpression: NEW PrimitiveType DimExprs Dims .
-  311 Dims: Dims . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  303 ArrayCreationExpression: NEW PrimitiveType DimExprs Dims •
+  311 Dims: Dims • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 594
 
@@ -11290,8 +11290,8 @@ State 559
 
 State 560
 
-  305 ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs Dims .
-  311 Dims: Dims . OPENSQUAREBRACKET CLOSESQUAREBRACKET
+  305 ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs Dims •
+  311 Dims: Dims • OPENSQUAREBRACKET CLOSESQUAREBRACKET
 
     OPENSQUAREBRACKET  shift, and go to state 594
 
@@ -11300,15 +11300,15 @@ State 560
 
 State 561
 
-  300 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET CLOSEBRACKET .
+  300 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET CLOSEBRACKET •
 
     $default  reduce using rule 300 (ClassInstanceCreationExpression)
 
 
 State 562
 
-  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET ArgumentList . CLOSEBRACKET
-  302 ArgumentList: ArgumentList . COMMA Expression
+  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET ArgumentList • CLOSEBRACKET
+  302 ArgumentList: ArgumentList • COMMA Expression
 
     CLOSEBRACKET  shift, and go to state 603
     COMMA         shift, and go to state 581
@@ -11316,15 +11316,15 @@ State 562
 
 State 563
 
-  321 ArrayAccess: Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET .
+  321 ArrayAccess: Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET •
 
     $default  reduce using rule 321 (ArrayAccess)
 
 
 State 564
 
-  200 LabeledStatement: Identifier COLON . Statement
-  201 LabeledStatementNoShortIf: Identifier COLON . StatementNoShortIf
+  200 LabeledStatement: Identifier COLON • Statement
+  201 LabeledStatementNoShortIf: Identifier COLON • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11424,8 +11424,8 @@ State 564
 
 State 565
 
-  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement . Statement
-  216 IfThenElseStatementNoShortIf: DummyIfStatement2 DummyElseStatement . StatementNoShortIf
+  215 IfThenElseStatement: DummyIfStatement2 DummyElseStatement • Statement
+  216 IfThenElseStatementNoShortIf: DummyIfStatement2 DummyElseStatement • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11525,8 +11525,8 @@ State 565
 
 State 566
 
-  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET . Statement
-  233 WhileStatementNoShortIf: DummyWhileStatement1 CLOSEBRACKET . StatementNoShortIf
+  232 WhileStatement: DummyWhileStatement1 CLOSEBRACKET • Statement
+  233 WhileStatementNoShortIf: DummyWhileStatement1 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11626,8 +11626,8 @@ State 566
 
 State 567
 
-  260 ForStatement: DummyForStatement3 CLOSEBRACKET . Statement
-  268 ForStatementNoShortIf: DummyForStatement3 CLOSEBRACKET . StatementNoShortIf
+  260 ForStatement: DummyForStatement3 CLOSEBRACKET • Statement
+  268 ForStatementNoShortIf: DummyForStatement3 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11727,15 +11727,15 @@ State 567
 
 State 568
 
-  263 ForStatementNoShortIf: DummyForStatement4 StatementNoShortIf .
+  263 ForStatementNoShortIf: DummyForStatement4 StatementNoShortIf •
 
     $default  reduce using rule 263 (ForStatementNoShortIf)
 
 
 State 569
 
-  253 ForStatement: DummyForStatement6 CLOSEBRACKET . Statement
-  261 ForStatementNoShortIf: DummyForStatement6 CLOSEBRACKET . StatementNoShortIf
+  253 ForStatement: DummyForStatement6 CLOSEBRACKET • Statement
+  261 ForStatementNoShortIf: DummyForStatement6 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11835,15 +11835,15 @@ State 569
 
 State 570
 
-  266 ForStatementNoShortIf: DummyForStatement7 StatementNoShortIf .
+  266 ForStatementNoShortIf: DummyForStatement7 StatementNoShortIf •
 
     $default  reduce using rule 266 (ForStatementNoShortIf)
 
 
 State 571
 
-  254 ForStatement: DummyForStatement9 CLOSEBRACKET . Statement
-  262 ForStatementNoShortIf: DummyForStatement9 CLOSEBRACKET . StatementNoShortIf
+  254 ForStatement: DummyForStatement9 CLOSEBRACKET • Statement
+  262 ForStatementNoShortIf: DummyForStatement9 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -11943,15 +11943,15 @@ State 571
 
 State 572
 
-  265 ForStatementNoShortIf: DummyForStatement10 StatementNoShortIf .
+  265 ForStatementNoShortIf: DummyForStatement10 StatementNoShortIf •
 
     $default  reduce using rule 265 (ForStatementNoShortIf)
 
 
 State 573
 
-  256 ForStatement: DummyForStatement12 CLOSEBRACKET . Statement
-  264 ForStatementNoShortIf: DummyForStatement12 CLOSEBRACKET . StatementNoShortIf
+  256 ForStatement: DummyForStatement12 CLOSEBRACKET • Statement
+  264 ForStatementNoShortIf: DummyForStatement12 CLOSEBRACKET • StatementNoShortIf
 
     IF                    shift, and go to state 157
     SWITCH                shift, and go to state 158
@@ -12051,14 +12051,14 @@ State 573
 
 State 574
 
-  267 ForStatementNoShortIf: DummyForStatement13 StatementNoShortIf .
+  267 ForStatementNoShortIf: DummyForStatement13 StatementNoShortIf •
 
     $default  reduce using rule 267 (ForStatementNoShortIf)
 
 
 State 575
 
-  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression CLOSEBRACKET . SwitchBlock
+  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression CLOSEBRACKET • SwitchBlock
 
     OPENCURLYBRACKET  shift, and go to state 611
 
@@ -12067,7 +12067,7 @@ State 575
 
 State 576
 
-  235 DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET . Expression
+  235 DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET • Expression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12126,15 +12126,15 @@ State 576
 
 State 577
 
-  273 StatementExpressionList: StatementExpressionList COMMA StatementExpression .
+  273 StatementExpressionList: StatementExpressionList COMMA StatementExpression •
 
     $default  reduce using rule 273 (StatementExpressionList)
 
 
 State 578
 
-  317 MethodInvocation: Primary DOT Identifier OPENBRACKET . ArgumentList CLOSEBRACKET
-  318                 | Primary DOT Identifier OPENBRACKET . CLOSEBRACKET
+  317 MethodInvocation: Primary DOT Identifier OPENBRACKET • ArgumentList CLOSEBRACKET
+  318                 | Primary DOT Identifier OPENBRACKET • CLOSEBRACKET
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12195,21 +12195,21 @@ State 578
 
 State 579
 
-  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET .
+  322 ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET •
 
     $default  reduce using rule 322 (ArrayAccess)
 
 
 State 580
 
-  315 MethodInvocation: DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET .
+  315 MethodInvocation: DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET •
 
     $default  reduce using rule 315 (MethodInvocation)
 
 
 State 581
 
-  302 ArgumentList: ArgumentList COMMA . Expression
+  302 ArgumentList: ArgumentList COMMA • Expression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12268,15 +12268,15 @@ State 581
 
 State 582
 
-  141 ExplicitConstructorInvocation: THIS OPENBRACKET CLOSEBRACKET . SEMICOLON
+  141 ExplicitConstructorInvocation: THIS OPENBRACKET CLOSEBRACKET • SEMICOLON
 
     SEMICOLON  shift, and go to state 617
 
 
 State 583
 
-  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList . CLOSEBRACKET SEMICOLON
-  302 ArgumentList: ArgumentList . COMMA Expression
+  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList • CLOSEBRACKET SEMICOLON
+  302 ArgumentList: ArgumentList • COMMA Expression
 
     CLOSEBRACKET  shift, and go to state 618
     COMMA         shift, and go to state 581
@@ -12284,15 +12284,15 @@ State 583
 
 State 584
 
-  143 ExplicitConstructorInvocation: SUPER OPENBRACKET CLOSEBRACKET . SEMICOLON
+  143 ExplicitConstructorInvocation: SUPER OPENBRACKET CLOSEBRACKET • SEMICOLON
 
     SEMICOLON  shift, and go to state 619
 
 
 State 585
 
-  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList . CLOSEBRACKET SEMICOLON
-  302 ArgumentList: ArgumentList . COMMA Expression
+  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList • CLOSEBRACKET SEMICOLON
+  302 ArgumentList: ArgumentList • COMMA Expression
 
     CLOSEBRACKET  shift, and go to state 620
     COMMA         shift, and go to state 581
@@ -12300,36 +12300,36 @@ State 585
 
 State 586
 
-  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET .
+  136 ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET •
 
     $default  reduce using rule 136 (ConstructorBody)
 
 
 State 587
 
-  123 ClassTypeList: ClassTypeList COMMA ClassType .
+  123 ClassTypeList: ClassTypeList COMMA ClassType •
 
     $default  reduce using rule 123 (ClassTypeList)
 
 
 State 588
 
-  163 ArrayInitializer: OPENCURLYBRACKET COMMA CLOSECURLYBRACKET .
+  163 ArrayInitializer: OPENCURLYBRACKET COMMA CLOSECURLYBRACKET •
 
     $default  reduce using rule 163 (ArrayInitializer)
 
 
 State 589
 
-  164 ArrayInitializer: OPENCURLYBRACKET VariableInitializers CLOSECURLYBRACKET .
+  164 ArrayInitializer: OPENCURLYBRACKET VariableInitializers CLOSECURLYBRACKET •
 
     $default  reduce using rule 164 (ArrayInitializer)
 
 
 State 590
 
-  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers COMMA . CLOSECURLYBRACKET
-  167 VariableInitializers: VariableInitializers COMMA . VariableInitializer
+  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers COMMA • CLOSECURLYBRACKET
+  167 VariableInitializers: VariableInitializers COMMA • VariableInitializer
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12392,21 +12392,21 @@ State 590
 
 State 591
 
-  341 CastExpression: OPENBRACKET PrimitiveType CLOSEBRACKET UnaryExpression .
+  341 CastExpression: OPENBRACKET PrimitiveType CLOSEBRACKET UnaryExpression •
 
     $default  reduce using rule 341 (CastExpression)
 
 
 State 592
 
-  310 Dims: OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+  310 Dims: OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 310 (Dims)
 
 
 State 593
 
-  340 CastExpression: OPENBRACKET PrimitiveType Dims CLOSEBRACKET . UnaryExpression
+  340 CastExpression: OPENBRACKET PrimitiveType Dims CLOSEBRACKET • UnaryExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12450,14 +12450,14 @@ State 593
 
 State 594
 
-  311 Dims: Dims OPENSQUAREBRACKET . CLOSESQUAREBRACKET
+  311 Dims: Dims OPENSQUAREBRACKET • CLOSESQUAREBRACKET
 
     CLOSESQUAREBRACKET  shift, and go to state 624
 
 
 State 595
 
-  343 CastExpression: OPENBRACKET Name Dims CLOSEBRACKET . UnaryExpressionNotPlusMinus
+  343 CastExpression: OPENBRACKET Name Dims CLOSEBRACKET • UnaryExpressionNotPlusMinus
 
     IntegerLiteral        shift, and go to state 159
     FloatingPointLiteral  shift, and go to state 160
@@ -12494,14 +12494,14 @@ State 595
 
 State 596
 
-  342 CastExpression: OPENBRACKET Expression CLOSEBRACKET UnaryExpressionNotPlusMinus .
+  342 CastExpression: OPENBRACKET Expression CLOSEBRACKET UnaryExpressionNotPlusMinus •
 
     $default  reduce using rule 342 (CastExpression)
 
 
 State 597
 
-  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression COLON . ConditionalExpression
+  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression COLON • ConditionalExpression
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12556,22 +12556,22 @@ State 597
 
 State 598
 
-  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression CLOSEBRACKET Block .
+  281 SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression CLOSEBRACKET Block •
 
     $default  reduce using rule 281 (SynchronizedStatement)
 
 
 State 599
 
-  320 MethodInvocation: SUPER DOT Identifier OPENBRACKET CLOSEBRACKET .
+  320 MethodInvocation: SUPER DOT Identifier OPENBRACKET CLOSEBRACKET •
 
     $default  reduce using rule 320 (MethodInvocation)
 
 
 State 600
 
-  302 ArgumentList: ArgumentList . COMMA Expression
-  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET ArgumentList . CLOSEBRACKET
+  302 ArgumentList: ArgumentList • COMMA Expression
+  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET ArgumentList • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 627
     COMMA         shift, and go to state 581
@@ -12579,7 +12579,7 @@ State 600
 
 State 601
 
-  288 CatchClause: CATCH $@16 OPENBRACKET . FormalParameter CLOSEBRACKET Block
+  288 CatchClause: CATCH $@16 OPENBRACKET • FormalParameter CLOSEBRACKET Block
 
     BYTE        shift, and go to state 84
     SHORT       shift, and go to state 85
@@ -12607,73 +12607,73 @@ State 601
 
 State 602
 
-  309 DimExpr: OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET .
+  309 DimExpr: OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET •
 
     $default  reduce using rule 309 (DimExpr)
 
 
 State 603
 
-  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET .
+  299 ClassInstanceCreationExpression: NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET •
 
     $default  reduce using rule 299 (ClassInstanceCreationExpression)
 
 
 State 604
 
-  201 LabeledStatementNoShortIf: Identifier COLON StatementNoShortIf .
+  201 LabeledStatementNoShortIf: Identifier COLON StatementNoShortIf •
 
     $default  reduce using rule 201 (LabeledStatementNoShortIf)
 
 
 State 605
 
-  216 IfThenElseStatementNoShortIf: DummyIfStatement2 DummyElseStatement StatementNoShortIf .
+  216 IfThenElseStatementNoShortIf: DummyIfStatement2 DummyElseStatement StatementNoShortIf •
 
     $default  reduce using rule 216 (IfThenElseStatementNoShortIf)
 
 
 State 606
 
-  233 WhileStatementNoShortIf: DummyWhileStatement1 CLOSEBRACKET StatementNoShortIf .
+  233 WhileStatementNoShortIf: DummyWhileStatement1 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 233 (WhileStatementNoShortIf)
 
 
 State 607
 
-  268 ForStatementNoShortIf: DummyForStatement3 CLOSEBRACKET StatementNoShortIf .
+  268 ForStatementNoShortIf: DummyForStatement3 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 268 (ForStatementNoShortIf)
 
 
 State 608
 
-  261 ForStatementNoShortIf: DummyForStatement6 CLOSEBRACKET StatementNoShortIf .
+  261 ForStatementNoShortIf: DummyForStatement6 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 261 (ForStatementNoShortIf)
 
 
 State 609
 
-  262 ForStatementNoShortIf: DummyForStatement9 CLOSEBRACKET StatementNoShortIf .
+  262 ForStatementNoShortIf: DummyForStatement9 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 262 (ForStatementNoShortIf)
 
 
 State 610
 
-  264 ForStatementNoShortIf: DummyForStatement12 CLOSEBRACKET StatementNoShortIf .
+  264 ForStatementNoShortIf: DummyForStatement12 CLOSEBRACKET StatementNoShortIf •
 
     $default  reduce using rule 264 (ForStatementNoShortIf)
 
 
 State 611
 
-  219 SwitchBlock: OPENCURLYBRACKET . SwitchBlockStatementGroups SwitchLabels CLOSECURLYBRACKET
-  220            | OPENCURLYBRACKET . SwitchLabels CLOSECURLYBRACKET
-  221            | OPENCURLYBRACKET . SwitchBlockStatementGroups CLOSECURLYBRACKET
-  222            | OPENCURLYBRACKET . CLOSECURLYBRACKET
+  219 SwitchBlock: OPENCURLYBRACKET • SwitchBlockStatementGroups SwitchLabels CLOSECURLYBRACKET
+  220            | OPENCURLYBRACKET • SwitchLabels CLOSECURLYBRACKET
+  221            | OPENCURLYBRACKET • SwitchBlockStatementGroups CLOSECURLYBRACKET
+  222            | OPENCURLYBRACKET • CLOSECURLYBRACKET
 
     CASE               shift, and go to state 629
     DEFAULT            shift, and go to state 630
@@ -12687,29 +12687,29 @@ State 611
 
 State 612
 
-  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression CLOSEBRACKET SwitchBlock .
+  218 SwitchStatement: DummySwitchStatement OPENBRACKET Expression CLOSEBRACKET SwitchBlock •
 
     $default  reduce using rule 218 (SwitchStatement)
 
 
 State 613
 
-  235 DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET Expression .
+  235 DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET Expression •
 
     $default  reduce using rule 235 (DummyDoStatement1)
 
 
 State 614
 
-  318 MethodInvocation: Primary DOT Identifier OPENBRACKET CLOSEBRACKET .
+  318 MethodInvocation: Primary DOT Identifier OPENBRACKET CLOSEBRACKET •
 
     $default  reduce using rule 318 (MethodInvocation)
 
 
 State 615
 
-  302 ArgumentList: ArgumentList . COMMA Expression
-  317 MethodInvocation: Primary DOT Identifier OPENBRACKET ArgumentList . CLOSEBRACKET
+  302 ArgumentList: ArgumentList • COMMA Expression
+  317 MethodInvocation: Primary DOT Identifier OPENBRACKET ArgumentList • CLOSEBRACKET
 
     CLOSEBRACKET  shift, and go to state 636
     COMMA         shift, and go to state 581
@@ -12717,98 +12717,98 @@ State 615
 
 State 616
 
-  302 ArgumentList: ArgumentList COMMA Expression .
+  302 ArgumentList: ArgumentList COMMA Expression •
 
     $default  reduce using rule 302 (ArgumentList)
 
 
 State 617
 
-  141 ExplicitConstructorInvocation: THIS OPENBRACKET CLOSEBRACKET SEMICOLON .
+  141 ExplicitConstructorInvocation: THIS OPENBRACKET CLOSEBRACKET SEMICOLON •
 
     $default  reduce using rule 141 (ExplicitConstructorInvocation)
 
 
 State 618
 
-  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList CLOSEBRACKET . SEMICOLON
+  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList CLOSEBRACKET • SEMICOLON
 
     SEMICOLON  shift, and go to state 637
 
 
 State 619
 
-  143 ExplicitConstructorInvocation: SUPER OPENBRACKET CLOSEBRACKET SEMICOLON .
+  143 ExplicitConstructorInvocation: SUPER OPENBRACKET CLOSEBRACKET SEMICOLON •
 
     $default  reduce using rule 143 (ExplicitConstructorInvocation)
 
 
 State 620
 
-  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList CLOSEBRACKET . SEMICOLON
+  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList CLOSEBRACKET • SEMICOLON
 
     SEMICOLON  shift, and go to state 638
 
 
 State 621
 
-  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET .
+  162 ArrayInitializer: OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET •
 
     $default  reduce using rule 162 (ArrayInitializer)
 
 
 State 622
 
-  167 VariableInitializers: VariableInitializers COMMA VariableInitializer .
+  167 VariableInitializers: VariableInitializers COMMA VariableInitializer •
 
     $default  reduce using rule 167 (VariableInitializers)
 
 
 State 623
 
-  340 CastExpression: OPENBRACKET PrimitiveType Dims CLOSEBRACKET UnaryExpression .
+  340 CastExpression: OPENBRACKET PrimitiveType Dims CLOSEBRACKET UnaryExpression •
 
     $default  reduce using rule 340 (CastExpression)
 
 
 State 624
 
-  311 Dims: Dims OPENSQUAREBRACKET CLOSESQUAREBRACKET .
+  311 Dims: Dims OPENSQUAREBRACKET CLOSESQUAREBRACKET •
 
     $default  reduce using rule 311 (Dims)
 
 
 State 625
 
-  343 CastExpression: OPENBRACKET Name Dims CLOSEBRACKET UnaryExpressionNotPlusMinus .
+  343 CastExpression: OPENBRACKET Name Dims CLOSEBRACKET UnaryExpressionNotPlusMinus •
 
     $default  reduce using rule 343 (CastExpression)
 
 
 State 626
 
-  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression COLON ConditionalExpression .
+  375 ConditionalExpression: ConditionalOrExpression QUESTION Expression COLON ConditionalExpression •
 
     $default  reduce using rule 375 (ConditionalExpression)
 
 
 State 627
 
-  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET .
+  319 MethodInvocation: SUPER DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET •
 
     $default  reduce using rule 319 (MethodInvocation)
 
 
 State 628
 
-  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter . CLOSEBRACKET Block
+  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter • CLOSEBRACKET Block
 
     CLOSEBRACKET  shift, and go to state 639
 
 
 State 629
 
-  228 SwitchLabel: CASE . ConstantExpression COLON
+  228 SwitchLabel: CASE • ConstantExpression COLON
 
     PLUS                  shift, and go to state 282
     IntegerLiteral        shift, and go to state 159
@@ -12868,23 +12868,23 @@ State 629
 
 State 630
 
-  229 SwitchLabel: DEFAULT . COLON
+  229 SwitchLabel: DEFAULT • COLON
 
     COLON  shift, and go to state 642
 
 
 State 631
 
-  222 SwitchBlock: OPENCURLYBRACKET CLOSECURLYBRACKET .
+  222 SwitchBlock: OPENCURLYBRACKET CLOSECURLYBRACKET •
 
     $default  reduce using rule 222 (SwitchBlock)
 
 
 State 632
 
-  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups . SwitchLabels CLOSECURLYBRACKET
-  221            | OPENCURLYBRACKET SwitchBlockStatementGroups . CLOSECURLYBRACKET
-  224 SwitchBlockStatementGroups: SwitchBlockStatementGroups . SwitchBlockStatementGroup
+  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups • SwitchLabels CLOSECURLYBRACKET
+  221            | OPENCURLYBRACKET SwitchBlockStatementGroups • CLOSECURLYBRACKET
+  224 SwitchBlockStatementGroups: SwitchBlockStatementGroups • SwitchBlockStatementGroup
 
     CASE               shift, and go to state 629
     DEFAULT            shift, and go to state 630
@@ -12897,16 +12897,16 @@ State 632
 
 State 633
 
-  223 SwitchBlockStatementGroups: SwitchBlockStatementGroup .
+  223 SwitchBlockStatementGroups: SwitchBlockStatementGroup •
 
     $default  reduce using rule 223 (SwitchBlockStatementGroups)
 
 
 State 634
 
-  220 SwitchBlock: OPENCURLYBRACKET SwitchLabels . CLOSECURLYBRACKET
-  225 SwitchBlockStatementGroup: SwitchLabels . BlockStatements
-  227 SwitchLabels: SwitchLabels . SwitchLabel
+  220 SwitchBlock: OPENCURLYBRACKET SwitchLabels • CLOSECURLYBRACKET
+  225 SwitchBlockStatementGroup: SwitchLabels • BlockStatements
+  227 SwitchLabels: SwitchLabels • SwitchLabel
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -13026,35 +13026,35 @@ State 634
 
 State 635
 
-  226 SwitchLabels: SwitchLabel .
+  226 SwitchLabels: SwitchLabel •
 
     $default  reduce using rule 226 (SwitchLabels)
 
 
 State 636
 
-  317 MethodInvocation: Primary DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET .
+  317 MethodInvocation: Primary DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET •
 
     $default  reduce using rule 317 (MethodInvocation)
 
 
 State 637
 
-  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON .
+  140 ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON •
 
     $default  reduce using rule 140 (ExplicitConstructorInvocation)
 
 
 State 638
 
-  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON .
+  142 ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON •
 
     $default  reduce using rule 142 (ExplicitConstructorInvocation)
 
 
 State 639
 
-  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET . Block
+  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET • Block
 
     OPENCURLYBRACKET  shift, and go to state 113
 
@@ -13063,44 +13063,44 @@ State 639
 
 State 640
 
-  394 ConstantExpression: Expression .
+  394 ConstantExpression: Expression •
 
     $default  reduce using rule 394 (ConstantExpression)
 
 
 State 641
 
-  228 SwitchLabel: CASE ConstantExpression . COLON
+  228 SwitchLabel: CASE ConstantExpression • COLON
 
     COLON  shift, and go to state 650
 
 
 State 642
 
-  229 SwitchLabel: DEFAULT COLON .
+  229 SwitchLabel: DEFAULT COLON •
 
     $default  reduce using rule 229 (SwitchLabel)
 
 
 State 643
 
-  221 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups CLOSECURLYBRACKET .
+  221 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups CLOSECURLYBRACKET •
 
     $default  reduce using rule 221 (SwitchBlock)
 
 
 State 644
 
-  224 SwitchBlockStatementGroups: SwitchBlockStatementGroups SwitchBlockStatementGroup .
+  224 SwitchBlockStatementGroups: SwitchBlockStatementGroups SwitchBlockStatementGroup •
 
     $default  reduce using rule 224 (SwitchBlockStatementGroups)
 
 
 State 645
 
-  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups SwitchLabels . CLOSECURLYBRACKET
-  225 SwitchBlockStatementGroup: SwitchLabels . BlockStatements
-  227 SwitchLabels: SwitchLabels . SwitchLabel
+  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups SwitchLabels • CLOSECURLYBRACKET
+  225 SwitchBlockStatementGroup: SwitchLabels • BlockStatements
+  227 SwitchLabels: SwitchLabels • SwitchLabel
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -13220,15 +13220,15 @@ State 645
 
 State 646
 
-  220 SwitchBlock: OPENCURLYBRACKET SwitchLabels CLOSECURLYBRACKET .
+  220 SwitchBlock: OPENCURLYBRACKET SwitchLabels CLOSECURLYBRACKET •
 
     $default  reduce using rule 220 (SwitchBlock)
 
 
 State 647
 
-  171 BlockStatements: BlockStatements . BlockStatement
-  225 SwitchBlockStatementGroup: SwitchLabels BlockStatements .
+  171 BlockStatements: BlockStatements • BlockStatement
+  225 SwitchBlockStatementGroup: SwitchLabels BlockStatements •
 
     BYTE                  shift, and go to state 84
     SHORT                 shift, and go to state 85
@@ -13345,27 +13345,27 @@ State 647
 
 State 648
 
-  227 SwitchLabels: SwitchLabels SwitchLabel .
+  227 SwitchLabels: SwitchLabels SwitchLabel •
 
     $default  reduce using rule 227 (SwitchLabels)
 
 
 State 649
 
-  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block .
+  288 CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block •
 
     $default  reduce using rule 288 (CatchClause)
 
 
 State 650
 
-  228 SwitchLabel: CASE ConstantExpression COLON .
+  228 SwitchLabel: CASE ConstantExpression COLON •
 
     $default  reduce using rule 228 (SwitchLabel)
 
 
 State 651
 
-  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups SwitchLabels CLOSECURLYBRACKET .
+  219 SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups SwitchLabels CLOSECURLYBRACKET •
 
     $default  reduce using rule 219 (SwitchBlock)
