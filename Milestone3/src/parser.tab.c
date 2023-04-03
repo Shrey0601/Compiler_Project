@@ -7637,7 +7637,7 @@ sizeparam.clear();
                                                 {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].lex)).str)));
   ((yyval.typ)).ndim=1;
-  
+
   
 }
 #line 7644 "parser.tab.c"

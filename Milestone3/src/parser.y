@@ -4031,7 +4031,7 @@ DimExpr:
 OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, strcat(($2).tempvar, ($3).str)));
   ($$).ndim=1;
-  
+
   
 };
 
