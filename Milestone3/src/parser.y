@@ -89,8 +89,9 @@
       return 4;
       else if(s=="double")
       return 8;
-      else
-      return 0;
+      else if(s=="null")
+      return -1;
+      else return 8;
     }
     void print_shape(map<int,vector<int>> shape)
     {

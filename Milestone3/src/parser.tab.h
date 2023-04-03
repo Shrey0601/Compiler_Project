@@ -153,7 +153,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 579 "parser.y"
+#line 589 "parser.y"
 
   struct {
     int n;
