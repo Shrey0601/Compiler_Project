@@ -90,8 +90,9 @@
       return 4;
       else if(s=="double")
       return 8;
-      else
-      return 0;
+      else if(s=="null")
+      return -1;
+      else return 8;
     }
     void print_shape(map<int,vector<int>> shape)
     {
@@ -1795,9 +1796,37 @@ curr_table->classwidth = offset;
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
 curr_table->classwidth = offset;
+ string tv5 = string((char*)(($3).type));
+ string tv6 = "";
+ int fla = 0;
+ for(auto it : tv5){
+  if(it == '['){
+    fla = 1;
+    break;
+  }
+  tv6.push_back(it);
+ }
+ if(fla == 1){
+    string tv4 = newtemp();
+    auto it = curr_table->lookup(string((char*)(($1).type))).dims;
+    int sizealloc = 0;
+    for(auto ent : it){
+      sizealloc += ent;
+    }
+    sizealloc  = sizealloc*getsz(tv6);
+    emit("=", to_string(sizealloc), "null", tv4, -1);
+    emit("push",tv4,"","",-1);
+    emit("stackpointer","+" + to_string(sizealloc),"","",-1);
+    emit("call","allocmem","1","",-1);
+    emit("stackpointer","-" + to_string(sizealloc),"","",-1);
+    string tv2 = newtemp();
+    emit("=", "popparam", "null", tv2, -1);
+    strcpy(($$).tempvar, tv2.c_str());
+ }
 
   // cout<<ndim <<" "<<($3).ndim<<'\n';
   // cout<<($3).type<<'\n';
+  else
   strcpy(($$).tempvar, ($3).tempvar);
   // arrname=($1).type;
   // cout<<"YYYY"<<($1).type<<($3).type<<'\n';
@@ -2892,7 +2921,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("=", tempparam[i] , "null",  "[ebp" + to_string(offset - funcargtypesz(1, currfunc.top()) - 4) + "]" , -1);
+      emit("=", tempparam[i] , "null",  "[ebp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
       offset += sizeparam[i];
       // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
@@ -4036,8 +4065,8 @@ Expression {
 ArrayCreationExpression:
 NEW PrimitiveType DimExprs Dims {
   newhandle = string((char*)(($2).type));
-  strcpy(($$).tempvar, newtemp().c_str());
-  emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
+  // strcpy(($$).tempvar, newtemp().c_str());
+  // emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
   flagyo=1;
   strcpy(($$).arrtype,($2).type);
   ($$).ndim = ($3).ndim + ($4).ndim;
@@ -4051,8 +4080,8 @@ NEW PrimitiveType DimExprs Dims {
 }
 |NEW PrimitiveType DimExprs {
   newhandle = string((char*)(($2).type));
-  strcpy(($$).tempvar, newtemp().c_str());
-  emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
+  // strcpy(($$).tempvar, newtemp().c_str());
+  // emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
 
   flagyo=1;
   strcpy(($$).type,"array");
@@ -4068,8 +4097,8 @@ NEW PrimitiveType DimExprs Dims {
 }
 |NEW ClassOrInterfaceType DimExprs Dims {
   newhandle = string((char*)(($2).type));
-  strcpy(($$).tempvar, newtemp().c_str());
-  emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
+  // strcpy(($$).tempvar, newtemp().c_str());
+  // emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar) + string((char*)($4).tempvar), ($$).tempvar, -1);
   flagyo=1;
   strcpy(($$).type,"array");
   strcpy(($$).arrtype,($2).type);
@@ -4084,8 +4113,8 @@ NEW PrimitiveType DimExprs Dims {
   
 }
 |NEW ClassOrInterfaceType DimExprs {
-  strcpy(($$).tempvar, newtemp().c_str());
-  emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
+  // strcpy(($$).tempvar, newtemp().c_str());
+  // emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
   flagyo=1;
   strcpy(($$).type,"array");
   strcpy(($$).arrtype,($2).type);
