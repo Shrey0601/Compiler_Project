@@ -10,6 +10,7 @@
     int dimint;
     int isvoid;
     int isimport=0;
+    string arrayname;
     int issystem=0;
     int isfinal=0;
     int isreturn =0;
@@ -222,7 +223,8 @@
           classwidth = classwidth;
           if(!strcmp(toke.c_str(),"Constructor")) isitstatic=1;
           // isstatic=0;
-          dims=newdim;
+          // dims=newdim;
+          copy(newdim.begin(), newdim.end(), back_inserter(dims)); 
           // if(!dims.empty())
           // {
           // cout<<"DIMS: ";
@@ -4406,6 +4408,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 
 ArrayAccess:
 Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
+  arrayname=($1).type;
   strcpy(($$).tempvar, newtemp().c_str());
   string tp4;
   string tp5 = curr_table->lookup(string((char*)($1).type)).type;
@@ -4426,7 +4429,7 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   }
 
   string tp7 = newtemp();
-  string tp8 = string((char*)(($1).type));
+  string tp8 = curr_table->lookup(string((char*)(($1).type))).type;
   string arraytypeval = "";
   for(auto it : tp8){
     if(it != '['){
@@ -4436,15 +4439,51 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
       break;
     }
   }
+  int size;
+  if(!strcmp(arraytypeval.c_str(),"int")||!strcmp(arraytypeval.c_str(),"float"))
+  {
+    size=4;
+  }
+  else if(!strcmp(arraytypeval.c_str(),"char")||!strcmp(arraytypeval.c_str(),"byte"))
+  {
+    size=1;
+  }
+  else if(!strcmp(arraytypeval.c_str(),"short"))
+  {
+    size=2;
+  }
+  else size=8;
+  // cout<<"GGGG"<<arraytypeval<<size<<'\n';
   if(arrayaccesscount != 1){
-    tp8 = string((char*)($3).tempvar)+ "*" + to_string(8);
+    vector<int> v = curr_table->lookup(arrayname).dims;
+    // cout<<"XMI: ";
+    // for(auto yo:v)
+    // {
+    //   cout<<yo<<" ";
+    // }
+    int x=1;
+    for(long i=v.size()-arrayaccesscount+1;i<v.size();i++)
+    {
+      // cout<<v[i]<<" ";
+      x=x*v[i];
+    }
+    x=x*size;
+    cout<<endl;
+    // cout<<"LLL"<<($3).tempvar<<'\n';
+    string hello(($3).tempvar); 
+    stringstream str(hello); 
+    int y;  
+    str >> y;  
+    x=x*y;
+    // cout<<"YUI"<<y<<" "<<x<<'\n';
+    tp8 = to_string(x);
     arrayaccesscount -- ;
   }
   else{
     tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
   }
   emit("=",tp8,"null",tp7,-1);
-  string tp6 = "*(" + string((char*)($1).tempvar) + "+" + tp7 + ")";
+  string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
   emit("=",tp6,"null",string((char*)($$).tempvar),-1);
   
 
@@ -4513,15 +4552,57 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
       break;
     }
   }
+  // cout<<"FUCK"<<arraytypeval<<getsz(arraytypeval)<<'\n';
+  int size;
+  if(!strcmp(arraytypeval.c_str(),"int")||!strcmp(arraytypeval.c_str(),"float"))
+  {
+    size=4;
+  }
+  else if(!strcmp(arraytypeval.c_str(),"char")||!strcmp(arraytypeval.c_str(),"byte"))
+  {
+    size=1;
+  }
+  else if(!strcmp(arraytypeval.c_str(),"short"))
+  {
+    size=2;
+  }
+  else size=8;
+  // cout<<"GGGG"<<arrayname<<'\n';
   if(arrayaccesscount != 1){
-    tp8 = string((char*)($3).tempvar)+ "*" + to_string(8);
+    vector<int> v = curr_table->lookup(arrayname).dims;
+    // cout<<"XMI: ";
+    // for(auto yo:v)
+    // {
+    //   cout<<yo<<" ";
+    // }
+    int x=1;
+    for(long i=v.size()-arrayaccesscount+1;i<v.size();i++)
+    {
+      // cout<<v[i]<<" ";
+      x=x*v[i];
+    }
+    x=x*size;
+    cout<<endl;
+    // cout<<"LLL"<<($3).tempvar<<'\n';
+    string hello(($3).tempvar); 
+    stringstream str(hello); 
+    int y;  
+    str >> y;  
+    x=x*y;
+    // cout<<"YUI"<<y<<" "<<x<<'\n';
+    tp8 = to_string(x);
     arrayaccesscount -- ;
   }
   else{
-    tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
+    string hello(($3).tempvar); 
+    stringstream str(hello); 
+    int y;  
+    str >> y;  
+    tp8 = to_string(size*y);
+    // tp8 = string((char*)($3).tempvar)+ "*" + to_string(10);
   }
   emit("=",tp8,"null",tp7,-1);
-  string tp6 = "*(" + string((char*)($1).tempvar) + "+" + tp7 + ")";
+  string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
   emit("=",tp6,"null",string((char*)($$).tempvar),-1);
   arraccess=1;
   // if(curr_table->lookup(string((char*)($1).type)).offset == -1 && checkobj(string((char*)($1).type)) == 0){
