@@ -1,6 +1,7 @@
 %{
     #include<bits/stdc++.h>
     #include <fstream>
+    #define PTR_SZ 8
     using namespace std;
     extern FILE* yyin;
     void yyerror(const char * s);
@@ -1014,7 +1015,7 @@ Name {
   strcpy(($$).tempvar,($1).tempvar);
 
   strcpy(($$).type, ($1).type);
-  ($$).sz = ($1).sz;
+  ($$).sz = PTR_SZ;
 };
 ClassType:
 ClassOrInterfaceType {
@@ -1829,6 +1830,7 @@ curr_table->classwidth = offset;
   else ndim=0;
   funcparam.push_back({string((char*)($1).type), {type, -1}});
   sizeparam.push_back(sz);
+  cout<<($1).type<<" "<<sz<<endl;
   tempparam.push_back(string((char*)(($$).tempvar)));
 
   if(curr_table->lookup(string((char*)($1).type)).offset != -1)
@@ -2839,6 +2841,7 @@ LocalVariableDeclaration SEMICOLON {
     issystem=0;
     isfinal=0;
 };
+
 LocalVariableDeclaration:
 Type VariableDeclarators {
   // cout<<($1).type<<($2).type<<'\n';
@@ -2884,6 +2887,7 @@ Type VariableDeclarators {
           break;
         }
       }
+      cout<<funcparam[i].first<<endl;
       if(fl == 0)
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
@@ -2893,7 +2897,7 @@ Type VariableDeclarators {
       // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
       if(newhandle != "null"){
-        offset = offset - getsz(newhandle) + 8;
+        offset = offset - getsz(newhandle) + PTR_SZ;
         newhandle = "null";
       }
 
@@ -4013,6 +4017,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   isaccess=0;
   // cout<<($2).type<<'\n';
 };
+
 ArgumentList:
 Expression {
   args.push({string((char*)($1).tempvar), sz});
