@@ -2828,7 +2828,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", funcparam[i].first, -1);
+      emit("=", "[ebp" + to_string(offset - funcargtypesz(1, funcparam[i].first) - 4) + "]", "null", funcparam[i].first, -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
       if(newhandle != "null"){
@@ -6176,6 +6176,7 @@ string classname,n,funcname,m;
     {
       if(it.op=="BeginFunc")
       {
+        cout<<"\n";
         cout<<it.op<<'\n';
       }
       else if(it.arg2=="null" && it.res=="null")
