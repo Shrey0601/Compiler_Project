@@ -10396,6 +10396,7 @@ string classname,n,funcname,m;
     {
       funcname=m;
       flag=1;
+      cout<<classname<<"_"<<funcname<<":"<<'\n';
     }
     m=it.op;
     if(it.op=="EndFunc")
