@@ -6,6 +6,8 @@
     void yyerror(const char * s);
     int yylex();
     int nelem=0;
+    vector<int> newdim;
+    int dimint;
     int isvoid;
     int isimport=0;
     int issystem=0;
@@ -49,6 +51,16 @@
     vector<string> keywords = {"abstract","continue","for","new","switch","assert","default","if","package","synchronized","boolean","do","goto","private","this","break","double","implements","protected","throw","byte","else","import","public","throws","case","enum","instanceof","return","transient","catch","extends","int","SHORT","try","char","final","interface","static","void","class","finally","long","strictfp","volatile","const","float","native","super","while","_","exports","opens","requires","uses","module","permits","sealed","var","non-sealed","provides","to","with","open","record","transitive","yield"};
     vector<string> sep = {"(",")","{","}",",","[","]",";",".","...","::"};
     vector<string> dtype = {"char","byte","short","int","long","float","double","invalid"};
+    void print_dims()
+    {
+      cout<<"DIMS: ";
+      for(auto i:newdim)
+      {
+        cout<<i<<" ";
+      }
+      cout<<"\n";
+      //   
+    }
     int getsz(string s)
     {
       int count = 0;
@@ -190,6 +202,7 @@
         int isitstatic;
         int isitfinal;
         int classwidth = 0;
+        vector<int> dims;
         map<int,vector<int>> arrshape;
         Sym_Entry(){ 
         }
@@ -209,7 +222,16 @@
           classwidth = classwidth;
           if(!strcmp(toke.c_str(),"Constructor")) isitstatic=1;
           // isstatic=0;
-          // shape.clear();
+          dims=newdim;
+          // if(!dims.empty())
+          // {
+          // cout<<"DIMS: ";
+          // for(auto i:dims)
+          // {
+          //   cout<<i<<" ";
+          // }
+          // cout<<'\n';
+          // }
         }
         void print_entry(){
           cout << token << " " << type << " " << offset << " " << scope_name << " " << line << " "<<narg << " "<<argno<<" "<<isfieldprivate<<" "<<isitstatic<<endl;
@@ -839,6 +861,8 @@ CompilationUnit {
 };
 Literal:
 IntegerLiteral {
+  // cout<<"GYO"<<stoi(($1).str)<<'\n';
+  dimint=stoi(($1).str);
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"int");
 }
@@ -1145,7 +1169,7 @@ TypeDeclaration {
 }
 ;
 PackageDeclaration:
-PACKAGE Name SEMICOLON {isclassaccess=0; issystem=0;isfinal=0;
+PACKAGE Name SEMICOLON {isclassaccess=0; issystem=0;isfinal=0;     
 };
 ImportDeclaration:
 SingleTypeImportDeclaration {
@@ -1158,10 +1182,10 @@ DummyImport: IMPORT {
 }
 
 SingleTypeImportDeclaration:
-DummyImport Name SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;isimport=0;
+DummyImport Name SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;isimport=0;    
 };
 TypeImportOnDemandDeclaration:
-DummyImport Name DOT STAR SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;isimport=0;
+DummyImport Name DOT STAR SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;isimport=0;    
 };
 TypeDeclaration:
 ClassDeclaration {
@@ -1170,7 +1194,7 @@ ClassDeclaration {
 |InterfaceDeclaration {
   isimport=0;
 };
-|SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;
+|SEMICOLON {isclassaccess=0;issystem=0;isfinal=0;    
 };
 Modifiers:
 Modifier {
@@ -1507,7 +1531,8 @@ FieldDeclaration {
   
 };
 FieldDeclaration:
-Modifiers Type VariableDeclarators SEMICOLON {
+Modifiers Type VariableDeclarators SEMICOLON { 
+  newdim.clear();   
   isfinal=0;
   isclassaccess=0;
   issystem=0;
@@ -1555,7 +1580,8 @@ sizeparam.clear();
   isstatic=0;
 
 }
-|Type VariableDeclarators SEMICOLON {
+|Type VariableDeclarators SEMICOLON {   
+  newdim.clear(); 
   strcpy(($$).tempvar, ($1).tempvar);
   isclassaccess=0;
 issystem=0;
@@ -2382,7 +2408,8 @@ Block  {
   emit("EndFunc","","","",-1);
   infunction=1;
 }
-|SEMICOLON {
+|SEMICOLON {   
+  newdim.clear(); 
   emit("EndFunc","","","",-1);
   infunction=1;
   isclassaccess=0;
@@ -2516,7 +2543,8 @@ OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET
   
 };
 ExplicitConstructorInvocation:
-THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON {
+THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON {    
+  newdim.clear();
   isclassaccess=0;
   isfinal=0;
   issystem=0;
@@ -2525,26 +2553,26 @@ THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON {
   
   
 }
-|THIS OPENBRACKET CLOSEBRACKET SEMICOLON {
+|THIS OPENBRACKET CLOSEBRACKET SEMICOLON {    
   isclassaccess=0;
-  
+  newdim.clear();
   isfinal=0;
   issystem=0;
   
   
 }
-|SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON {
+|SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON {    
     isclassaccess=0;
   issystem=0;
-  
+  newdim.clear();
   
   isfinal=0;
   
 }
-|SUPER OPENBRACKET CLOSEBRACKET SEMICOLON {
+|SUPER OPENBRACKET CLOSEBRACKET SEMICOLON {    
     isclassaccess=0;
   issystem=0;
-  
+  newdim.clear();
   isfinal=0;
   
 };
@@ -2683,7 +2711,8 @@ FieldDeclaration {
   
   };
 AbstractMethodDeclaration:
-MethodHeader SEMICOLON {
+MethodHeader SEMICOLON {    
+  newdim.clear();
   isfinal=0;
   isclassaccess=0;
     issystem=0;
@@ -2778,13 +2807,15 @@ LocalVariableDeclarationStatement {
   
   };
 LocalVariableDeclarationStatement:
-LocalVariableDeclaration SEMICOLON {
+LocalVariableDeclaration SEMICOLON {    
+  newdim.clear();
   isclassaccess=0;
   type="";
     issystem=0;
   }
 |FINAL LocalVariableDeclaration SEMICOLON
-{
+{    
+  newdim.clear();
    isclassaccess=0;
   type="";
     issystem=0;
@@ -2946,7 +2977,7 @@ Block {
   
   };
 EmptyStatement:
-SEMICOLON {
+SEMICOLON {    
     issystem=0;
   isclassaccess=0;
   isfinal=0;
@@ -2964,7 +2995,8 @@ Identifier COLON StatementNoShortIf {
   }
   };
 ExpressionStatement:
-StatementExpression SEMICOLON {
+StatementExpression SEMICOLON {    
+  newdim.clear();
   strcpy(($$).type,($1).type);
   strcpy(($$).tempvar, ($1).tempvar);
     issystem=0;
@@ -3242,7 +3274,8 @@ DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET Expression {
 }
 
 DoStatement:
-DummyDoStatement1 CLOSEBRACKET SEMICOLON {
+DummyDoStatement1 CLOSEBRACKET SEMICOLON {    
+  newdim.clear();
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
@@ -3270,7 +3303,8 @@ DummyForStatement1: DummyForStatement OPENBRACKET ForInit{
   strcpy(($$).gotoname,a.c_str());
 };
 
-DummyForStatement14: DummyForStatement1 SEMICOLON {
+DummyForStatement14: DummyForStatement1 SEMICOLON {    
+  newdim.clear();
  isclassaccess=0;
     issystem=0;
     isfinal=0;
@@ -3292,7 +3326,8 @@ DummyForStatement2: DummyForStatement14 Expression {
   continuelabels.push(c);
 };
 
-DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate {
+DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate {    
+  newdim.clear();
   emit("Goto", ($1).gotoname, "", "", -1);
   emit(($1).nextgoto1, ":", "", "", -1);
   strcpy(($$).gotoname,($1).gotoname);
@@ -3305,7 +3340,8 @@ DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate {
   breaklabels.push(string((char*)(($1).nextgoto)));
 }
 
-DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET{
+DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET{   
+  newdim.clear(); 
   emit("Goto", ($1).gotoname, "", "", -1);
   emit(($1).nextgoto1, ":", "", "", -1);
   strcpy(($$).gotoname,($1).gotoname);
@@ -3318,7 +3354,8 @@ DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET{
   breaklabels.push(string((char*)(($1).nextgoto)));
 }
 
-DummyForStatement15: DummyForStatement OPENBRACKET SEMICOLON {
+DummyForStatement15: DummyForStatement OPENBRACKET SEMICOLON {    
+  newdim.clear();
   string a = newLabel();
   emit(a, ":", "", "", -1);
   strcpy(($$).gotoname,a.c_str());
@@ -3344,6 +3381,7 @@ DummyForStatement5: DummyForStatement15 Expression {
 }
 
 DummyForStatement6: DummyForStatement5 SEMICOLON ForUpdate {
+  newdim.clear();
   emit("Goto", ($1).gotoname, "", "", -1);
   emit(($1).nextgoto1, ":", "", "", -1);
   strcpy(($$).gotoname,($1).gotoname);
@@ -3353,10 +3391,12 @@ DummyForStatement6: DummyForStatement5 SEMICOLON ForUpdate {
   isclassaccess=0;
     issystem=0;
     isfinal=0;
+        
   breaklabels.push(string((char*)(($1).nextgoto)));
 }
 
 DummyForStatement7: DummyForStatement5 SEMICOLON CLOSEBRACKET {
+      newdim.clear();
   emit("Goto", ($1).gotoname, "", "", -1);
   emit(($1).nextgoto1, ":", "", "", -1);
   strcpy(($$).gotoname,($1).gotoname);
@@ -3370,6 +3410,7 @@ DummyForStatement7: DummyForStatement5 SEMICOLON CLOSEBRACKET {
 }
 
 DummyForStatement8: DummyForStatement1 SEMICOLON SEMICOLON {
+      newdim.clear();
   string a = newLabel();
   string b = newLabel();
   emit("Goto", b, "", "", -1);
@@ -3406,6 +3447,7 @@ DummyForStatement10: DummyForStatement8 CLOSEBRACKET {
 }
 
 DummyForStatement11: DummyForStatement15 SEMICOLON {
+      newdim.clear();
   string a = newLabel();
   string b = newLabel();
   emit("Goto", b, "", "", -1);
@@ -3638,6 +3680,7 @@ StatementExpression {
 
 BreakStatement:
 BREAK SEMICOLON {
+      newdim.clear();
   isclassaccess=0;
    isfinal=0;
   if(!inloop)
@@ -3650,6 +3693,8 @@ BREAK SEMICOLON {
   emit("Goto", breaklabels.top(), "", "", -1);
 }
 |BREAK Identifier SEMICOLON {
+  newdim.clear();
+      
   if(curr_table->lookup(string((char*)($1).str)).offset == -1 && checkobj(string((char*)($1).str)) == 0){
     cout<<"Undeclared variable on line "<< yylineno<<"\n";
   }
@@ -3666,6 +3711,8 @@ BREAK SEMICOLON {
 
 ContinueStatement:
 CONTINUE Identifier SEMICOLON {
+  newdim.clear();
+      
   if(curr_table->lookup(string((char*)($1).str)).offset == -1 && checkobj(string((char*)($1).str)) == 0){
     cout<<"Undeclared variable on line "<< yylineno<<"\n";
   }
@@ -3679,7 +3726,8 @@ CONTINUE Identifier SEMICOLON {
     isclassaccess=0;
     issystem=0;
 }
-|CONTINUE SEMICOLON {
+|CONTINUE SEMICOLON {    
+  newdim.clear();
    isfinal=0;
   if(!inloop)
   {
@@ -3692,7 +3740,8 @@ CONTINUE Identifier SEMICOLON {
 };
 
 ReturnStatement:
-RETURN SEMICOLON {
+RETURN SEMICOLON {   
+  newdim.clear(); 
   if(!infunction)
   {
     cout<<"Invalid return on line "<<yylineno<<'\n';
@@ -3702,7 +3751,8 @@ RETURN SEMICOLON {
     emit("pop", "ebp", "", "", -1);
   emit("Return", "", "", "", -1);
 }
-|RETURN Expression SEMICOLON {
+|RETURN Expression SEMICOLON {    
+  newdim.clear();
   string p = string((char*)($2).tempvar);
     string o = p.substr(0, p.find('.'));
     if(p != o){
@@ -3732,7 +3782,8 @@ RETURN SEMICOLON {
     issystem=0;
 };
 ThrowStatement:
-THROW Expression SEMICOLON {
+THROW Expression SEMICOLON {    
+  newdim.clear();
   isclassaccess=0;
     issystem=0;
      isfinal=0;
@@ -3970,6 +4021,8 @@ NEW PrimitiveType DimExprs Dims {
   {
     strcat(($$).type,"[]");
   }
+  // print_dims();
+    
 }
 |NEW PrimitiveType DimExprs {
   newhandle = string((char*)(($2).type));
@@ -3985,7 +4038,8 @@ NEW PrimitiveType DimExprs Dims {
   {
     strcat(($$).type,"[]");
   }
-  
+  // print_dims();
+    
 }
 |NEW ClassOrInterfaceType DimExprs Dims {
   newhandle = string((char*)(($2).type));
@@ -4000,7 +4054,8 @@ NEW PrimitiveType DimExprs Dims {
   {
     strcat(($$).type,"[]");
   }
-  
+  // print_dims();
+    
   
 }
 |NEW ClassOrInterfaceType DimExprs {
@@ -4015,6 +4070,8 @@ NEW PrimitiveType DimExprs Dims {
   {
     strcat(($$).type,"[]");
   }
+  // print_dims();
+    
   
   
 };
@@ -4031,7 +4088,7 @@ DimExpr:
 OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, strcat(($2).tempvar, ($3).str)));
   ($$).ndim=1;
-
+  newdim.push_back(dimint);
   
 };
 
@@ -4040,11 +4097,13 @@ OPENSQUAREBRACKET CLOSESQUAREBRACKET {
   strcpy(($$).tempvar, strcat(($1).str, ($2).str));
   strcpy(($$).tempvar, strcat(($1).str, ($2).str));
   ($$).ndim=1;
+  newdim.push_back(0);
   
 }
 |Dims OPENSQUAREBRACKET CLOSESQUAREBRACKET {
   strcpy(($$).tempvar, strcat(($1).tempvar, strcat(($2).str, ($3).str)));
   ($$).ndim = ($1).ndim + 1;
+  newdim.push_back(0);
 };
 
 FieldAccess:
