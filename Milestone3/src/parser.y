@@ -4089,11 +4089,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   }
   int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
   emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
-  if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
-  {
-    emit("call", "print 1", "", "", -1);
-  }
-  else emit("call", string((char*)(($1).tempvar)), "", "", -1);
+  emit("call", string((char*)(($1).tempvar)), "", "", -1);
   emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
   string tv3 = newtemp();
   emit("=", "popparam", "null", tv3.c_str(), -1);
@@ -6175,7 +6171,6 @@ string classname,n,funcname,m;
     {
       funcname=m;
       flag=1;
-      cout<<classname<<"_"<<funcname<<":"<<'\n';
     }
     m=it.op;
     if(it.op=="EndFunc")
