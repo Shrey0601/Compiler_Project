@@ -23,6 +23,7 @@
     int isstatic=0;
     int isfieldprivate=0;
     string curr_class="";
+    stack<string> currfunc;
     int arraccess=0;
     int arrinit=0;
     string arrtype="null";
@@ -538,6 +539,7 @@
             if(ret == 1000000000){
               ret = it->classwidth;
             }
+            cout<<ret<<" "<<funcname<<endl;
             return ret;
           }
         }
@@ -1880,6 +1882,7 @@ Expression {
   strcpy(($$).type,($1).type);
   ($$).ndim=($1).ndim;
 };
+
 MethodDeclaration:
 MethodHeader MethodBody {
   curr_table = tables.top(); tables.pop();
@@ -1896,6 +1899,7 @@ MethodHeader MethodBody {
 
 }
 |MethodBody {
+  currfunc.pop();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1917,7 +1921,7 @@ Modifiers Type MethodDeclarator Throws {
 // emit("BeginFunc","","","",-1);
 // emit("push","ebp","","",-1);
 // emit("=", "esp", "null", "ebp", -1);
-
+  currfunc.push(string((char*)(($3).type)));
     if(isvoid)
   {
     cout<<"Main function should be void return type\n";
@@ -1969,7 +1973,7 @@ sizeparam.clear();
 
 }
 |Modifiers Type MethodDeclarator  { 
-  
+  currfunc.push(string((char*)(($3).type)));
    if(isvoid)
   {
     cout<<"Main function should be void return type\n";
@@ -2022,6 +2026,7 @@ sizeparam.clear();
 
 }
 |Type MethodDeclarator Throws {
+  currfunc.push(string((char*)(($2).type)));
   if(isvoid)
   {
     cout<<"Main function should be void return type\n";
@@ -2071,6 +2076,7 @@ sizeparam.clear();
   
 }
 |Type MethodDeclarator {
+  currfunc.push(string((char*)(($2).type)));
     if(isvoid)
   {
     cout<<"Main function should be void return type\n";
@@ -2119,6 +2125,7 @@ sizeparam.clear();
   }
 }
 |Modifiers VOID MethodDeclarator Throws {
+  currfunc.push(string((char*)(($3).type)));
   functype="void";
   infunction=1;
   nelem=($3).nelem;
@@ -2165,6 +2172,7 @@ sizeparam.clear();
   isfieldprivate=0;
 }
 |VOID MethodDeclarator Throws {
+  currfunc.push(string((char*)(($2).type)));
   if(ismainstatic&&!isstatic)
   {
     cout<<"Main function should be satic\n";
@@ -2210,6 +2218,7 @@ sizeparam.clear();
   }
 }
 |Modifiers VOID MethodDeclarator  {
+  currfunc.push(string((char*)(($3).type)));
   if(ismainstatic&&!isstatic)
   {
     cout<<"Main function should be satic\n";
@@ -2259,6 +2268,7 @@ sizeparam.clear();
 
 }
 |VOID MethodDeclarator {
+  currfunc.push(string((char*)(($2).type)));
   if(ismainstatic&&!isstatic)
   {
     cout<<"Main function should be satic\n";
@@ -2303,6 +2313,7 @@ curr_table->classwidth = offset;
 sizeparam.clear();
   }
 };
+
 MethodDeclarator:
 Identifier OPENBRACKET CLOSEBRACKET {
   emit(($1).str,":","","",-1);
@@ -2828,9 +2839,9 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("=", "[ebp" + to_string(offset - funcargtypesz(1, funcparam[i].first) - 4) + "]", "null", funcparam[i].first, -1);
+      emit("=", "[ebp" + to_string(offset - funcargtypesz(1, currfunc.top()) - 4) + "]", "null", funcparam[i].first, -1);
       offset += sizeparam[i];
-curr_table->classwidth = offset;
+      curr_table->classwidth = offset;
       if(newhandle != "null"){
         offset = offset - getsz(newhandle) + 8;
         newhandle = "null";
