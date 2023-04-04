@@ -3812,7 +3812,7 @@ RETURN SEMICOLON {
   isclassaccess=0;
     issystem=0;
     emit("pop", "ebp", "", "", -1);
-  emit("Return", "", "", "", -1);
+  emit("ret", "", "", "", -1);
 }
 |RETURN Expression SEMICOLON {    
   newdim.clear();
@@ -3825,7 +3825,8 @@ RETURN SEMICOLON {
       strcpy(($2).tempvar, tp3.c_str());
     }
     emit("pop", "ebp", "", "", -1);
-    emit("Return", ($2).tempvar , "", "", -1);
+    emit("push", ($2).tempvar, "", "", -1);
+    emit("ret", "" , "", "", -1);
   if(!infunction)
   {
     cout<<"Invalid return on line "<<yylineno<<'\n';
@@ -6388,9 +6389,9 @@ fout.open("TAC.txt");
     {
       if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass")
        {
-        //if(it.op=="EndClass") fout<<'\n';
         
         fout<<'\t'<<it.op<<'\n';
+        if(it.op=="EndClass") fout<<'\n'; 
         
       }
       else if(it.arg2=="null" && it.res=="null")
@@ -6436,7 +6437,7 @@ fout.open("TAC.txt");
       {
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
-      else if(it.op=="Return")
+      else if(it.op=="ret")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
       }
