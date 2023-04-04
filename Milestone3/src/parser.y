@@ -4070,9 +4070,19 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   
 }
 |NEW ClassType OPENBRACKET CLOSEBRACKET {
-  string a = newtemp();
-  strcpy(($$).tempvar, a.c_str());
-  emit("=", "new", string((char*)($2).type) + "()", ($$).tempvar, -1);
+  // string a = newtemp();
+  // strcpy(($$).tempvar, a.c_str());
+  string tv1 = newtemp();
+  emit("=", to_string(getclasswidth(string((char*)($2).type))), "null", tv1, -1);
+  emit("push",tv1,"","",-1);
+  emit("stackpointer","+" + to_string(getclasswidth(string((char*)($2).type))),"","",-1);
+  emit("call","allocmem","1","",-1);
+  emit("stackpointer","-" + to_string(getclasswidth(string((char*)($2).type))),"","",-1);
+  string tv2 = newtemp();
+  emit("=", "popparam", "null", tv2, -1);
+  emit("push",tv2,"","",-1);
+  emit("call",string((char*)(($2).type)), "","",-1);
+  strcpy(($$).tempvar, tv2.c_str());
 
   strcpy(($$).type,($2).type);
   if((curr_table->lookup(string((char*)($2).type)).offset == -1)&& checkobj(string((char*)($2).type)) == 0){
