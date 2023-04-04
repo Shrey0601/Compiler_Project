@@ -6380,85 +6380,72 @@ int main(int argc, char *argv[])
     cout<<'\n';
   }
 
-int flag=0;
-string classname,n,funcname,m;
+ofstream fout;
+fout.open("TAC.txt");
    for(auto it: code){
-    if(it.op=="BeginClass")
+   // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+    if(true)
     {
-      classname=n;
-    }
-    n=it.op;
-    if(it.op=="BeginFunc")
-    {
-      funcname=m;
-      flag=1;
-    }
-    m=it.op;
-    if(it.op=="EndFunc")
-    {
-      flag=0;
-      cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
-    }
-    if(flag==1)
-    {
-      if(it.op=="BeginFunc")
-      {
-        cout<<"\n";
-        cout<<it.op<<'\n';
+      if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass")
+       {
+        //if(it.op=="EndClass") fout<<'\n';
+        fout<<it.op<<'\n';
+        
       }
       else if(it.arg2=="null" && it.res=="null")
       {
-        cout<<it.op<<" "<<it.res<<"\n";
+        fout<<it.op<<" "<<it.res<<"\n";
       }
       else if(it.op=="Call")
       {
-        cout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
+        fout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
       }
       else if(it.arg2=="null" && it.res!="null")
       {
       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
         {
-      cout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
+      fout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
         }
       else 
         {
-        cout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
+        fout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
         }
       }
       else if(it.op=="push"||it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop")
       {
-        cout<<it.op<<" "<<it.arg1<<'\n';
+        fout<<it.op<<" "<<it.arg1<<'\n';
       }
       else if(it.op == "call"){
-        cout<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
+        fout<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
       }
       else if(it.res=="Ifz")
       {
-        cout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        fout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
       else if(it.op=="Goto")
       {
-        cout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+        fout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
       }
       else if(it.arg1==":")
       {
-        cout<<it.op<<it.arg1<<"\n";
+        fout<<'\n';
+        fout<<it.op<<it.arg1<<"\n";
       }
       else if(it.arg1=="new")
       {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+        fout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else if(it.op=="Return")
       {
-        cout<<it.op<<" "<<it.arg1<<"\n";
+        fout<<it.op<<" "<<it.arg1<<"\n";
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+        fout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
       {
-        cout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        fout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
 
       }
