@@ -4417,8 +4417,8 @@ yyreduce:
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("stackpointer","+" + to_string(sizeparam[i]),"","",-1);
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("stackpointer","+" + to_string(sizeparam[i]),"","",-1);
+      // emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
       curr_table->classwidth = offset;
       
@@ -4472,8 +4472,8 @@ issystem=0;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("stackpointer","+" + to_string(sizeparam[i]),"","",-1);
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("stackpointer","+" + to_string(sizeparam[i]),"","",-1);
+      // emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
