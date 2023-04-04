@@ -1,3 +1,3 @@
 make
 cd ..
-./milestone3 -i tests/test_11.java
+./milestone3 -i tests/test_10.java

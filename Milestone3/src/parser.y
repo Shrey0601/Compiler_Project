@@ -3990,7 +3990,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("stackpointer","-" + to_string(getclasswidth(string((char*)($2).type))),"","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
-  emit("push",tv2,"","",-1);
+  //emit("push",tv2,"","",-1);
   int pops = 0;
   string ar = "";
   stack<string> args2;
@@ -4009,7 +4009,8 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
     args2.pop();
     if(!args2.empty()) ar = ar + ",";
   }
-
+  emit("push",tv2,"","",-1);
+  //emit("stackpointer","+" + to_string(pops),"","",-1);
   emit("call",string((char*)(($2).type)), "","",-1);
   strcpy(($$).tempvar, tv2.c_str());
 
