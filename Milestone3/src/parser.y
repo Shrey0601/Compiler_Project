@@ -374,6 +374,7 @@
             
             return -1;
         }
+
     int checkclass(string lexeme){
         for(auto it: list_of_Symbol_Tables){
             auto tab = it->table;
@@ -394,6 +395,20 @@
             auto tab = it->table;
             for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
                 if(it1->second.scope_name == "Class" + lexeme){
+                    return it->classwidth;
+                }
+                else{
+                    break;
+                }
+            }
+        }
+        return 0;
+    }
+    int getfuncwidth(string lexeme){
+        for(auto it: list_of_Symbol_Tables){
+            auto tab = it->table;
+            for(auto it1 = tab.begin(); it1 != tab.end(); it1++){
+                if(it1->second.scope_name == "Method" + lexeme){
                     return it->classwidth;
                 }
                 else{
@@ -2002,7 +2017,7 @@ Modifiers Type MethodDeclarator Throws {
   }
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2400,6 +2415,7 @@ MethodDeclarator:
 Identifier OPENBRACKET CLOSEBRACKET {
   emit(($1).str,":","","",-1);
   emit("BeginFunc","","","",-1);
+  //emit("BeginFunc",to_string(getfuncwidth(string((char*)($1).type))),"","",-1);
   emit("push","ebp","","",-1);
   emit("=", "esp", "null", "ebp", -1);
   strcpy(($$).type,($1).str);
@@ -2412,6 +2428,7 @@ Identifier OPENBRACKET CLOSEBRACKET {
 }
 |Identifier OPENBRACKET FormalParameterList CLOSEBRACKET {
   emit(($1).str,":","","",-1);
+
   emit("BeginFunc","","","",-1);
   emit("push","ebp","","",-1);
   emit("=", "esp", "null", "ebp", -1);
@@ -2485,6 +2502,7 @@ Modifiers ConstructorDeclarator Throws ConstructorBody {
   offset = offsets.top(); offsets.pop();
   isfieldprivate=0;
   nelem=0;
+  
 }
 |Modifiers ConstructorDeclarator ConstructorBody {
   curr_table = tables.top(); tables.pop();
@@ -2492,22 +2510,25 @@ Modifiers ConstructorDeclarator Throws ConstructorBody {
   offset = offsets.top(); offsets.pop();
   isfieldprivate=0;
   nelem=0;
+  
 }
 |ConstructorDeclarator Throws ConstructorBody {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   nelem=0;
+  
 }
 |ConstructorDeclarator ConstructorBody {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   nelem=0;
+  
 }
 
 ConstructorHeader: SimpleName OPENBRACKET{
-  
+  emit("BeginCtor","","","",-1);
 }
 
 ConstructorDeclarator:
@@ -2579,26 +2600,27 @@ CLOSEBRACKET {
 ConstructorBody:
 OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET {
   
-  
+  emit("EndCtor","","","",-1);
   
   
   
 }
 |OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET {
   
+  emit("EndCtor","","","",-1);
   
   
   
 }
 |OPENCURLYBRACKET ExplicitConstructorInvocation CLOSECURLYBRACKET {
   
-  
+  emit("EndCtor","","","",-1);
   
   
 }
 |OPENCURLYBRACKET CLOSECURLYBRACKET {
   
-  
+  emit("EndCtor","","","",-1);
   
 };
 ExplicitConstructorInvocation:
@@ -6387,10 +6409,10 @@ fout.open("TAC.txt");
    // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
     if(true)
     {
-      if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass")
+      if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass" || it.op=="BeginCtor" || it.op=="EndCtor")
        {
         
-        fout<<'\t'<<it.op<<'\n';
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         if(it.op=="EndClass") fout<<'\n'; 
         
       }
