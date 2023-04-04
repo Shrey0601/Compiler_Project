@@ -316,6 +316,7 @@
     int addoff = 0;
     stack<string> continuelabels;
     stack<string> breaklabels;
+    map<string, string> objtotemp;
 
 
     Sym_Entry lookup1(string funcname, int argno){
@@ -1097,13 +1098,15 @@ Identifier {
     }
     // cout<<curr_table->lookup(string((char*)($1).str)).scope_name<<'\n';
   }
-  string tv8 = newtemp();
-  emit("=", "symtable.lookup(" + string((char*)($1).str) + ")","null" , tv8, -1);
-  strcpy(($$).tempvar, tv8.c_str());
-
+  // string tv8 = newtemp();
+  // emit("=", "symtable.lookup(" + string((char*)($1).str) + ")","null" , tv8, -1);
+  // strcpy(($$).tempvar, tv8.c_str());
+  // objtotemp[string((char*)($1).str)]= tv8 ;
+  strcpy(($$).tempvar, ($1).str);
   strcpy(($$).type, ($1).str);
   ($$).sz = (string((char*)($1).str)).size();
 };
+
 QualifiedName:
 Name DOT Identifier {
     // cout<<"LJO"<<(char*)($1).type<<'\n';
@@ -1111,9 +1114,10 @@ Name DOT Identifier {
     string s = string((char*)($1).type) + "." + string((char*)($3).str);
     string s1 = mo + "." + string((char*)($3).str);
     // cout<<"I was here"<<s1<<endl;
-    string tv8 = newtemp();
-    emit("=", "symtable.lookup(" + s + ")","null" , tv8, -1);
-    strcpy(($$).tempvar, tv8.c_str());
+    // string tv8 = newtemp();
+    // emit("=", "symtable.lookup(" + s + ")","null" , tv8, -1);
+    // strcpy(($$).tempvar, tv8.c_str());
+    strcpy(($$).tempvar, s.c_str());
     isaccess=1;
     fullname=s;
     classname=mo;
@@ -1568,7 +1572,7 @@ Modifiers Type VariableDeclarators SEMICOLON {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
       curr_table->classwidth = offset;
       
@@ -1617,7 +1621,7 @@ issystem=0;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2027,7 +2031,7 @@ Modifiers Type MethodDeclarator Throws {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
       fl = 0;
@@ -2080,7 +2084,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2133,7 +2137,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2231,7 +2235,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2279,7 +2283,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2327,7 +2331,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2377,7 +2381,7 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2538,7 +2542,7 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
+      emit("=", "[ebp+" + to_string(offset + 8) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2925,7 +2929,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", tempparam[i] , "null",  "[ebp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
+      emit("=", tempparam[i] , "null",  "[ebp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
       offset += sizeparam[i];
       // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
@@ -6141,12 +6145,12 @@ LeftHandSide AssignmentOperator AssignmentExpression {
       string v = p.substr(p.find('.')+1, p.size());
       string classname = curr_table->lookup(o).type;
       int tp2 = offsetobj(classname, v);
-      string tp3 = "*(" + o + "+" + to_string(tp2) + ")";
+      string tp3 = "*(" + objtotemp[o] + "+" + to_string(tp2) + ")";
       if(p1 != o1){
         string v1 = p1.substr(p1.find('.')+1, p1.size());
         string classname1 = curr_table->lookup(o1).type;
         int tp21 = offsetobj(classname1, v1);
-        string tp31 = "*(" + o1 + "+" + to_string(tp21) + ")";
+        string tp31 = "*(" + objtotemp[o1] + "+" + to_string(tp21) + ")";
         emit("=",tp31.c_str(),"null",tp3.c_str(), -1);
       }
       else{
