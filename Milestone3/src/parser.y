@@ -2072,7 +2072,7 @@ tempparam.clear();
   }
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
