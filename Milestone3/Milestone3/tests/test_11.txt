@@ -1,0 +1,197 @@
+GFG:
+	BeginClass 
+swap:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	arr = [ebp+16]
+	sub esp 4
+	i = [ebp+20]
+	sub esp 4
+	j = [ebp+24]
+	t1 = i*4
+	t0 = arr+t1
+	sub esp 4
+	[ebp-4] = *t0
+	t3 = i*4
+	t2 = arr+t3
+	t5 = j*4
+	t4 = arr+t5
+	t6 = popparam
+	*t2 = *t4
+	t8 = j*4
+	t7 = arr+t8
+	t9 = popparam
+	*t7 = temp
+	add esp 16
+	pop ebp
+	ret 
+	EndFunc 
+partition:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	arr = [ebp+16]
+	sub esp 4
+	low = [ebp+20]
+	sub esp 4
+	high = [ebp+24]
+	t11 = high*4
+	t10 = arr+t11
+	sub esp 4
+	[ebp-4] = *t10
+	t12 = low -int 1
+	sub esp 4
+	[ebp-8] = (t12)
+	sub esp 4
+	[ebp+8] = low
+L0:
+	t13 = high -int 1
+	t14 = j <= t13
+	Ifz t14 Goto L1
+	Goto L2
+L3:
+	t15 = j
+	j = t15 + 1
+	Goto L0
+L2:
+	t17 = j*4
+	t16 = arr+t17
+	t18 = *t16 < pivot
+	Ifz t18 Goto L4
+	t19 = i
+	i = t19 + 1
+	param j
+	param i
+	param arr
+	sub esp 12
+	call swap 
+	add esp 12
+	t20 = popparam
+	add esp 8
+	Goto L5
+L4:
+L5:
+	Goto L3
+L1:
+	t21 = i +int 1
+	param high
+	param t21
+	param arr
+	sub esp 12
+	call swap 
+	add esp 12
+	t22 = popparam
+	add esp 8
+	t23 = i +int 1
+	add esp 24
+	pop ebp
+	push (t23)
+	ret 
+	EndFunc 
+quickSort:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	arr = [ebp+16]
+	sub esp 4
+	low = [ebp+20]
+	sub esp 4
+	high = [ebp+24]
+	t24 = low < high
+	Ifz t24 Goto L6
+	param high
+	param low
+	param arr
+	sub esp 12
+	call partition 
+	add esp 12
+	t25 = popparam
+	add esp 8
+	sub esp 4
+	[ebp+8] = t25
+	t26 = pi -int 1
+	param t26
+	param low
+	param arr
+	sub esp 12
+	call quickSort 
+	add esp 12
+	t27 = popparam
+	add esp 8
+	t28 = pi +int 1
+	param high
+	param t28
+	param arr
+	sub esp 12
+	call quickSort 
+	add esp 12
+	t29 = popparam
+	add esp 8
+	Goto L7
+L6:
+L7:
+	add esp 16
+	pop ebp
+	ret 
+	EndFunc 
+printArray:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	arr = [ebp+16]
+	sub esp 4
+	size = [ebp+20]
+	sub esp 4
+	[ebp+4] = 0
+L8:
+	t30 = i < size
+	Ifz t30 Goto L9
+	Goto L10
+L11:
+	t31 = i
+	i = t31 + 1
+	Goto L8
+L10:
+	Goto L11
+L9:
+	add esp 12
+	pop ebp
+	ret 
+	EndFunc 
+main:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 8
+	args = [ebp+16]
+	sub esp 4
+	[ebp-4] = {10,7,8,9,1,5}
+	sub esp 4
+	[ebp-8] = 6
+	t32 = n -int 1
+	param t32
+	param 0
+	param arr
+	sub esp 12
+	call quickSort 
+	add esp 12
+	t33 = popparam
+	add esp 8
+	param n
+	param arr
+	sub esp 8
+	call printArray 
+	add esp 8
+	t34 = popparam
+	add esp 8
+	add esp 16
+	pop ebp
+	ret 
+	EndFunc 
+	EndClass 
+

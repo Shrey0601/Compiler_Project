@@ -1,5 +1,5 @@
 CC = g++
-FLAGS = -g -Wall
+FLAGS = -g -Wall -w
 PARSER_NAME = parser
 PARSER = $(PARSER_NAME).y
 PARSER_TAB_C = $(PARSER_NAME).tab.c

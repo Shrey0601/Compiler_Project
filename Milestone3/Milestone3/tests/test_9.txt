@@ -1,0 +1,92 @@
+CatalnNumber:
+	BeginClass 
+catalan:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	n = [ebp+16]
+	sub esp 4
+	[ebp-4] = 0
+	t0 = n <= 1
+	Ifz t0 Goto L0
+	add esp 8
+	pop ebp
+	push 1
+	ret 
+	Goto L1
+L0:
+L1:
+	sub esp 4
+	[ebp+0] = 0
+L2:
+	t1 = i < n
+	Ifz t1 Goto L3
+	Goto L4
+L5:
+	t2 = i
+	i = t2 + 1
+	Goto L2
+L4:
+	param i
+	sub esp 4
+	call catalan 
+	add esp 4
+	t3 = popparam
+	add esp 8
+	t4 = n -int i
+	t5 = t4 -int 1
+	param t5
+	sub esp 4
+	call catalan 
+	add esp 4
+	t6 = popparam
+	add esp 8
+	t7 = t3 *int t6
+	t8 = res + t7
+	res = t8
+	Goto L5
+L3:
+	EndFunc 
+main:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 6
+	args = [ebp+16]
+	t9 = 0
+	param t9
+	sub esp 8
+	call allocmem 1
+	add esp 8
+	t10 = popparam
+	param t10
+	call CatalnNumber 
+	sub esp 8
+	[ebp-4] = t10
+	sub esp 4
+	[ebp+2] = 0
+L6:
+	t11 = i < 10
+	Ifz t11 Goto L7
+	Goto L8
+L9:
+	t12 = i
+	i = t12 + 1
+	Goto L6
+L8:
+	param i
+	param cn
+	sub esp 12
+	call CatalnNumber.catalan 
+	add esp 12
+	t13 = popparam
+	add esp 8
+	Goto L9
+L7:
+	add esp 22
+	pop ebp
+	ret 
+	EndFunc 
+	EndClass 
+

@@ -1101,7 +1101,7 @@ Identifier {
   {
     if(strcmp(($1).str,"String"))
     {
-      if(!isimport||!issystem) cout<<"Undeclared variable "<<($1).str<<" on line "<<yylineno<<'\n';
+      if(!isimport&&!issystem) cout<<"Undeclared variable "<<($1).str<<" on line "<<yylineno<<'\n';
       // else isimport=0;
     }
   }
@@ -1164,7 +1164,7 @@ Name DOT Identifier {
     else
     {
       // cout<<isimport<<issystem<<'\n';
-      if(!isimport||!issystem) cout<<"The variable you are trying to reach is currently undefined on line "<<yylineno<<". Please try again later\n";
+      if(!isimport&&!issystem) cout<<"The variable you are trying to reach is currently undefined on line "<<yylineno<<". Please try again later\n";
       // else isimport=0;
     }
     if(checkobj(s1)==1 and isclassaccess==1)
@@ -2636,6 +2636,7 @@ tempparam.clear();
   nelem=0;
 }
 |SimpleName OPENBRACKET {
+  emit("BeginCtor","","","",-1);
   emit("push","ebp","","",-1);
   emit("=", "esp", "null", "ebp", -1);
   nelem=0;
@@ -4492,8 +4493,25 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   // yo="";
 }
 |DummyMethodInvocation OPENBRACKET CLOSEBRACKET {
+  if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
+  {
+    emit("call", "print 1", "", "", -1);
+  }
+  else{
+    string tv9 = string((char*)(($1).tempvar));
+    string oname = tv9.substr(0, tv9.find('.'));
+    string cname = curr_table->lookup(oname).type;
+    if(checkclass(cname)){
+      string mname = tv9.substr(tv9.find('.')+1, tv9.size());
+      emit("param", oname, "", "", -1);
+      emit("call", cname + "." + mname, "", "", -1);
+
+    }
+    else{
+      emit("call", string((char*)(($1).tempvar)),"", "", -1);
+    }
+  }
   string s = newtemp();
-  emit("call",string((char*)($1).tempvar),"","",-1);
   emit("=", "popparam", "null", s.c_str(), -1);
   emit("add", "esp", to_string(8), "", -1);
   strcpy(($$).tempvar,s.c_str());

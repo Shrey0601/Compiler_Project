@@ -1,7 +1,13 @@
 class Employee{  
     int id;  
     String name;  
-    float salary;  
+    float salary; 
+    Employee()
+    {
+        id=0;
+        name="";
+        salary=0;
+    } 
     void insert(int i, String n, float s) {  
         id=i;  
         name=n;  

@@ -1,7 +1,7 @@
-class Student{  
- int id;  
+class Student{   
  String name;  
- int yo(){return 1;}
+ int id;
+ int yo(){return 2*3;}
 }  
 class TestStudent2{  
  public static void main(String args[]){  
