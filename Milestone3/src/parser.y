@@ -6389,63 +6389,64 @@ fout.open("TAC.txt");
       if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass")
        {
         //if(it.op=="EndClass") fout<<'\n';
-        fout<<it.op<<'\n';
+        
+        fout<<'\t'<<it.op<<'\n';
         
       }
       else if(it.arg2=="null" && it.res=="null")
       {
-        fout<<it.op<<" "<<it.res<<"\n";
+        fout<<'\t'<<it.op<<" "<<it.res<<"\n";
       }
       else if(it.op=="Call")
       {
-        fout<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
+        fout<<'\t'<<it.res<<" = "<<it.op<<" "<<it.arg1<<'\n';
       }
       else if(it.arg2=="null" && it.res!="null")
       {
       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
         {
-      fout<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
+      fout<<'\t'<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
         }
       else 
         {
-        fout<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
+        fout<<'\t'<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
         }
       }
       else if(it.op=="push"||it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop")
       {
-        fout<<it.op<<" "<<it.arg1<<'\n';
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
       }
       else if(it.op == "call"){
-        fout<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
+        fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
       }
       else if(it.res=="Ifz")
       {
-        fout<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        fout<<'\t'<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
       else if(it.op=="Goto")
       {
-        fout<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+        fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
       }
       else if(it.arg1==":")
       {
-        fout<<'\n';
+        // fout<<'\t';
         fout<<it.op<<it.arg1<<"\n";
       }
       else if(it.arg1=="new")
       {
-        fout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else if(it.op=="Return")
       {
-        fout<<it.op<<" "<<it.arg1<<"\n";
+        fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
-        fout<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
       {
-        fout<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
 
       }
