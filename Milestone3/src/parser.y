@@ -2127,7 +2127,7 @@ tempparam.clear();
   }
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2179,7 +2179,7 @@ tempparam.clear();
   }
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2229,7 +2229,7 @@ tempparam.clear();
   nelem=($3).nelem;
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2275,7 +2275,7 @@ tempparam.clear();
   currfunc.push(string((char*)(($2).type)));
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2323,7 +2323,7 @@ tempparam.clear();
   currfunc.push(string((char*)(($3).type)));
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
@@ -2375,7 +2375,7 @@ tempparam.clear();
   currfunc.push(string((char*)(($2).type)));
   if(ismainstatic&&!isstatic)
   {
-    cout<<"Main function should be satic\n";
+    cout<<"Main function should be static\n";
   }
   ismainstatic=0;
   isvoid=0;
