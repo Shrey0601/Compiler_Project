@@ -1547,8 +1547,7 @@ ClassMemberDeclaration {
   isstatic=0;
 }
 |ConstructorDeclaration {
-  
-  
+
 };
 ClassMemberDeclaration:
 FieldDeclaration {
@@ -2590,6 +2589,7 @@ tempparam.clear();
   nelem=0;
 }
 |SimpleName OPENBRACKET {
+  emit("BeginCtor","","","",-1);
   nelem=0;
   curr_table->entry(string((char*)(($1).type)), "Constructor", string((char*)(($1).type)), offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
