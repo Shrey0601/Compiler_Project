@@ -1,0 +1,126 @@
+Employee:
+	BeginClass 
+	BeginCtor 
+	push ebp
+	ebp = esp
+	t0 = popparam
+	*(t0+0) = 0
+	t1 = popparam
+	*(t1+4) = ""
+	t2 = popparam
+	*(t2+12) = 0
+	pop ebp
+	ret 
+	EndCtor 
+insert:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	i = [ebp+16]
+	sub esp 8
+	n = [ebp+20]
+	sub esp 4
+	s = [ebp+28]
+	t3 = popparam
+	*(t3+0) = i
+	t4 = popparam
+	*(t4+4) = n
+	t5 = popparam
+	*(t5+12) = s
+	add esp 16
+	pop ebp
+	ret 
+	EndFunc 
+display:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	pop ebp
+	ret 
+	EndFunc 
+	EndClass 
+
+TestEmployee:
+	BeginClass 
+main:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 6
+	args = [ebp+16]
+	t6 = 16
+	param t6
+	sub esp 8
+	call allocmem 1
+	add esp 8
+	t7 = popparam
+	param t7
+	call Employee 
+	sub esp 8
+	[ebp-4] = t7
+	t8 = 16
+	param t8
+	sub esp 8
+	call allocmem 1
+	add esp 8
+	t9 = popparam
+	param t9
+	call Employee 
+	sub esp 8
+	[ebp-12] = t9
+	t10 = 16
+	param t10
+	sub esp 8
+	call allocmem 1
+	add esp 8
+	t11 = popparam
+	param t11
+	call Employee 
+	sub esp 8
+	[ebp-20] = t11
+	param 45000
+	param "ajeet"
+	param 101
+	param e1
+	sub esp 24
+	call Employee.insert 
+	add esp 24
+	t12 = popparam
+	add esp 8
+	param 25000
+	param "irfan"
+	param 102
+	param e2
+	sub esp 24
+	call Employee.insert 
+	add esp 24
+	t13 = popparam
+	add esp 8
+	param 55000
+	param "nakul"
+	param 103
+	param e3
+	sub esp 24
+	call Employee.insert 
+	add esp 24
+	t14 = popparam
+	add esp 8
+	param e1
+	call Employee.display 
+	t15 = popparam
+	add esp 8
+	param e2
+	call Employee.display 
+	t16 = popparam
+	add esp 8
+	param e3
+	call Employee.display 
+	t17 = popparam
+	add esp 8
+	add esp 30
+	pop ebp
+	ret 
+	EndFunc 
+	EndClass 
+
