@@ -616,16 +616,16 @@
         temp.arg2 = arg2;
         temp.res = res;
         temp.idx = idx;
-        if(idx == -1) temp.idx = code.size();
+        // if(idx < 0) temp.idx = code.size();
         code.push_back(temp);
     }
 
     string newtemp(){
-      string temp_var = "t"+to_string(counter++);
+      string temp_var = "#t"+to_string(counter++);
       return temp_var;
     }
     string newLabel(){
-      string temp_var = "L"+to_string(counter1++);
+      string temp_var = "#L"+to_string(counter1++);
       return temp_var;
     }
 
@@ -1381,36 +1381,36 @@ static const yytype_int16 yyrline[] =
     1328,  1328,  1364,  1364,  1388,  1388,  1412,  1412,  1449,  1449,
     1473,  1473,  1511,  1517,  1523,  1527,  1534,  1537,  1541,  1545,
     1551,  1555,  1558,  1563,  1567,  1572,  1622,  1667,  1699,  1776,
-    1828,  1956,  1962,  1962,  1972,  1981,  1989,  2003,  2022,  2081,
-    2139,  2193,  2246,  2297,  2347,  2401,  2453,  2467,  2482,  2486,
-    2489,  2493,  2512,  2515,  2517,  2521,  2533,  2550,  2550,  2554,
-    2562,  2570,  2577,  2585,  2590,  2640,  2640,  2664,  2679,  2692,
-    2704,  2716,  2726,  2734,  2742,  2750,  2750,  2774,  2774,  2796,
-    2796,  2814,  2814,  2836,  2841,  2848,  2853,  2860,  2864,  2870,
-    2874,  2879,  2884,  2892,  2901,  2911,  2919,  2931,  2939,  2949,
-    2955,  2961,  2965,  2971,  2975,  2980,  2986,  2996,  3070,  3074,
-    3078,  3082,  3086,  3090,  3095,  3099,  3103,  3107,  3111,  3116,
-    3120,  3124,  3128,  3132,  3136,  3140,  3144,  3148,  3152,  3156,
-    3161,  3167,  3173,  3179,  3188,  3194,  3200,  3206,  3212,  3218,
-    3225,  3231,  3244,  3256,  3263,  3275,  3283,  3295,  3308,  3320,
-    3324,  3331,  3337,  3343,  3349,  3353,  3358,  3364,  3368,  3374,
-    3380,  3385,  3402,  3412,  3422,  3431,  3448,  3458,  3468,  3481,
-    3487,  3494,  3510,  3524,  3538,  3548,  3564,  3579,  3593,  3610,
-    3620,  3630,  3647,  3657,  3668,  3679,  3690,  3701,  3712,  3723,
-    3734,  3745,  3758,  3769,  3780,  3791,  3802,  3813,  3824,  3835,
-    3847,  3849,  3853,  3857,  3859,  3863,  3876,  3894,  3910,  3925,
-    3942,  3980,  3987,  3990,  3992,  3994,  3997,  3999,  4002,  4002,
-    4019,  4022,  4027,  4033,  4038,  4044,  4051,  4056,  4063,  4070,
-    4077,  4169,  4205,  4211,  4220,  4235,  4252,  4269,  4287,  4291,
-    4296,  4304,  4311,  4318,  4332,  4339,  4347,  4497,  4553,  4605,
-    4620,  4647,  4664,  4807,  4948,  4954,  4965,  4970,  4977,  5010,
-    5043,  5049,  5054,  5066,  5075,  5083,  5116,  5146,  5150,  5162,
-    5174,  5180,  5206,  5229,  5252,  5284,  5296,  5441,  5584,  5727,
-    5733,  5877,  6021,  6028,  6047,  6068,  6086,  6092,  6121,  6151,
-    6180,  6211,  6216,  6223,  6254,  6286,  6293,  6301,  6308,  6316,
-    6322,  6330,  6336,  6345,  6351,  6357,  6363,  6367,  6373,  6380,
-    6525,  6538,  6545,  6556,  6561,  6565,  6569,  6573,  6577,  6581,
-    6585,  6589,  6593,  6597,  6602,  6613
+    1828,  1955,  1961,  1961,  1971,  1980,  1988,  2002,  2021,  2080,
+    2138,  2192,  2245,  2296,  2346,  2400,  2452,  2466,  2481,  2485,
+    2488,  2492,  2511,  2514,  2516,  2520,  2532,  2549,  2549,  2553,
+    2561,  2569,  2576,  2584,  2589,  2639,  2639,  2663,  2678,  2691,
+    2703,  2715,  2725,  2733,  2741,  2749,  2749,  2773,  2773,  2795,
+    2795,  2813,  2813,  2835,  2840,  2847,  2852,  2859,  2863,  2869,
+    2873,  2878,  2883,  2891,  2900,  2910,  2918,  2930,  2938,  2948,
+    2954,  2960,  2964,  2970,  2974,  2979,  2985,  2995,  3069,  3073,
+    3077,  3081,  3085,  3089,  3094,  3098,  3102,  3106,  3110,  3115,
+    3119,  3123,  3127,  3131,  3135,  3139,  3143,  3147,  3151,  3155,
+    3160,  3166,  3172,  3178,  3187,  3193,  3199,  3205,  3211,  3217,
+    3224,  3230,  3243,  3255,  3262,  3274,  3282,  3294,  3307,  3319,
+    3323,  3330,  3336,  3342,  3348,  3352,  3357,  3363,  3367,  3373,
+    3379,  3384,  3401,  3411,  3421,  3430,  3447,  3457,  3467,  3480,
+    3486,  3493,  3509,  3523,  3537,  3547,  3563,  3578,  3592,  3609,
+    3619,  3629,  3646,  3656,  3667,  3678,  3689,  3700,  3711,  3722,
+    3733,  3744,  3757,  3768,  3779,  3790,  3801,  3812,  3823,  3834,
+    3846,  3848,  3852,  3856,  3858,  3862,  3875,  3893,  3909,  3924,
+    3941,  3979,  3986,  3989,  3991,  3993,  3996,  3998,  4001,  4001,
+    4018,  4021,  4026,  4032,  4037,  4043,  4050,  4055,  4062,  4069,
+    4076,  4168,  4204,  4210,  4219,  4234,  4251,  4268,  4286,  4290,
+    4295,  4303,  4310,  4317,  4331,  4338,  4346,  4496,  4552,  4604,
+    4619,  4646,  4663,  4806,  4947,  4953,  4964,  4969,  4976,  5009,
+    5042,  5048,  5053,  5065,  5074,  5082,  5115,  5145,  5149,  5161,
+    5173,  5179,  5205,  5228,  5251,  5283,  5295,  5440,  5583,  5726,
+    5732,  5876,  6020,  6027,  6046,  6067,  6085,  6091,  6120,  6150,
+    6179,  6210,  6215,  6222,  6253,  6285,  6292,  6300,  6307,  6315,
+    6321,  6329,  6335,  6344,  6350,  6356,  6362,  6366,  6372,  6379,
+    6515,  6528,  6535,  6546,  6551,  6555,  6559,  6563,  6567,  6571,
+    6575,  6579,  6583,  6587,  6592,  6603
 };
 #endif
 
@@ -4426,7 +4426,7 @@ yyreduce:
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
       curr_table->classwidth = offset;
       
@@ -4480,7 +4480,7 @@ issystem=0;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -4702,10 +4702,10 @@ curr_table->classwidth = offset;
     emit("=", to_string(sizealloc), "null", tv4, -1);
     emit("param",tv4,"","",-1);
     // emit("stackpointer","+" + to_string(sizealloc),"","",-1);
-    emit("add", "esp", to_string(sizealloc), "", -1);
+    emit("add", "rsp", to_string(sizealloc), "", -1);
     emit("call","allocmem","1","",-1);
     // emit("stackpointer","-" + to_string(sizealloc),"","",-1);
-    emit("sub", "esp", to_string(sizealloc), "", -1);
+    emit("sub", "rsp", to_string(sizealloc), "", -1);
     string tv2 = newtemp();
     emit("=", "popparam", "null", tv2, -1);
     strcpy(((yyval.typ)).tempvar, tv2.c_str());
@@ -4713,7 +4713,6 @@ curr_table->classwidth = offset;
  }
   else{
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
-  emit("=", ((yyvsp[0].typ)).tempvar, "null", ((yyvsp[-2].typ)).tempvar, -1);
   objtotemp[string((char*)(((yyvsp[-2].typ)).type))] = string((char*)(((yyvsp[0].typ)).tempvar));
   }
   // arrname=($1).type;
@@ -4802,41 +4801,41 @@ curr_table->classwidth = offset;
   }
   // cout<<"GGG"<<($$).type<<'\n';
 }
-#line 4806 "parser.tab.c"
+#line 4805 "parser.tab.c"
     break;
 
   case 101: /* VariableDeclaratorId: Identifier  */
-#line 1956 "parser.y"
+#line 1955 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].lex)).str);
   ndim=0;
 }
-#line 4817 "parser.tab.c"
+#line 4816 "parser.tab.c"
     break;
 
   case 102: /* $@9: %empty  */
-#line 1962 "parser.y"
+#line 1961 "parser.y"
                       {
   type  = type + "[]";
   ndim=ndim+1;
   // type = "Array";
 }
-#line 4827 "parser.tab.c"
+#line 4826 "parser.tab.c"
     break;
 
   case 103: /* VariableDeclaratorId: VariableDeclaratorId $@9 OPENSQUAREBRACKET CLOSESQUAREBRACKET  */
-#line 1966 "parser.y"
+#line 1965 "parser.y"
                                        {
   
   // ($$).ndim=ndim;
 }
-#line 4836 "parser.tab.c"
+#line 4835 "parser.tab.c"
     break;
 
   case 104: /* VariableInitializer: Expression  */
-#line 1972 "parser.y"
+#line 1971 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -4846,22 +4845,22 @@ curr_table->classwidth = offset;
   // cout<<"YO"<<($$).ndim<<'\n';
 
 }
-#line 4850 "parser.tab.c"
+#line 4849 "parser.tab.c"
     break;
 
   case 105: /* VariableInitializer: ArrayInitializer  */
-#line 1981 "parser.y"
+#line 1980 "parser.y"
                   {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
 }
-#line 4861 "parser.tab.c"
+#line 4860 "parser.tab.c"
     break;
 
   case 106: /* MethodDeclaration: MethodHeader MethodBody  */
-#line 1989 "parser.y"
+#line 1988 "parser.y"
                         {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -4876,11 +4875,11 @@ curr_table->classwidth = offset;
   isstatic=0;
 
 }
-#line 4880 "parser.tab.c"
+#line 4879 "parser.tab.c"
     break;
 
   case 107: /* MethodDeclaration: MethodBody  */
-#line 2003 "parser.y"
+#line 2002 "parser.y"
             {
   currfunc.pop();
   curr_table->classwidth = offset;
@@ -4897,15 +4896,15 @@ curr_table->classwidth = offset;
   isstatic=0;
 
 }
-#line 4901 "parser.tab.c"
+#line 4900 "parser.tab.c"
     break;
 
   case 108: /* MethodHeader: Modifiers Type MethodDeclarator Throws  */
-#line 2022 "parser.y"
+#line 2021 "parser.y"
                                        {
 // emit("BeginFunc","","","",-1);
-// emit("push","ebp","","",-1);
-// emit("=", "esp", "null", "ebp", -1);
+// emit("push","rbp","","",-1);
+// emit("=", "rsp", "null", "rbp", -1);
   currfunc.push(string((char*)(((yyvsp[-1].typ)).type)));
     if(isvoid)
   {
@@ -4944,10 +4943,10 @@ curr_table->classwidth = offset;
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
       fl = 0;
@@ -4961,11 +4960,11 @@ tempparam.clear();
   isstatic=0;
 
 }
-#line 4965 "parser.tab.c"
+#line 4964 "parser.tab.c"
     break;
 
   case 109: /* MethodHeader: Modifiers Type MethodDeclarator  */
-#line 2081 "parser.y"
+#line 2080 "parser.y"
                                   { 
   currfunc.push(string((char*)(((yyvsp[0].typ)).type)));
    if(isvoid)
@@ -5005,11 +5004,11 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5024,11 +5023,11 @@ tempparam.clear();
   isstatic=0;
 
 }
-#line 5028 "parser.tab.c"
+#line 5027 "parser.tab.c"
     break;
 
   case 110: /* MethodHeader: Type MethodDeclarator Throws  */
-#line 2139 "parser.y"
+#line 2138 "parser.y"
                               {
   currfunc.push(string((char*)(((yyvsp[-1].typ)).type)));
   if(isvoid)
@@ -5067,10 +5066,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5083,11 +5082,11 @@ tempparam.clear();
   }
   
 }
-#line 5087 "parser.tab.c"
+#line 5086 "parser.tab.c"
     break;
 
   case 111: /* MethodHeader: Type MethodDeclarator  */
-#line 2193 "parser.y"
+#line 2192 "parser.y"
                        {
   currfunc.push(string((char*)(((yyvsp[0].typ)).type)));
     if(isvoid)
@@ -5126,10 +5125,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
       curr_table->classwidth = offset;
 
@@ -5141,11 +5140,11 @@ sizeparam.clear();
 tempparam.clear();
   }
 }
-#line 5145 "parser.tab.c"
+#line 5144 "parser.tab.c"
     break;
 
   case 112: /* MethodHeader: Modifiers VOID MethodDeclarator Throws  */
-#line 2246 "parser.y"
+#line 2245 "parser.y"
                                         {
   currfunc.push(string((char*)(((yyvsp[-1].typ)).type)));
   functype="void";
@@ -5181,10 +5180,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5197,11 +5196,11 @@ tempparam.clear();
   }
   isfieldprivate=0;
 }
-#line 5201 "parser.tab.c"
+#line 5200 "parser.tab.c"
     break;
 
   case 113: /* MethodHeader: VOID MethodDeclarator Throws  */
-#line 2297 "parser.y"
+#line 2296 "parser.y"
                               {
   currfunc.push(string((char*)(((yyvsp[-1].typ)).type)));
   if(ismainstatic&&!isstatic)
@@ -5237,10 +5236,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5252,11 +5251,11 @@ sizeparam.clear();
 tempparam.clear();
   }
 }
-#line 5256 "parser.tab.c"
+#line 5255 "parser.tab.c"
     break;
 
   case 114: /* MethodHeader: Modifiers VOID MethodDeclarator  */
-#line 2347 "parser.y"
+#line 2346 "parser.y"
                                   {
   currfunc.push(string((char*)(((yyvsp[0].typ)).type)));
   if(ismainstatic&&!isstatic)
@@ -5293,10 +5292,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5311,11 +5310,11 @@ tempparam.clear();
   isstatic=0;
 
 }
-#line 5315 "parser.tab.c"
+#line 5314 "parser.tab.c"
     break;
 
   case 115: /* MethodHeader: VOID MethodDeclarator  */
-#line 2401 "parser.y"
+#line 2400 "parser.y"
                        {
   currfunc.push(string((char*)(((yyvsp[0].typ)).type)));
   if(ismainstatic&&!isstatic)
@@ -5351,10 +5350,10 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","esp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "esp", to_string(sizeparam[i]), "", -1);
+      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -5366,17 +5365,17 @@ sizeparam.clear();
 tempparam.clear();
   }
 }
-#line 5370 "parser.tab.c"
+#line 5369 "parser.tab.c"
     break;
 
   case 116: /* MethodDeclarator: Identifier OPENBRACKET CLOSEBRACKET  */
-#line 2453 "parser.y"
+#line 2452 "parser.y"
                                     {
   emit(((yyvsp[-2].lex)).str,":","","",-1);
   emit("BeginFunc","","","",-1);
   //emit("BeginFunc",to_string(getfuncwidth(string((char*)($1).type))),"","",-1);
-  emit("push","ebp","","",-1);
-  emit("=", "esp", "null", "ebp", -1);
+  emit("push","rbp","","",-1);
+  emit("=", "rsp", "null", "rbp", -1);
   strcpy(((yyval.typ)).type,((yyvsp[-2].lex)).str);
   ((yyval.typ)).nelem=0;
   if(!strcmp(((yyvsp[-2].lex)).str,"main"))
@@ -5385,17 +5384,17 @@ tempparam.clear();
     isvoid=1;
   }
 }
-#line 5389 "parser.tab.c"
+#line 5388 "parser.tab.c"
     break;
 
   case 117: /* MethodDeclarator: Identifier OPENBRACKET FormalParameterList CLOSEBRACKET  */
-#line 2467 "parser.y"
+#line 2466 "parser.y"
                                                          {
   emit(((yyvsp[-3].lex)).str,":","","",-1);
 
   emit("BeginFunc","","","",-1);
-  emit("push","ebp","","",-1);
-  emit("=", "esp", "null", "ebp", -1);
+  emit("push","rbp","","",-1);
+  emit("=", "rsp", "null", "rbp", -1);
 
   strcpy(((yyval.typ)).type,((yyvsp[-3].lex)).str);
   ((yyval.typ)).nelem=((yyvsp[-1].typ)).nelem;
@@ -5405,35 +5404,35 @@ tempparam.clear();
     isvoid=1;
   }
 }
-#line 5409 "parser.tab.c"
+#line 5408 "parser.tab.c"
     break;
 
   case 118: /* MethodDeclarator: MethodDeclarator OPENSQUAREBRACKET CLOSESQUAREBRACKET  */
-#line 2482 "parser.y"
+#line 2481 "parser.y"
                                                        {
 
 }
-#line 5417 "parser.tab.c"
+#line 5416 "parser.tab.c"
     break;
 
   case 119: /* FormalParameterList: FormalParameter  */
-#line 2486 "parser.y"
+#line 2485 "parser.y"
                 {
   ((yyval.typ)).nelem=1;
 }
-#line 5425 "parser.tab.c"
+#line 5424 "parser.tab.c"
     break;
 
   case 120: /* FormalParameterList: FormalParameterList COMMA FormalParameter  */
-#line 2489 "parser.y"
+#line 2488 "parser.y"
                                            {
   ((yyval.typ)).nelem=((yyvsp[-2].typ)).nelem+1;
 }
-#line 5433 "parser.tab.c"
+#line 5432 "parser.tab.c"
     break;
 
   case 121: /* FormalParameter: Type VariableDeclaratorId  */
-#line 2493 "parser.y"
+#line 2492 "parser.y"
                           {
   strcpy(((yyval.typ)).tempvar,((yyvsp[0].typ)).tempvar);
   ((yyval.typ)).ndim=ndim;
@@ -5452,36 +5451,36 @@ tempparam.clear();
   sizeparam.push_back(sz);
   tempparam.push_back(string((char*)(((yyvsp[0].typ)).tempvar)));
 }
-#line 5456 "parser.tab.c"
+#line 5455 "parser.tab.c"
     break;
 
   case 122: /* Throws: THROWS ClassTypeList  */
-#line 2512 "parser.y"
+#line 2511 "parser.y"
                      {
 }
-#line 5463 "parser.tab.c"
+#line 5462 "parser.tab.c"
     break;
 
   case 123: /* ClassTypeList: ClassType  */
-#line 2515 "parser.y"
+#line 2514 "parser.y"
            {
 }
-#line 5470 "parser.tab.c"
+#line 5469 "parser.tab.c"
     break;
 
   case 124: /* ClassTypeList: ClassTypeList COMMA ClassType  */
-#line 2517 "parser.y"
+#line 2516 "parser.y"
                                {
 }
-#line 5477 "parser.tab.c"
+#line 5476 "parser.tab.c"
     break;
 
   case 125: /* MethodBody: Block  */
-#line 2521 "parser.y"
+#line 2520 "parser.y"
        {
     if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
@@ -5490,16 +5489,16 @@ emit("ret","","","",-1);
   
   infunction=1;
 }
-#line 5494 "parser.tab.c"
+#line 5493 "parser.tab.c"
     break;
 
   case 126: /* MethodBody: SEMICOLON  */
-#line 2533 "parser.y"
+#line 2532 "parser.y"
            {   
   newdim.clear(); 
     if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
@@ -5511,25 +5510,25 @@ emit("ret","","","",-1);
   isfinal=0;
   issystem=0;
 }
-#line 5515 "parser.tab.c"
+#line 5514 "parser.tab.c"
     break;
 
   case 127: /* $@10: %empty  */
-#line 2550 "parser.y"
+#line 2549 "parser.y"
        {isstatic=1;}
-#line 5521 "parser.tab.c"
+#line 5520 "parser.tab.c"
     break;
 
   case 128: /* StaticInitializer: STATIC $@10 Block  */
-#line 2550 "parser.y"
+#line 2549 "parser.y"
                            {
   // cout<<"YIS"<<isstatic<<'\n';
 }
-#line 5529 "parser.tab.c"
+#line 5528 "parser.tab.c"
     break;
 
   case 129: /* ConstructorDeclaration: Modifiers ConstructorDeclarator Throws ConstructorBody  */
-#line 2554 "parser.y"
+#line 2553 "parser.y"
                                                        {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5538,11 +5537,11 @@ emit("ret","","","",-1);
   nelem=0;
   
 }
-#line 5542 "parser.tab.c"
+#line 5541 "parser.tab.c"
     break;
 
   case 130: /* ConstructorDeclaration: Modifiers ConstructorDeclarator ConstructorBody  */
-#line 2562 "parser.y"
+#line 2561 "parser.y"
                                                  {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5551,11 +5550,11 @@ emit("ret","","","",-1);
   nelem=0;
   
 }
-#line 5555 "parser.tab.c"
+#line 5554 "parser.tab.c"
     break;
 
   case 131: /* ConstructorDeclaration: ConstructorDeclarator Throws ConstructorBody  */
-#line 2570 "parser.y"
+#line 2569 "parser.y"
                                               {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5563,11 +5562,11 @@ emit("ret","","","",-1);
   nelem=0;
   
 }
-#line 5567 "parser.tab.c"
+#line 5566 "parser.tab.c"
     break;
 
   case 132: /* ConstructorDeclaration: ConstructorDeclarator ConstructorBody  */
-#line 2577 "parser.y"
+#line 2576 "parser.y"
                                        {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5575,22 +5574,22 @@ emit("ret","","","",-1);
   nelem=0;
   
 }
-#line 5579 "parser.tab.c"
+#line 5578 "parser.tab.c"
     break;
 
   case 133: /* ConstructorHeader: SimpleName OPENBRACKET  */
-#line 2585 "parser.y"
+#line 2584 "parser.y"
                                          {
   emit("BeginCtor","","","",-1);
 }
-#line 5587 "parser.tab.c"
+#line 5586 "parser.tab.c"
     break;
 
   case 134: /* ConstructorDeclarator: ConstructorHeader FormalParameterList CLOSEBRACKET  */
-#line 2590 "parser.y"
+#line 2589 "parser.y"
                                                    {
-  emit("push","ebp","","",-1);
-  emit("=", "esp", "null", "ebp", -1);
+  emit("push","rbp","","",-1);
+  emit("=", "rsp", "null", "rbp", -1);
   nelem=((yyvsp[-1].typ)).nelem;
   // cout<<"YO "<<constpass<<endl;
  
@@ -5623,9 +5622,9 @@ emit("ret","","","",-1);
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("sub","esp",to_string(sizeparam[i]),"",-1);
+      emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       totalstack += sizeparam[i];
-      emit("=", "[ebp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
       curr_table->classwidth = offset;
 
@@ -5638,15 +5637,15 @@ tempparam.clear();
   }
   nelem=0;
 }
-#line 5642 "parser.tab.c"
+#line 5641 "parser.tab.c"
     break;
 
   case 135: /* $@11: %empty  */
-#line 2640 "parser.y"
+#line 2639 "parser.y"
                         {
   emit("BeginCtor","","","",-1);
-  emit("push","ebp","","",-1);
-  emit("=", "esp", "null", "ebp", -1);
+  emit("push","rbp","","",-1);
+  emit("=", "rsp", "null", "rbp", -1);
   nelem=0;
   curr_table->entry(string((char*)(((yyvsp[-1].typ)).type)), "Constructor", string((char*)(((yyvsp[-1].typ)).type)), offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
@@ -5659,27 +5658,27 @@ tempparam.clear();
   int new_offset = 0;
   offset = new_offset;
 }
-#line 5663 "parser.tab.c"
+#line 5662 "parser.tab.c"
     break;
 
   case 136: /* ConstructorDeclarator: SimpleName OPENBRACKET $@11 CLOSEBRACKET  */
-#line 2656 "parser.y"
+#line 2655 "parser.y"
              {
   
   
   
   
 }
-#line 5674 "parser.tab.c"
+#line 5673 "parser.tab.c"
     break;
 
   case 137: /* ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET  */
-#line 2664 "parser.y"
+#line 2663 "parser.y"
                                                                                  {
   
   if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
@@ -5690,16 +5689,16 @@ emit("ret","","","",-1);
   
   
 }
-#line 5694 "parser.tab.c"
+#line 5693 "parser.tab.c"
     break;
 
   case 138: /* ConstructorBody: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET  */
-#line 2679 "parser.y"
+#line 2678 "parser.y"
                                                     {
   
   if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
@@ -5708,16 +5707,16 @@ emit("ret","","","",-1);
   
   
 }
-#line 5712 "parser.tab.c"
+#line 5711 "parser.tab.c"
     break;
 
   case 139: /* ConstructorBody: OPENCURLYBRACKET ExplicitConstructorInvocation CLOSECURLYBRACKET  */
-#line 2692 "parser.y"
+#line 2691 "parser.y"
                                                                   {
   
   if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
@@ -5725,27 +5724,27 @@ emit("ret","","","",-1);
   ispopped = 1;
   
 }
-#line 5729 "parser.tab.c"
+#line 5728 "parser.tab.c"
     break;
 
   case 140: /* ConstructorBody: OPENCURLYBRACKET CLOSECURLYBRACKET  */
-#line 2704 "parser.y"
+#line 2703 "parser.y"
                                     {
   
   if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
   }
   emit("EndCtor","","","",-1);
   ispopped = 1;
 }
-#line 5745 "parser.tab.c"
+#line 5744 "parser.tab.c"
     break;
 
   case 141: /* ExplicitConstructorInvocation: THIS OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON  */
-#line 2716 "parser.y"
+#line 2715 "parser.y"
                                                      {    
   newdim.clear();
   isclassaccess=0;
@@ -5756,11 +5755,11 @@ emit("ret","","","",-1);
   
   
 }
-#line 5760 "parser.tab.c"
+#line 5759 "parser.tab.c"
     break;
 
   case 142: /* ExplicitConstructorInvocation: THIS OPENBRACKET CLOSEBRACKET SEMICOLON  */
-#line 2726 "parser.y"
+#line 2725 "parser.y"
                                          {    
   isclassaccess=0;
   newdim.clear();
@@ -5769,11 +5768,11 @@ emit("ret","","","",-1);
   
   
 }
-#line 5773 "parser.tab.c"
+#line 5772 "parser.tab.c"
     break;
 
   case 143: /* ExplicitConstructorInvocation: SUPER OPENBRACKET ArgumentList CLOSEBRACKET SEMICOLON  */
-#line 2734 "parser.y"
+#line 2733 "parser.y"
                                                        {    
     isclassaccess=0;
   issystem=0;
@@ -5782,11 +5781,11 @@ emit("ret","","","",-1);
   isfinal=0;
   
 }
-#line 5786 "parser.tab.c"
+#line 5785 "parser.tab.c"
     break;
 
   case 144: /* ExplicitConstructorInvocation: SUPER OPENBRACKET CLOSEBRACKET SEMICOLON  */
-#line 2742 "parser.y"
+#line 2741 "parser.y"
                                           {    
     isclassaccess=0;
   issystem=0;
@@ -5794,11 +5793,11 @@ emit("ret","","","",-1);
   isfinal=0;
   
 }
-#line 5798 "parser.tab.c"
+#line 5797 "parser.tab.c"
     break;
 
   case 145: /* $@12: %empty  */
-#line 2750 "parser.y"
+#line 2749 "parser.y"
                                                  {
   curr_table->entry(string((char*)((yyvsp[-1].lex)).str), "Identifier", "Interface", offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
@@ -5812,11 +5811,11 @@ emit("ret","","","",-1);
   offset = new_offset;
   isfieldprivate=0;
 }
-#line 5816 "parser.tab.c"
+#line 5815 "parser.tab.c"
     break;
 
   case 146: /* InterfaceDeclaration: Modifiers INTERFACE Identifier ExtendsInterfaces $@12 InterfaceBody  */
-#line 2763 "parser.y"
+#line 2762 "parser.y"
               {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5828,11 +5827,11 @@ emit("ret","","","",-1);
   
   
 }
-#line 5832 "parser.tab.c"
+#line 5831 "parser.tab.c"
     break;
 
   case 147: /* $@13: %empty  */
-#line 2774 "parser.y"
+#line 2773 "parser.y"
                                         {
   curr_table->entry(string((char*)((yyvsp[-1].lex)).str), "Identifier", "Interface", offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
@@ -5845,11 +5844,11 @@ emit("ret","","","",-1);
   int new_offset = 0;
   offset = new_offset;
 }
-#line 5849 "parser.tab.c"
+#line 5848 "parser.tab.c"
     break;
 
   case 148: /* InterfaceDeclaration: INTERFACE Identifier ExtendsInterfaces $@13 InterfaceBody  */
-#line 2786 "parser.y"
+#line 2785 "parser.y"
               {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5860,11 +5859,11 @@ emit("ret","","","",-1);
   
   
 }
-#line 5864 "parser.tab.c"
+#line 5863 "parser.tab.c"
     break;
 
   case 149: /* $@14: %empty  */
-#line 2796 "parser.y"
+#line 2795 "parser.y"
                                 {
   curr_table->entry(string((char*)((yyvsp[0].lex)).str), "Identifier", "Interface", offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
@@ -5878,21 +5877,21 @@ emit("ret","","","",-1);
   offset = new_offset;
   isfieldprivate=0;
 }
-#line 5882 "parser.tab.c"
+#line 5881 "parser.tab.c"
     break;
 
   case 150: /* InterfaceDeclaration: Modifiers INTERFACE Identifier $@14 InterfaceBody  */
-#line 2809 "parser.y"
+#line 2808 "parser.y"
               {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
 }
-#line 5892 "parser.tab.c"
+#line 5891 "parser.tab.c"
     break;
 
   case 151: /* $@15: %empty  */
-#line 2814 "parser.y"
+#line 2813 "parser.y"
                       {
   curr_table->entry(string((char*)((yyvsp[0].lex)).str), "Identifier", "Interface", offset, curr_scope, yylineno, -1);
   tables.push(curr_table);
@@ -5905,11 +5904,11 @@ emit("ret","","","",-1);
   int new_offset = 0;
   offset = new_offset;
 }
-#line 5909 "parser.tab.c"
+#line 5908 "parser.tab.c"
     break;
 
   case 152: /* InterfaceDeclaration: INTERFACE Identifier $@15 InterfaceBody  */
-#line 2826 "parser.y"
+#line 2825 "parser.y"
               {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -5919,110 +5918,110 @@ emit("ret","","","",-1);
   
   
 }
-#line 5923 "parser.tab.c"
+#line 5922 "parser.tab.c"
     break;
 
   case 153: /* ExtendsInterfaces: EXTENDS InterfaceType  */
-#line 2836 "parser.y"
+#line 2835 "parser.y"
                       {
   
   
   
   }
-#line 5933 "parser.tab.c"
+#line 5932 "parser.tab.c"
     break;
 
   case 154: /* ExtendsInterfaces: ExtendsInterfaces COMMA InterfaceType  */
-#line 2841 "parser.y"
+#line 2840 "parser.y"
                                        {
   
   
   
   
   }
-#line 5944 "parser.tab.c"
+#line 5943 "parser.tab.c"
     break;
 
   case 155: /* InterfaceBody: OPENCURLYBRACKET CLOSECURLYBRACKET  */
-#line 2848 "parser.y"
+#line 2847 "parser.y"
                                    {
   
   
   
   }
-#line 5954 "parser.tab.c"
+#line 5953 "parser.tab.c"
     break;
 
   case 156: /* InterfaceBody: OPENCURLYBRACKET InterfaceMemberDeclarations CLOSECURLYBRACKET  */
-#line 2853 "parser.y"
+#line 2852 "parser.y"
                                                                 {
   
   
   
   
   }
-#line 5965 "parser.tab.c"
+#line 5964 "parser.tab.c"
     break;
 
   case 157: /* InterfaceMemberDeclarations: InterfaceMemberDeclaration  */
-#line 2860 "parser.y"
+#line 2859 "parser.y"
                            {
   
   
   }
-#line 5974 "parser.tab.c"
+#line 5973 "parser.tab.c"
     break;
 
   case 158: /* InterfaceMemberDeclarations: InterfaceMemberDeclarations InterfaceMemberDeclaration  */
-#line 2864 "parser.y"
+#line 2863 "parser.y"
                                                         {
   
   
   
   }
-#line 5984 "parser.tab.c"
+#line 5983 "parser.tab.c"
     break;
 
   case 159: /* InterfaceMemberDeclaration: ConstantDeclaration  */
-#line 2870 "parser.y"
+#line 2869 "parser.y"
                     {
   
   
   }
-#line 5993 "parser.tab.c"
+#line 5992 "parser.tab.c"
     break;
 
   case 160: /* InterfaceMemberDeclaration: AbstractMethodDeclaration  */
-#line 2874 "parser.y"
+#line 2873 "parser.y"
                            {
   
   
   }
-#line 6002 "parser.tab.c"
+#line 6001 "parser.tab.c"
     break;
 
   case 161: /* ConstantDeclaration: FieldDeclaration  */
-#line 2879 "parser.y"
+#line 2878 "parser.y"
                  {
   
   
   }
-#line 6011 "parser.tab.c"
+#line 6010 "parser.tab.c"
     break;
 
   case 162: /* AbstractMethodDeclaration: MethodHeader SEMICOLON  */
-#line 2884 "parser.y"
+#line 2883 "parser.y"
                        {    
   newdim.clear();
   isfinal=0;
   isclassaccess=0;
     issystem=0;
 }
-#line 6022 "parser.tab.c"
+#line 6021 "parser.tab.c"
     break;
 
   case 163: /* ArrayInitializer: OPENCURLYBRACKET VariableInitializers COMMA CLOSECURLYBRACKET  */
-#line 2892 "parser.y"
+#line 2891 "parser.y"
                                                               {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-3].lex)).str, strcat(((yyvsp[-2].typ)).tempvar, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str))));
   arrinit=1;
@@ -6032,11 +6031,11 @@ emit("ret","","","",-1);
   shape[((yyval.typ)).ndim].push_back(((yyvsp[-2].typ)).nelem);
   // cout<<($$).ndim<<'\n';
 }
-#line 6036 "parser.tab.c"
+#line 6035 "parser.tab.c"
     break;
 
   case 164: /* ArrayInitializer: OPENCURLYBRACKET COMMA CLOSECURLYBRACKET  */
-#line 2901 "parser.y"
+#line 2900 "parser.y"
                                           {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str)));
   arrinit=1;
@@ -6047,11 +6046,11 @@ emit("ret","","","",-1);
   // cout<<($$).ndim<<'\n';
   
   }
-#line 6051 "parser.tab.c"
+#line 6050 "parser.tab.c"
     break;
 
   case 165: /* ArrayInitializer: OPENCURLYBRACKET VariableInitializers CLOSECURLYBRACKET  */
-#line 2911 "parser.y"
+#line 2910 "parser.y"
                                                          {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].lex)).str)));
   arrinit=1;
@@ -6060,11 +6059,11 @@ emit("ret","","","",-1);
   ((yyval.typ)).ndim=((yyvsp[-1].typ)).ndim+1;
   shape[((yyval.typ)).ndim].push_back(((yyvsp[-1].typ)).nelem);
   }
-#line 6064 "parser.tab.c"
+#line 6063 "parser.tab.c"
     break;
 
   case 166: /* ArrayInitializer: OPENCURLYBRACKET CLOSECURLYBRACKET  */
-#line 2919 "parser.y"
+#line 2918 "parser.y"
                                     {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str));
   arrinit=1;
@@ -6076,11 +6075,11 @@ emit("ret","","","",-1);
   
   
   }
-#line 6080 "parser.tab.c"
+#line 6079 "parser.tab.c"
     break;
 
   case 167: /* VariableInitializers: VariableInitializer  */
-#line 2931 "parser.y"
+#line 2930 "parser.y"
                     {
   strcpy(((yyval.typ)).tempvar,((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
@@ -6089,11 +6088,11 @@ emit("ret","","","",-1);
   ((yyval.typ)).nelem=1;
   
   }
-#line 6093 "parser.tab.c"
+#line 6092 "parser.tab.c"
     break;
 
   case 168: /* VariableInitializers: VariableInitializers COMMA VariableInitializer  */
-#line 2939 "parser.y"
+#line 2938 "parser.y"
                                                 {
   strcpy(((yyval.typ)).tempvar, strcat(strcat(((yyvsp[-2].typ)).tempvar,","),((yyvsp[0].typ)).tempvar));
   strcpy(((yyval.typ)).type,getorder(((yyvsp[-2].typ)).type,((yyvsp[0].typ)).type,1).c_str());
@@ -6103,80 +6102,80 @@ emit("ret","","","",-1);
   // cout<<"types "<<($1).type<<" "<<($3).type<<" "<<($$).type<<'\n';
   
   }
-#line 6107 "parser.tab.c"
+#line 6106 "parser.tab.c"
     break;
 
   case 169: /* Block: OPENCURLYBRACKET BlockStatements CLOSECURLYBRACKET  */
-#line 2949 "parser.y"
+#line 2948 "parser.y"
                                                    {
   
   
   
   
   }
-#line 6118 "parser.tab.c"
+#line 6117 "parser.tab.c"
     break;
 
   case 170: /* Block: OPENCURLYBRACKET CLOSECURLYBRACKET  */
-#line 2955 "parser.y"
+#line 2954 "parser.y"
                                     {
   
   
   
   }
-#line 6128 "parser.tab.c"
+#line 6127 "parser.tab.c"
     break;
 
   case 171: /* BlockStatements: BlockStatement  */
-#line 2961 "parser.y"
+#line 2960 "parser.y"
                {
   
   
   }
-#line 6137 "parser.tab.c"
+#line 6136 "parser.tab.c"
     break;
 
   case 172: /* BlockStatements: BlockStatements BlockStatement  */
-#line 2965 "parser.y"
+#line 2964 "parser.y"
                                 {
   
   
   
   }
-#line 6147 "parser.tab.c"
+#line 6146 "parser.tab.c"
     break;
 
   case 173: /* BlockStatement: LocalVariableDeclarationStatement  */
-#line 2971 "parser.y"
+#line 2970 "parser.y"
                                   {
   
   
   }
-#line 6156 "parser.tab.c"
+#line 6155 "parser.tab.c"
     break;
 
   case 174: /* BlockStatement: Statement  */
-#line 2975 "parser.y"
+#line 2974 "parser.y"
            {
   
   
   }
-#line 6165 "parser.tab.c"
+#line 6164 "parser.tab.c"
     break;
 
   case 175: /* LocalVariableDeclarationStatement: LocalVariableDeclaration SEMICOLON  */
-#line 2980 "parser.y"
+#line 2979 "parser.y"
                                    {    
   newdim.clear();
   isclassaccess=0;
   type="";
     issystem=0;
   }
-#line 6176 "parser.tab.c"
+#line 6175 "parser.tab.c"
     break;
 
   case 176: /* LocalVariableDeclarationStatement: FINAL LocalVariableDeclaration SEMICOLON  */
-#line 2987 "parser.y"
+#line 2986 "parser.y"
 {    
   newdim.clear();
    isclassaccess=0;
@@ -6184,11 +6183,11 @@ emit("ret","","","",-1);
     issystem=0;
     isfinal=0;
 }
-#line 6188 "parser.tab.c"
+#line 6187 "parser.tab.c"
     break;
 
   case 177: /* LocalVariableDeclaration: Type VariableDeclarators  */
-#line 2996 "parser.y"
+#line 2995 "parser.y"
                          {
   // cout<<($1).type<<($2).type<<'\n';
   // cout<<"GHF"<<isstatic<<'\n';
@@ -6238,12 +6237,12 @@ emit("ret","","","",-1);
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("sub","esp",to_string(sizeparam[i]),"",-1);
+      emit("sub","rsp",to_string(sizeparam[i]),"",-1);
 totalstack += sizeparam[i];
       if(-(offset - funcargtypesz(1, currfunc.top())) - 4 < 0)
-      emit("=", tempparam[i] , "null",  "[ebp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
+      emit("=", tempparam[i] , "null",  "[rbp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
       else{
-        emit("=", tempparam[i] , "null",  "[ebp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
+        emit("=", tempparam[i] , "null",  "[rbp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
       }
 
       offset += sizeparam[i];
@@ -6262,239 +6261,239 @@ sizeparam.clear();
 tempparam.clear();
   }
   }
-#line 6266 "parser.tab.c"
+#line 6265 "parser.tab.c"
     break;
 
   case 178: /* Statement: StatementWithoutTrailingSubstatement  */
-#line 3070 "parser.y"
+#line 3069 "parser.y"
                                      {
   
   
   }
-#line 6275 "parser.tab.c"
+#line 6274 "parser.tab.c"
     break;
 
   case 179: /* Statement: LabeledStatement  */
-#line 3074 "parser.y"
+#line 3073 "parser.y"
                   {
   
   
   }
-#line 6284 "parser.tab.c"
+#line 6283 "parser.tab.c"
     break;
 
   case 180: /* Statement: IfThenStatement  */
-#line 3078 "parser.y"
+#line 3077 "parser.y"
                  {
   
   
   }
-#line 6293 "parser.tab.c"
+#line 6292 "parser.tab.c"
     break;
 
   case 181: /* Statement: IfThenElseStatement  */
-#line 3082 "parser.y"
+#line 3081 "parser.y"
                      {
   
   
   }
-#line 6302 "parser.tab.c"
+#line 6301 "parser.tab.c"
     break;
 
   case 182: /* Statement: WhileStatement  */
-#line 3086 "parser.y"
+#line 3085 "parser.y"
                 {
   
   
   }
-#line 6311 "parser.tab.c"
+#line 6310 "parser.tab.c"
     break;
 
   case 183: /* Statement: ForStatement  */
-#line 3090 "parser.y"
+#line 3089 "parser.y"
               {
   
   
   }
-#line 6320 "parser.tab.c"
+#line 6319 "parser.tab.c"
     break;
 
   case 184: /* StatementNoShortIf: StatementWithoutTrailingSubstatement  */
-#line 3095 "parser.y"
+#line 3094 "parser.y"
                                      {
   
   
   }
-#line 6329 "parser.tab.c"
+#line 6328 "parser.tab.c"
     break;
 
   case 185: /* StatementNoShortIf: LabeledStatementNoShortIf  */
-#line 3099 "parser.y"
+#line 3098 "parser.y"
                            {
   
   
   }
-#line 6338 "parser.tab.c"
+#line 6337 "parser.tab.c"
     break;
 
   case 186: /* StatementNoShortIf: IfThenElseStatementNoShortIf  */
-#line 3103 "parser.y"
+#line 3102 "parser.y"
                               {
   
   
   }
-#line 6347 "parser.tab.c"
+#line 6346 "parser.tab.c"
     break;
 
   case 187: /* StatementNoShortIf: WhileStatementNoShortIf  */
-#line 3107 "parser.y"
+#line 3106 "parser.y"
                          {
   
   
   }
-#line 6356 "parser.tab.c"
+#line 6355 "parser.tab.c"
     break;
 
   case 188: /* StatementNoShortIf: ForStatementNoShortIf  */
-#line 3111 "parser.y"
+#line 3110 "parser.y"
                        {
   
   
   }
-#line 6365 "parser.tab.c"
+#line 6364 "parser.tab.c"
     break;
 
   case 189: /* StatementWithoutTrailingSubstatement: Block  */
-#line 3116 "parser.y"
+#line 3115 "parser.y"
       {
   
   
   }
-#line 6374 "parser.tab.c"
+#line 6373 "parser.tab.c"
     break;
 
   case 190: /* StatementWithoutTrailingSubstatement: EmptyStatement  */
-#line 3120 "parser.y"
+#line 3119 "parser.y"
                 {
   
   
   }
-#line 6383 "parser.tab.c"
+#line 6382 "parser.tab.c"
     break;
 
   case 191: /* StatementWithoutTrailingSubstatement: ExpressionStatement  */
-#line 3124 "parser.y"
+#line 3123 "parser.y"
                      {
   
   
   }
-#line 6392 "parser.tab.c"
+#line 6391 "parser.tab.c"
     break;
 
   case 192: /* StatementWithoutTrailingSubstatement: SwitchStatement  */
-#line 3128 "parser.y"
+#line 3127 "parser.y"
                  {
   
   
   }
-#line 6401 "parser.tab.c"
+#line 6400 "parser.tab.c"
     break;
 
   case 193: /* StatementWithoutTrailingSubstatement: DoStatement  */
-#line 3132 "parser.y"
+#line 3131 "parser.y"
              {
   
   
   }
-#line 6410 "parser.tab.c"
+#line 6409 "parser.tab.c"
     break;
 
   case 194: /* StatementWithoutTrailingSubstatement: BreakStatement  */
-#line 3136 "parser.y"
+#line 3135 "parser.y"
                 {
   
   
   }
-#line 6419 "parser.tab.c"
+#line 6418 "parser.tab.c"
     break;
 
   case 195: /* StatementWithoutTrailingSubstatement: ContinueStatement  */
-#line 3140 "parser.y"
+#line 3139 "parser.y"
                    {
   
   
   }
-#line 6428 "parser.tab.c"
+#line 6427 "parser.tab.c"
     break;
 
   case 196: /* StatementWithoutTrailingSubstatement: ReturnStatement  */
-#line 3144 "parser.y"
+#line 3143 "parser.y"
                  {
   
   
   }
-#line 6437 "parser.tab.c"
+#line 6436 "parser.tab.c"
     break;
 
   case 197: /* StatementWithoutTrailingSubstatement: SynchronizedStatement  */
-#line 3148 "parser.y"
+#line 3147 "parser.y"
                        {
   
   
   }
-#line 6446 "parser.tab.c"
+#line 6445 "parser.tab.c"
     break;
 
   case 198: /* StatementWithoutTrailingSubstatement: ThrowStatement  */
-#line 3152 "parser.y"
+#line 3151 "parser.y"
                 {
   
   
   }
-#line 6455 "parser.tab.c"
+#line 6454 "parser.tab.c"
     break;
 
   case 199: /* StatementWithoutTrailingSubstatement: TryStatement  */
-#line 3156 "parser.y"
+#line 3155 "parser.y"
               {
   
   
   }
-#line 6464 "parser.tab.c"
+#line 6463 "parser.tab.c"
     break;
 
   case 200: /* EmptyStatement: SEMICOLON  */
-#line 3161 "parser.y"
+#line 3160 "parser.y"
           {    
     issystem=0;
   isclassaccess=0;
   isfinal=0;
 }
-#line 6474 "parser.tab.c"
+#line 6473 "parser.tab.c"
     break;
 
   case 201: /* LabeledStatement: Identifier COLON Statement  */
-#line 3167 "parser.y"
+#line 3166 "parser.y"
                            {
   if(curr_table->lookup(string((char*)((yyvsp[-2].lex)).str)).offset == -1  && checkobj(string((char*)((yyvsp[-2].lex)).str)) == 0){
     cout<<"Undeclared variable on line "<< yylineno<<"\n";
   }
 }
-#line 6484 "parser.tab.c"
+#line 6483 "parser.tab.c"
     break;
 
   case 202: /* LabeledStatementNoShortIf: Identifier COLON StatementNoShortIf  */
-#line 3173 "parser.y"
+#line 3172 "parser.y"
                                     {
   if(curr_table->lookup(string((char*)((yyvsp[-2].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[-2].lex)).str)) == 0){
     cout<<"Undeclared variable on line "<< yylineno<<"\n";
   }
   }
-#line 6494 "parser.tab.c"
+#line 6493 "parser.tab.c"
     break;
 
   case 203: /* ExpressionStatement: StatementExpression SEMICOLON  */
-#line 3179 "parser.y"
+#line 3178 "parser.y"
                               {    
   newdim.clear();
   strcpy(((yyval.typ)).type,((yyvsp[-1].typ)).type);
@@ -6503,66 +6502,66 @@ tempparam.clear();
   isclassaccess=0;
   isfinal=0;
   }
-#line 6507 "parser.tab.c"
+#line 6506 "parser.tab.c"
     break;
 
   case 204: /* StatementExpression: Assignment  */
-#line 3188 "parser.y"
+#line 3187 "parser.y"
            {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   
   }
-#line 6518 "parser.tab.c"
+#line 6517 "parser.tab.c"
     break;
 
   case 205: /* StatementExpression: PreIncrementExpression  */
-#line 3194 "parser.y"
+#line 3193 "parser.y"
                         {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   
   }
-#line 6529 "parser.tab.c"
+#line 6528 "parser.tab.c"
     break;
 
   case 206: /* StatementExpression: PreDecrementExpression  */
-#line 3200 "parser.y"
+#line 3199 "parser.y"
                         {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   
   }
-#line 6540 "parser.tab.c"
+#line 6539 "parser.tab.c"
     break;
 
   case 207: /* StatementExpression: PostIncrementExpression  */
-#line 3206 "parser.y"
+#line 3205 "parser.y"
                          {
   
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   }
-#line 6551 "parser.tab.c"
+#line 6550 "parser.tab.c"
     break;
 
   case 208: /* StatementExpression: PostDecrementExpression  */
-#line 3212 "parser.y"
+#line 3211 "parser.y"
                          {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   
   }
-#line 6562 "parser.tab.c"
+#line 6561 "parser.tab.c"
     break;
 
   case 209: /* StatementExpression: MethodInvocation  */
-#line 3218 "parser.y"
+#line 3217 "parser.y"
                   {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
@@ -6570,22 +6569,22 @@ tempparam.clear();
 
   
   }
-#line 6574 "parser.tab.c"
+#line 6573 "parser.tab.c"
     break;
 
   case 210: /* StatementExpression: ClassInstanceCreationExpression  */
-#line 3225 "parser.y"
+#line 3224 "parser.y"
                                  {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   
   }
-#line 6585 "parser.tab.c"
+#line 6584 "parser.tab.c"
     break;
 
   case 211: /* DummyIfStatement: IF OPENBRACKET  */
-#line 3231 "parser.y"
+#line 3230 "parser.y"
                                  {
 
   tables.push(curr_table);
@@ -6598,11 +6597,11 @@ tempparam.clear();
   int new_offset = 0;
   offset = new_offset;
 }
-#line 6602 "parser.tab.c"
+#line 6601 "parser.tab.c"
     break;
 
   case 212: /* DummyElseStatement: ELSE  */
-#line 3244 "parser.y"
+#line 3243 "parser.y"
                          {
   tables.push(curr_table);
   curr_table = new Sym_Table(curr_table);
@@ -6614,21 +6613,21 @@ tempparam.clear();
   int new_offset = 0;
   offset = new_offset;
 }
-#line 6618 "parser.tab.c"
+#line 6617 "parser.tab.c"
     break;
 
   case 213: /* DummyIfStatement1: DummyIfStatement Expression  */
-#line 3256 "parser.y"
+#line 3255 "parser.y"
                                                {
   string a = newLabel();
   emit("Goto", ((yyvsp[0].typ)).tempvar, a, "Ifz", -1);
   strcpy(((yyval.typ)).gotoname,a.c_str());
 }
-#line 6628 "parser.tab.c"
+#line 6627 "parser.tab.c"
     break;
 
   case 214: /* IfThenStatement: DummyIfStatement1 CLOSEBRACKET Statement  */
-#line 3263 "parser.y"
+#line 3262 "parser.y"
                                          {
   
   curr_table = tables.top(); tables.pop();
@@ -6640,22 +6639,22 @@ tempparam.clear();
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
   emit(a, ":", "", "", -1);
 }
-#line 6644 "parser.tab.c"
+#line 6643 "parser.tab.c"
     break;
 
   case 215: /* DummyIfStatement2: DummyIfStatement1 CLOSEBRACKET StatementNoShortIf  */
-#line 3275 "parser.y"
+#line 3274 "parser.y"
                                                                      {
   string a = newLabel();
   emit("Goto", "", a, "", -1);
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
   strcpy(((yyval.typ)).gotoname,a.c_str());
 }
-#line 6655 "parser.tab.c"
+#line 6654 "parser.tab.c"
     break;
 
   case 216: /* IfThenElseStatement: DummyIfStatement2 DummyElseStatement Statement  */
-#line 3283 "parser.y"
+#line 3282 "parser.y"
                                                {
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
 
@@ -6667,11 +6666,11 @@ tempparam.clear();
   offset = offsets.top(); offsets.pop();
   
   }
-#line 6671 "parser.tab.c"
+#line 6670 "parser.tab.c"
     break;
 
   case 217: /* IfThenElseStatementNoShortIf: DummyIfStatement2 DummyElseStatement StatementNoShortIf  */
-#line 3295 "parser.y"
+#line 3294 "parser.y"
                                                         {
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
 
@@ -6682,11 +6681,11 @@ tempparam.clear();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   }
-#line 6686 "parser.tab.c"
+#line 6685 "parser.tab.c"
     break;
 
   case 218: /* DummySwitchStatement: SWITCH  */
-#line 3308 "parser.y"
+#line 3307 "parser.y"
                              {
   tables.push(curr_table);
   curr_table = new Sym_Table(curr_table);
@@ -6698,19 +6697,19 @@ tempparam.clear();
   int new_offset = 0;
   offset = new_offset;
 }
-#line 6702 "parser.tab.c"
+#line 6701 "parser.tab.c"
     break;
 
   case 219: /* SwitchStatement: DummySwitchStatement OPENBRACKET Expression CLOSEBRACKET SwitchBlock  */
-#line 3320 "parser.y"
+#line 3319 "parser.y"
                                                                      {
 
   }
-#line 6710 "parser.tab.c"
+#line 6709 "parser.tab.c"
     break;
 
   case 220: /* SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups SwitchLabels CLOSECURLYBRACKET  */
-#line 3324 "parser.y"
+#line 3323 "parser.y"
                                                                            {
   
   
@@ -6718,111 +6717,111 @@ tempparam.clear();
   
   
   }
-#line 6722 "parser.tab.c"
+#line 6721 "parser.tab.c"
     break;
 
   case 221: /* SwitchBlock: OPENCURLYBRACKET SwitchLabels CLOSECURLYBRACKET  */
-#line 3331 "parser.y"
+#line 3330 "parser.y"
                                                  {
   
   
   
   
   }
-#line 6733 "parser.tab.c"
+#line 6732 "parser.tab.c"
     break;
 
   case 222: /* SwitchBlock: OPENCURLYBRACKET SwitchBlockStatementGroups CLOSECURLYBRACKET  */
-#line 3337 "parser.y"
+#line 3336 "parser.y"
                                                                {
   
   
   
   
   }
-#line 6744 "parser.tab.c"
+#line 6743 "parser.tab.c"
     break;
 
   case 223: /* SwitchBlock: OPENCURLYBRACKET CLOSECURLYBRACKET  */
-#line 3343 "parser.y"
+#line 3342 "parser.y"
                                     {
   
   
   
   }
-#line 6754 "parser.tab.c"
+#line 6753 "parser.tab.c"
     break;
 
   case 224: /* SwitchBlockStatementGroups: SwitchBlockStatementGroup  */
-#line 3349 "parser.y"
+#line 3348 "parser.y"
                           {
   
   
   }
-#line 6763 "parser.tab.c"
+#line 6762 "parser.tab.c"
     break;
 
   case 225: /* SwitchBlockStatementGroups: SwitchBlockStatementGroups SwitchBlockStatementGroup  */
-#line 3353 "parser.y"
+#line 3352 "parser.y"
                                                       {
 
   
   }
-#line 6772 "parser.tab.c"
+#line 6771 "parser.tab.c"
     break;
 
   case 226: /* SwitchBlockStatementGroup: SwitchLabels BlockStatements  */
-#line 3358 "parser.y"
+#line 3357 "parser.y"
                              {
   
   
   
   }
-#line 6782 "parser.tab.c"
+#line 6781 "parser.tab.c"
     break;
 
   case 227: /* SwitchLabels: SwitchLabel  */
-#line 3364 "parser.y"
+#line 3363 "parser.y"
              {
   
   
   }
-#line 6791 "parser.tab.c"
+#line 6790 "parser.tab.c"
     break;
 
   case 228: /* SwitchLabels: SwitchLabels SwitchLabel  */
-#line 3368 "parser.y"
+#line 3367 "parser.y"
                           {
   
   
   
   }
-#line 6801 "parser.tab.c"
+#line 6800 "parser.tab.c"
     break;
 
   case 229: /* SwitchLabel: CASE ConstantExpression COLON  */
-#line 3374 "parser.y"
+#line 3373 "parser.y"
                               {
   
   
   
   
   }
-#line 6812 "parser.tab.c"
+#line 6811 "parser.tab.c"
     break;
 
   case 230: /* SwitchLabel: DEFAULT COLON  */
-#line 3380 "parser.y"
+#line 3379 "parser.y"
                {
   
   
   
   }
-#line 6822 "parser.tab.c"
+#line 6821 "parser.tab.c"
     break;
 
   case 231: /* DummyWhileStatement: WHILE  */
-#line 3385 "parser.y"
+#line 3384 "parser.y"
                             {
   inloop=1;
   tables.push(curr_table);
@@ -6839,11 +6838,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).gotoname,a.c_str());
   continuelabels.push(a);
 }
-#line 6843 "parser.tab.c"
+#line 6842 "parser.tab.c"
     break;
 
   case 232: /* DummyWhileStatement1: DummyWhileStatement OPENBRACKET Expression  */
-#line 3402 "parser.y"
+#line 3401 "parser.y"
                                                                  {
   string a = newLabel();
   emit("Goto", ((yyvsp[0].typ)).tempvar, a, "Ifz", -1);
@@ -6852,11 +6851,11 @@ tempparam.clear();
   // emit(($1).gotoname, ":", "", "", -1);
   breaklabels.push(a);
 }
-#line 6856 "parser.tab.c"
+#line 6855 "parser.tab.c"
     break;
 
   case 233: /* WhileStatement: DummyWhileStatement1 CLOSEBRACKET Statement  */
-#line 3412 "parser.y"
+#line 3411 "parser.y"
                                             {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -6865,11 +6864,11 @@ tempparam.clear();
   emit("Goto", ((yyvsp[-2].typ)).nextgoto, "", "", -1);
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
   }
-#line 6869 "parser.tab.c"
+#line 6868 "parser.tab.c"
     break;
 
   case 234: /* WhileStatementNoShortIf: DummyWhileStatement1 CLOSEBRACKET StatementNoShortIf  */
-#line 3422 "parser.y"
+#line 3421 "parser.y"
                                                      {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -6878,11 +6877,11 @@ tempparam.clear();
   emit("Goto", ((yyvsp[-2].typ)).nextgoto, "", "", -1);
   emit(((yyvsp[-2].typ)).gotoname, ":", "", "", -1);
   }
-#line 6882 "parser.tab.c"
+#line 6881 "parser.tab.c"
     break;
 
   case 235: /* DummyDoStatement: DO  */
-#line 3431 "parser.y"
+#line 3430 "parser.y"
                      {
   inloop=1;
   tables.push(curr_table);
@@ -6899,11 +6898,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).gotoname,a.c_str());
   continuelabels.push(a);
 }
-#line 6903 "parser.tab.c"
+#line 6902 "parser.tab.c"
     break;
 
   case 236: /* DummyDoStatement1: DummyDoStatement Statement WHILE OPENBRACKET Expression  */
-#line 3448 "parser.y"
+#line 3447 "parser.y"
                                                                            {
   string a = newLabel();
   emit("Goto", ((yyvsp[0].typ)).tempvar, a, "Ifz", -1);
@@ -6912,11 +6911,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).gotoname,a.c_str());
   breaklabels.push(a);
 }
-#line 6916 "parser.tab.c"
+#line 6915 "parser.tab.c"
     break;
 
   case 237: /* DoStatement: DummyDoStatement1 CLOSEBRACKET SEMICOLON  */
-#line 3458 "parser.y"
+#line 3457 "parser.y"
                                          {    
   newdim.clear();
   curr_table = tables.top(); tables.pop();
@@ -6927,11 +6926,11 @@ tempparam.clear();
     issystem=0;
     isfinal=0;
   }
-#line 6931 "parser.tab.c"
+#line 6930 "parser.tab.c"
     break;
 
   case 238: /* DummyForStatement: FOR  */
-#line 3468 "parser.y"
+#line 3467 "parser.y"
                         {
   inloop=1;
   tables.push(curr_table);
@@ -6944,32 +6943,32 @@ tempparam.clear();
   int new_offset = 0;
   offset = new_offset;
 }
-#line 6948 "parser.tab.c"
+#line 6947 "parser.tab.c"
     break;
 
   case 239: /* DummyForStatement1: DummyForStatement OPENBRACKET ForInit  */
-#line 3481 "parser.y"
+#line 3480 "parser.y"
                                                          {
   string a = newLabel();
   emit(a, ":", "", "", -1);
   strcpy(((yyval.typ)).gotoname,a.c_str());
 }
-#line 6958 "parser.tab.c"
+#line 6957 "parser.tab.c"
     break;
 
   case 240: /* DummyForStatement14: DummyForStatement1 SEMICOLON  */
-#line 3487 "parser.y"
+#line 3486 "parser.y"
                                                   {    
   newdim.clear();
  isclassaccess=0;
     issystem=0;
     isfinal=0;
 }
-#line 6969 "parser.tab.c"
+#line 6968 "parser.tab.c"
     break;
 
   case 241: /* DummyForStatement2: DummyForStatement14 Expression  */
-#line 3494 "parser.y"
+#line 3493 "parser.y"
                                                    {
   string a = newLabel();
   emit("Goto", ((yyvsp[0].typ)).tempvar, a, "Ifz", -1);
@@ -6985,11 +6984,11 @@ tempparam.clear();
     issystem=0;
   continuelabels.push(c);
 }
-#line 6989 "parser.tab.c"
+#line 6988 "parser.tab.c"
     break;
 
   case 242: /* DummyForStatement3: DummyForStatement2 SEMICOLON ForUpdate  */
-#line 3510 "parser.y"
+#line 3509 "parser.y"
                                                            {    
   newdim.clear();
   emit("Goto", ((yyvsp[-2].typ)).gotoname, "", "", -1);
@@ -7003,11 +7002,11 @@ tempparam.clear();
     isfinal=0;
   breaklabels.push(string((char*)(((yyvsp[-2].typ)).nextgoto)));
 }
-#line 7007 "parser.tab.c"
+#line 7006 "parser.tab.c"
     break;
 
   case 243: /* DummyForStatement4: DummyForStatement2 SEMICOLON CLOSEBRACKET  */
-#line 3524 "parser.y"
+#line 3523 "parser.y"
                                                              {   
   newdim.clear(); 
   emit("Goto", ((yyvsp[-2].typ)).gotoname, "", "", -1);
@@ -7021,11 +7020,11 @@ tempparam.clear();
     isfinal=0;
   breaklabels.push(string((char*)(((yyvsp[-2].typ)).nextgoto)));
 }
-#line 7025 "parser.tab.c"
+#line 7024 "parser.tab.c"
     break;
 
   case 244: /* DummyForStatement15: DummyForStatement OPENBRACKET SEMICOLON  */
-#line 3538 "parser.y"
+#line 3537 "parser.y"
                                                              {    
   newdim.clear();
   string a = newLabel();
@@ -7035,11 +7034,11 @@ tempparam.clear();
     issystem=0;
     isfinal=0;
 }
-#line 7039 "parser.tab.c"
+#line 7038 "parser.tab.c"
     break;
 
   case 245: /* DummyForStatement5: DummyForStatement15 Expression  */
-#line 3548 "parser.y"
+#line 3547 "parser.y"
                                                    {
   string a = newLabel();
   emit("Goto", ((yyvsp[0].typ)).tempvar, a, "Ifz", -1);
@@ -7055,11 +7054,11 @@ tempparam.clear();
     issystem=0;
   continuelabels.push(c);
 }
-#line 7059 "parser.tab.c"
+#line 7058 "parser.tab.c"
     break;
 
   case 246: /* DummyForStatement6: DummyForStatement5 SEMICOLON ForUpdate  */
-#line 3564 "parser.y"
+#line 3563 "parser.y"
                                                            {
   newdim.clear();
   emit("Goto", ((yyvsp[-2].typ)).gotoname, "", "", -1);
@@ -7074,11 +7073,11 @@ tempparam.clear();
         
   breaklabels.push(string((char*)(((yyvsp[-2].typ)).nextgoto)));
 }
-#line 7078 "parser.tab.c"
+#line 7077 "parser.tab.c"
     break;
 
   case 247: /* DummyForStatement7: DummyForStatement5 SEMICOLON CLOSEBRACKET  */
-#line 3579 "parser.y"
+#line 3578 "parser.y"
                                                               {
       newdim.clear();
   emit("Goto", ((yyvsp[-2].typ)).gotoname, "", "", -1);
@@ -7092,11 +7091,11 @@ tempparam.clear();
     isfinal=0;
   breaklabels.push(string((char*)(((yyvsp[-2].typ)).nextgoto)));
 }
-#line 7096 "parser.tab.c"
+#line 7095 "parser.tab.c"
     break;
 
   case 248: /* DummyForStatement8: DummyForStatement1 SEMICOLON SEMICOLON  */
-#line 3593 "parser.y"
+#line 3592 "parser.y"
                                                            {
       newdim.clear();
   string a = newLabel();
@@ -7113,11 +7112,11 @@ tempparam.clear();
      isfinal=0;
   continuelabels.push(c);
 }
-#line 7117 "parser.tab.c"
+#line 7116 "parser.tab.c"
     break;
 
   case 249: /* DummyForStatement9: DummyForStatement8 ForUpdate  */
-#line 3610 "parser.y"
+#line 3609 "parser.y"
                                                  {
   emit("Goto", ((yyvsp[-1].typ)).gotoname, "", "", -1);
   emit(((yyvsp[-1].typ)).nextgoto1, ":", "", "", -1);
@@ -7127,11 +7126,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).nextgoto2,((yyvsp[-1].typ)).nextgoto2);
   breaklabels.push(string((char*)(((yyvsp[-1].typ)).nextgoto)));
 }
-#line 7131 "parser.tab.c"
+#line 7130 "parser.tab.c"
     break;
 
   case 250: /* DummyForStatement10: DummyForStatement8 CLOSEBRACKET  */
-#line 3620 "parser.y"
+#line 3619 "parser.y"
                                                      {
   emit("Goto", ((yyvsp[-1].typ)).gotoname, "", "", -1);
   emit(((yyvsp[-1].typ)).nextgoto1, ":", "", "", -1);
@@ -7141,11 +7140,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).nextgoto2,((yyvsp[-1].typ)).nextgoto2);
   breaklabels.push(string((char*)(((yyvsp[-1].typ)).nextgoto)));
 }
-#line 7145 "parser.tab.c"
+#line 7144 "parser.tab.c"
     break;
 
   case 251: /* DummyForStatement11: DummyForStatement15 SEMICOLON  */
-#line 3630 "parser.y"
+#line 3629 "parser.y"
                                                    {
       newdim.clear();
   string a = newLabel();
@@ -7162,11 +7161,11 @@ tempparam.clear();
      isfinal=0;
   continuelabels.push(c);
 }
-#line 7166 "parser.tab.c"
+#line 7165 "parser.tab.c"
     break;
 
   case 252: /* DummyForStatement12: DummyForStatement11 ForUpdate  */
-#line 3647 "parser.y"
+#line 3646 "parser.y"
                                                    {
   emit("Goto", ((yyvsp[-1].typ)).gotoname, "", "", -1);
   emit(((yyvsp[-1].typ)).nextgoto1, ":", "", "", -1);
@@ -7176,11 +7175,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).nextgoto2,((yyvsp[-1].typ)).nextgoto2);
   breaklabels.push(string((char*)(((yyvsp[-1].typ)).nextgoto)));
 }
-#line 7180 "parser.tab.c"
+#line 7179 "parser.tab.c"
     break;
 
   case 253: /* DummyForStatement13: DummyForStatement11 CLOSEBRACKET  */
-#line 3657 "parser.y"
+#line 3656 "parser.y"
                                                       {
   emit("Goto", ((yyvsp[-1].typ)).gotoname, "", "", -1);
   emit(((yyvsp[-1].typ)).nextgoto1, ":", "", "", -1);
@@ -7190,11 +7189,11 @@ tempparam.clear();
   strcpy(((yyval.typ)).nextgoto2,((yyvsp[-1].typ)).nextgoto2);
   breaklabels.push(string((char*)(((yyvsp[-1].typ)).nextgoto)));
 }
-#line 7194 "parser.tab.c"
+#line 7193 "parser.tab.c"
     break;
 
   case 254: /* ForStatement: DummyForStatement6 CLOSEBRACKET Statement  */
-#line 3668 "parser.y"
+#line 3667 "parser.y"
                                           {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7206,11 +7205,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7210 "parser.tab.c"
+#line 7209 "parser.tab.c"
     break;
 
   case 255: /* ForStatement: DummyForStatement9 CLOSEBRACKET Statement  */
-#line 3679 "parser.y"
+#line 3678 "parser.y"
                                            {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7222,11 +7221,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7226 "parser.tab.c"
+#line 7225 "parser.tab.c"
     break;
 
   case 256: /* ForStatement: DummyForStatement4 Statement  */
-#line 3690 "parser.y"
+#line 3689 "parser.y"
                               {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7238,11 +7237,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7242 "parser.tab.c"
+#line 7241 "parser.tab.c"
     break;
 
   case 257: /* ForStatement: DummyForStatement12 CLOSEBRACKET Statement  */
-#line 3701 "parser.y"
+#line 3700 "parser.y"
                                             {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7254,11 +7253,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7258 "parser.tab.c"
+#line 7257 "parser.tab.c"
     break;
 
   case 258: /* ForStatement: DummyForStatement10 Statement  */
-#line 3712 "parser.y"
+#line 3711 "parser.y"
                                {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7270,11 +7269,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7274 "parser.tab.c"
+#line 7273 "parser.tab.c"
     break;
 
   case 259: /* ForStatement: DummyForStatement7 Statement  */
-#line 3723 "parser.y"
+#line 3722 "parser.y"
                               {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7286,11 +7285,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7290 "parser.tab.c"
+#line 7289 "parser.tab.c"
     break;
 
   case 260: /* ForStatement: DummyForStatement13 Statement  */
-#line 3734 "parser.y"
+#line 3733 "parser.y"
                                {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7302,11 +7301,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7306 "parser.tab.c"
+#line 7305 "parser.tab.c"
     break;
 
   case 261: /* ForStatement: DummyForStatement3 CLOSEBRACKET Statement  */
-#line 3745 "parser.y"
+#line 3744 "parser.y"
                                            {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7318,11 +7317,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7322 "parser.tab.c"
+#line 7321 "parser.tab.c"
     break;
 
   case 262: /* ForStatementNoShortIf: DummyForStatement6 CLOSEBRACKET StatementNoShortIf  */
-#line 3758 "parser.y"
+#line 3757 "parser.y"
                                                    {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7334,11 +7333,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7338 "parser.tab.c"
+#line 7337 "parser.tab.c"
     break;
 
   case 263: /* ForStatementNoShortIf: DummyForStatement9 CLOSEBRACKET StatementNoShortIf  */
-#line 3769 "parser.y"
+#line 3768 "parser.y"
                                                     {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7350,11 +7349,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7354 "parser.tab.c"
+#line 7353 "parser.tab.c"
     break;
 
   case 264: /* ForStatementNoShortIf: DummyForStatement4 StatementNoShortIf  */
-#line 3780 "parser.y"
+#line 3779 "parser.y"
                                        {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7366,11 +7365,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7370 "parser.tab.c"
+#line 7369 "parser.tab.c"
     break;
 
   case 265: /* ForStatementNoShortIf: DummyForStatement12 CLOSEBRACKET StatementNoShortIf  */
-#line 3791 "parser.y"
+#line 3790 "parser.y"
                                                      {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7382,11 +7381,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7386 "parser.tab.c"
+#line 7385 "parser.tab.c"
     break;
 
   case 266: /* ForStatementNoShortIf: DummyForStatement10 StatementNoShortIf  */
-#line 3802 "parser.y"
+#line 3801 "parser.y"
                                         {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7398,11 +7397,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7402 "parser.tab.c"
+#line 7401 "parser.tab.c"
     break;
 
   case 267: /* ForStatementNoShortIf: DummyForStatement7 StatementNoShortIf  */
-#line 3813 "parser.y"
+#line 3812 "parser.y"
                                        {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7414,11 +7413,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7418 "parser.tab.c"
+#line 7417 "parser.tab.c"
     break;
 
   case 268: /* ForStatementNoShortIf: DummyForStatement13 StatementNoShortIf  */
-#line 3824 "parser.y"
+#line 3823 "parser.y"
                                         {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7430,11 +7429,11 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7434 "parser.tab.c"
+#line 7433 "parser.tab.c"
     break;
 
   case 269: /* ForStatementNoShortIf: DummyForStatement3 CLOSEBRACKET StatementNoShortIf  */
-#line 3835 "parser.y"
+#line 3834 "parser.y"
                                                     {
   // breaklabels.push(string((char*)(($1).nextgoto)));
   curr_table = tables.top(); tables.pop();
@@ -7446,46 +7445,46 @@ tempparam.clear();
   continuelabels.pop();
   breaklabels.pop();
   }
-#line 7450 "parser.tab.c"
+#line 7449 "parser.tab.c"
     break;
 
   case 270: /* ForInit: StatementExpressionList  */
-#line 3847 "parser.y"
+#line 3846 "parser.y"
                         {
 }
-#line 7457 "parser.tab.c"
+#line 7456 "parser.tab.c"
     break;
 
   case 271: /* ForInit: LocalVariableDeclaration  */
-#line 3849 "parser.y"
+#line 3848 "parser.y"
                           {
 }
-#line 7464 "parser.tab.c"
+#line 7463 "parser.tab.c"
     break;
 
   case 272: /* ForUpdate: StatementExpressionList  */
-#line 3853 "parser.y"
+#line 3852 "parser.y"
                         {
 }
-#line 7471 "parser.tab.c"
+#line 7470 "parser.tab.c"
     break;
 
   case 273: /* StatementExpressionList: StatementExpression  */
-#line 3857 "parser.y"
+#line 3856 "parser.y"
                     {
 }
-#line 7478 "parser.tab.c"
+#line 7477 "parser.tab.c"
     break;
 
   case 274: /* StatementExpressionList: StatementExpressionList COMMA StatementExpression  */
-#line 3859 "parser.y"
+#line 3858 "parser.y"
                                                    {
 }
-#line 7485 "parser.tab.c"
+#line 7484 "parser.tab.c"
     break;
 
   case 275: /* BreakStatement: BREAK SEMICOLON  */
-#line 3863 "parser.y"
+#line 3862 "parser.y"
                 {
       newdim.clear();
   isclassaccess=0;
@@ -7499,11 +7498,11 @@ tempparam.clear();
   if(breaklabels.size())
   emit("Goto", breaklabels.top(), "", "", -1);
 }
-#line 7503 "parser.tab.c"
+#line 7502 "parser.tab.c"
     break;
 
   case 276: /* BreakStatement: BREAK Identifier SEMICOLON  */
-#line 3876 "parser.y"
+#line 3875 "parser.y"
                             {
   newdim.clear();
       
@@ -7520,11 +7519,11 @@ tempparam.clear();
   if(breaklabels.size())
   emit("Goto", breaklabels.top(), "", "", -1);
 }
-#line 7524 "parser.tab.c"
+#line 7523 "parser.tab.c"
     break;
 
   case 277: /* ContinueStatement: CONTINUE Identifier SEMICOLON  */
-#line 3894 "parser.y"
+#line 3893 "parser.y"
                               {
   newdim.clear();
       
@@ -7541,11 +7540,11 @@ tempparam.clear();
     isclassaccess=0;
     issystem=0;
 }
-#line 7545 "parser.tab.c"
+#line 7544 "parser.tab.c"
     break;
 
   case 278: /* ContinueStatement: CONTINUE SEMICOLON  */
-#line 3910 "parser.y"
+#line 3909 "parser.y"
                     {    
   newdim.clear();
    isfinal=0;
@@ -7558,11 +7557,11 @@ tempparam.clear();
   if(continuelabels.size())
   emit("Goto", continuelabels.top(), "", "", -1);
 }
-#line 7562 "parser.tab.c"
+#line 7561 "parser.tab.c"
     break;
 
   case 279: /* ReturnStatement: RETURN SEMICOLON  */
-#line 3925 "parser.y"
+#line 3924 "parser.y"
                  {   
   newdim.clear(); 
   if(!infunction)
@@ -7572,19 +7571,19 @@ tempparam.clear();
   isclassaccess=0;
     issystem=0;
     if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
     emit("ret", "", "", "", -1);
   }
     ispopped = 0;
   
 }
-#line 7584 "parser.tab.c"
+#line 7583 "parser.tab.c"
     break;
 
   case 280: /* ReturnStatement: RETURN Expression SEMICOLON  */
-#line 3942 "parser.y"
+#line 3941 "parser.y"
                              {    
   newdim.clear();
   string p = string((char*)((yyvsp[-1].typ)).tempvar);
@@ -7596,8 +7595,8 @@ emit("pop","ebp","","",-1);
       strcpy(((yyvsp[-1].typ)).tempvar, tp3.c_str());
     }
     if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "esp", to_string(totalstack), "", -1); ;}
-emit("pop","ebp","","",-1);
+    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
     emit("push", ((yyvsp[-1].typ)).tempvar, "", "", -1);
     emit("ret", "" , "", "", -1);
@@ -7620,64 +7619,64 @@ emit("pop","ebp","","",-1);
   isclassaccess=0;
     issystem=0;
 }
-#line 7624 "parser.tab.c"
+#line 7623 "parser.tab.c"
     break;
 
   case 281: /* ThrowStatement: THROW Expression SEMICOLON  */
-#line 3980 "parser.y"
+#line 3979 "parser.y"
                            {    
   newdim.clear();
   isclassaccess=0;
     issystem=0;
      isfinal=0;
 }
-#line 7635 "parser.tab.c"
+#line 7634 "parser.tab.c"
     break;
 
   case 282: /* SynchronizedStatement: SYNCHRONIZED OPENBRACKET Expression CLOSEBRACKET Block  */
-#line 3987 "parser.y"
+#line 3986 "parser.y"
                                                        {
 }
-#line 7642 "parser.tab.c"
+#line 7641 "parser.tab.c"
     break;
 
   case 283: /* TryStatement: TRY Block Catches  */
-#line 3990 "parser.y"
+#line 3989 "parser.y"
                   {
 }
-#line 7649 "parser.tab.c"
+#line 7648 "parser.tab.c"
     break;
 
   case 284: /* TryStatement: TRY Block Catches Finally  */
-#line 3992 "parser.y"
+#line 3991 "parser.y"
                            {
 }
-#line 7656 "parser.tab.c"
+#line 7655 "parser.tab.c"
     break;
 
   case 285: /* TryStatement: TRY Block Finally  */
-#line 3994 "parser.y"
+#line 3993 "parser.y"
                    {
 }
-#line 7663 "parser.tab.c"
+#line 7662 "parser.tab.c"
     break;
 
   case 286: /* Catches: CatchClause  */
-#line 3997 "parser.y"
+#line 3996 "parser.y"
             {
 }
-#line 7670 "parser.tab.c"
+#line 7669 "parser.tab.c"
     break;
 
   case 287: /* Catches: Catches CatchClause  */
-#line 3999 "parser.y"
+#line 3998 "parser.y"
                      {
 }
-#line 7677 "parser.tab.c"
+#line 7676 "parser.tab.c"
     break;
 
   case 288: /* $@16: %empty  */
-#line 4002 "parser.y"
+#line 4001 "parser.y"
       {
   tables.push(curr_table);
   curr_table = new Sym_Table(curr_table);
@@ -7689,68 +7688,68 @@ emit("pop","ebp","","",-1);
   int new_offset = 0;
   offset = new_offset;
 }
-#line 7693 "parser.tab.c"
+#line 7692 "parser.tab.c"
     break;
 
   case 289: /* CatchClause: CATCH $@16 OPENBRACKET FormalParameter CLOSEBRACKET Block  */
-#line 4013 "parser.y"
+#line 4012 "parser.y"
                                                {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
 }
-#line 7703 "parser.tab.c"
+#line 7702 "parser.tab.c"
     break;
 
   case 290: /* Finally: FINALLY Block  */
-#line 4019 "parser.y"
+#line 4018 "parser.y"
               {
 }
-#line 7710 "parser.tab.c"
+#line 7709 "parser.tab.c"
     break;
 
   case 291: /* Primary: PrimaryNoNewArray  */
-#line 4022 "parser.y"
+#line 4021 "parser.y"
                   {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
 }
-#line 7720 "parser.tab.c"
+#line 7719 "parser.tab.c"
     break;
 
   case 292: /* Primary: ArrayCreationExpression  */
-#line 4027 "parser.y"
+#line 4026 "parser.y"
                          {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 }
-#line 7729 "parser.tab.c"
+#line 7728 "parser.tab.c"
     break;
 
   case 293: /* PrimaryNoNewArray: Literal  */
-#line 4033 "parser.y"
+#line 4032 "parser.y"
         {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 7739 "parser.tab.c"
+#line 7738 "parser.tab.c"
     break;
 
   case 294: /* PrimaryNoNewArray: THIS  */
-#line 4038 "parser.y"
+#line 4037 "parser.y"
       {
   string s = newtemp();
-  emit("=", "[ebp+8]", "null", s, -1);
+  emit("=", "[rbp+8]", "null", s, -1);
   strcpy(((yyval.typ)).tempvar, s.c_str());
   strcpy(((yyval.typ)).type,((yyvsp[0].lex)).str);
 }
-#line 7750 "parser.tab.c"
+#line 7749 "parser.tab.c"
     break;
 
   case 295: /* PrimaryNoNewArray: OPENBRACKET Expression CLOSEBRACKET  */
-#line 4044 "parser.y"
+#line 4043 "parser.y"
                                      {
 
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].lex)).str)));
@@ -7758,21 +7757,21 @@ emit("pop","ebp","","",-1);
   strcpy(((yyval.typ)).type,((yyvsp[-1].typ)).type);
   
 }
-#line 7762 "parser.tab.c"
+#line 7761 "parser.tab.c"
     break;
 
   case 296: /* PrimaryNoNewArray: ClassInstanceCreationExpression  */
-#line 4051 "parser.y"
+#line 4050 "parser.y"
                                  {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 }
-#line 7772 "parser.tab.c"
+#line 7771 "parser.tab.c"
     break;
 
   case 297: /* PrimaryNoNewArray: FieldAccess  */
-#line 4056 "parser.y"
+#line 4055 "parser.y"
              {
 
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
@@ -7780,11 +7779,11 @@ emit("pop","ebp","","",-1);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 7784 "parser.tab.c"
+#line 7783 "parser.tab.c"
     break;
 
   case 298: /* PrimaryNoNewArray: MethodInvocation  */
-#line 4063 "parser.y"
+#line 4062 "parser.y"
                   {
 
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
@@ -7792,30 +7791,30 @@ emit("pop","ebp","","",-1);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 7796 "parser.tab.c"
+#line 7795 "parser.tab.c"
     break;
 
   case 299: /* PrimaryNoNewArray: ArrayAccess  */
-#line 4070 "parser.y"
+#line 4069 "parser.y"
              {
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 }
-#line 7806 "parser.tab.c"
+#line 7805 "parser.tab.c"
     break;
 
   case 300: /* ClassInstanceCreationExpression: NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET  */
-#line 4077 "parser.y"
+#line 4076 "parser.y"
                                                     {
   string tv1 = newtemp();
   emit("=", to_string(getclasswidth(string((char*)((yyvsp[-3].typ)).type))), "null", tv1, -1);
   emit("param",tv1,"","",-1);
-  // emit("sub","esp","8","",-1);
-  emit("sub","esp","8","",-1);
+  // emit("sub","rsp","8","",-1);
+  emit("sub","rsp","8","",-1);
   emit("call","allocmem","1","",-1);
-  // emit("add","esp","8","",-1);
-  emit("add","esp","8","",-1);
+  // emit("add","rsp","8","",-1);
+  emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
 
@@ -7838,9 +7837,9 @@ emit("pop","ebp","","",-1);
     if(!args2.empty()) ar = ar + ",";
   }
   emit("param",tv2,"","",-1);
-  emit("sub", "esp", to_string(8 + pops),"", -1);
+  emit("sub", "rsp", to_string(8 + pops),"", -1);
   emit("call",string((char*)(((yyvsp[-3].typ)).type)), "","",-1);
-  emit("add", "esp", to_string(8 + pops),"", -1);
+  emit("add", "rsp", to_string(8 + pops),"", -1);
   strcpy(((yyval.typ)).tempvar, tv2.c_str());
 
   strcpy(((yyval.typ)).type,((yyvsp[-3].typ)).type);
@@ -7899,20 +7898,20 @@ emit("pop","ebp","","",-1);
   // cout<<($2).type<<'\n';
   
 }
-#line 7903 "parser.tab.c"
+#line 7902 "parser.tab.c"
     break;
 
   case 301: /* ClassInstanceCreationExpression: NEW ClassType OPENBRACKET CLOSEBRACKET  */
-#line 4169 "parser.y"
+#line 4168 "parser.y"
                                         {
   // string a = newtemp();
   // strcpy(($$).tempvar, a.c_str());
   string tv1 = newtemp();
   emit("=", to_string(getclasswidth(string((char*)((yyvsp[-2].typ)).type))), "null", tv1, -1);
   emit("param",tv1,"","",-1);
-  emit("sub","esp","8","",-1);
+  emit("sub","rsp","8","",-1);
   emit("call","allocmem","1","",-1);
-  emit("add","esp","8","",-1);
+  emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
   emit("param",tv2,"","",-1);
@@ -7938,22 +7937,22 @@ emit("pop","ebp","","",-1);
   isaccess=0;
   // cout<<($2).type<<'\n';
 }
-#line 7942 "parser.tab.c"
+#line 7941 "parser.tab.c"
     break;
 
   case 302: /* ArgumentList: Expression  */
-#line 4205 "parser.y"
+#line 4204 "parser.y"
            {
   args.push({string((char*)((yyvsp[0].typ)).tempvar), sz});
   strcpy(((yyval.typ)).argstring, ((yyvsp[0].typ)).type);
   // cout<<"XXX"<<($$).argstring<<'\n';
   ((yyval.typ)).nelem=1;
 }
-#line 7953 "parser.tab.c"
+#line 7952 "parser.tab.c"
     break;
 
   case 303: /* ArgumentList: ArgumentList COMMA Expression  */
-#line 4211 "parser.y"
+#line 4210 "parser.y"
                                {
   args.push({string((char*)((yyvsp[0].typ)).tempvar), sz});
   strcat(((yyval.typ)).argstring, "$");
@@ -7961,11 +7960,11 @@ emit("pop","ebp","","",-1);
   // cout<<"XXX"<<($$).argstring<<'\n';
   ((yyval.typ)).nelem=((yyvsp[-2].typ)).nelem+1;
 }
-#line 7965 "parser.tab.c"
+#line 7964 "parser.tab.c"
     break;
 
   case 304: /* ArrayCreationExpression: NEW PrimitiveType DimExprs Dims  */
-#line 4220 "parser.y"
+#line 4219 "parser.y"
                                 {
   newhandle = string((char*)(((yyvsp[-2].typ)).type));
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -7981,11 +7980,11 @@ emit("pop","ebp","","",-1);
   // print_dims();
     
 }
-#line 7985 "parser.tab.c"
+#line 7984 "parser.tab.c"
     break;
 
   case 305: /* ArrayCreationExpression: NEW PrimitiveType DimExprs  */
-#line 4235 "parser.y"
+#line 4234 "parser.y"
                             {
   newhandle = string((char*)(((yyvsp[-1].typ)).type));
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -8003,11 +8002,11 @@ emit("pop","ebp","","",-1);
   // print_dims();
     
 }
-#line 8007 "parser.tab.c"
+#line 8006 "parser.tab.c"
     break;
 
   case 306: /* ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs Dims  */
-#line 4252 "parser.y"
+#line 4251 "parser.y"
                                         {
   newhandle = string((char*)(((yyvsp[-2].typ)).type));
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -8025,11 +8024,11 @@ emit("pop","ebp","","",-1);
     
   
 }
-#line 8029 "parser.tab.c"
+#line 8028 "parser.tab.c"
     break;
 
   case 307: /* ArrayCreationExpression: NEW ClassOrInterfaceType DimExprs  */
-#line 4269 "parser.y"
+#line 4268 "parser.y"
                                    {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit("=", "new", string((char*)($2).tempvar) + string((char*)($3).tempvar), ($$).tempvar, -1);
@@ -8047,40 +8046,40 @@ emit("pop","ebp","","",-1);
   
   
 }
-#line 8051 "parser.tab.c"
+#line 8050 "parser.tab.c"
     break;
 
   case 308: /* DimExprs: DimExpr  */
-#line 4287 "parser.y"
+#line 4286 "parser.y"
         {
   ((yyval.typ)).ndim=1;
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 }
-#line 8060 "parser.tab.c"
+#line 8059 "parser.tab.c"
     break;
 
   case 309: /* DimExprs: DimExprs DimExpr  */
-#line 4291 "parser.y"
+#line 4290 "parser.y"
                   {
   ((yyval.typ)).ndim = ((yyvsp[-1].typ)).ndim + 1;
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].typ)).tempvar));
 }
-#line 8069 "parser.tab.c"
+#line 8068 "parser.tab.c"
     break;
 
   case 310: /* DimExpr: OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET  */
-#line 4296 "parser.y"
+#line 4295 "parser.y"
                                                 {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].lex)).str)));
   ((yyval.typ)).ndim=1;
   newdim.push_back(dimint);
   
 }
-#line 8080 "parser.tab.c"
+#line 8079 "parser.tab.c"
     break;
 
   case 311: /* Dims: OPENSQUAREBRACKET CLOSESQUAREBRACKET  */
-#line 4304 "parser.y"
+#line 4303 "parser.y"
                                      {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str));
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str));
@@ -8088,21 +8087,21 @@ emit("pop","ebp","","",-1);
   newdim.push_back(0);
   
 }
-#line 8092 "parser.tab.c"
+#line 8091 "parser.tab.c"
     break;
 
   case 312: /* Dims: Dims OPENSQUAREBRACKET CLOSESQUAREBRACKET  */
-#line 4311 "parser.y"
+#line 4310 "parser.y"
                                            {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].typ)).tempvar, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str)));
   ((yyval.typ)).ndim = ((yyvsp[-2].typ)).ndim + 1;
   newdim.push_back(0);
 }
-#line 8102 "parser.tab.c"
+#line 8101 "parser.tab.c"
     break;
 
   case 313: /* FieldAccess: Primary DOT Identifier  */
-#line 4318 "parser.y"
+#line 4317 "parser.y"
                        {
   // strcpy(($$).tempvar, strcat(($1).tempvar, strcat(($2).str, ($3).str)));
   if(curr_table->lookup(string((char*)((yyvsp[0].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[0].lex)).str)) == 0){
@@ -8117,33 +8116,33 @@ emit("pop","ebp","","",-1);
     strcpy(((yyval.typ)).type,curr_table->thislookup(((yyvsp[0].lex)).str).c_str());
   }
 }
-#line 8121 "parser.tab.c"
+#line 8120 "parser.tab.c"
     break;
 
   case 314: /* FieldAccess: SUPER DOT Identifier  */
-#line 4332 "parser.y"
+#line 4331 "parser.y"
                       {
   strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].lex)).str, ((yyvsp[0].lex)).str)));
   if(curr_table->lookup(string((char*)((yyvsp[0].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[0].lex)).str)) == 0){
     cout<<"Undeclared variable on line "<< yylineno<<"\n";
   }
 }
-#line 8132 "parser.tab.c"
+#line 8131 "parser.tab.c"
     break;
 
   case 315: /* DummyMethodInvocation: Name  */
-#line 4339 "parser.y"
+#line 4338 "parser.y"
                             {
   //emit(string((char*)($1).type),"","","",-1);
   //emit("BeginFunc","","","",-1);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   strcpy(((yyval.typ)).tempvar,((yyvsp[0].typ)).tempvar);
 }
-#line 8143 "parser.tab.c"
+#line 8142 "parser.tab.c"
     break;
 
   case 316: /* MethodInvocation: DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET  */
-#line 4347 "parser.y"
+#line 4346 "parser.y"
                                                             {
   int pops = 0;
   string ar = "";
@@ -8171,20 +8170,20 @@ emit("pop","ebp","","",-1);
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       emit("param", oname, "", "", -1);
-      emit("sub","esp",to_string(funcargtypesz1),"",-1);
+      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       emit("call", cname + "." + mname, "", "", -1);
 
     }
     else{
-      emit("sub","esp",to_string(funcargtypesz1),"",-1);
+      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       emit("call", string((char*)(((yyvsp[-3].typ)).tempvar)),"", "", -1);
     }
   }
   // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
-  emit("add","esp",to_string(funcargtypesz1),"",-1);
+  emit("add","rsp",to_string(funcargtypesz1),"",-1);
   string tv3 = newtemp();
   emit("=", "popparam", "null", tv3.c_str(), -1);
-  emit("add", "esp", to_string(8), "", -1);
+  emit("add", "rsp", to_string(8), "", -1);
   strcpy(((yyval.typ)).tempvar, tv3.c_str());
   //emit("EndFunc","","","",-1)
 
@@ -8294,11 +8293,11 @@ emit("pop","ebp","","",-1);
   isaccess=0;
   // yo="";
 }
-#line 8298 "parser.tab.c"
+#line 8297 "parser.tab.c"
     break;
 
   case 317: /* MethodInvocation: DummyMethodInvocation OPENBRACKET CLOSEBRACKET  */
-#line 4497 "parser.y"
+#line 4496 "parser.y"
                                                 {
   if(!strcmp(string((char*)(((yyvsp[-2].typ)).tempvar)).c_str(),"System.println"))
   {
@@ -8320,7 +8319,7 @@ emit("pop","ebp","","",-1);
   }
   string s = newtemp();
   emit("=", "popparam", "null", s.c_str(), -1);
-  emit("add", "esp", to_string(8), "", -1);
+  emit("add", "rsp", to_string(8), "", -1);
   strcpy(((yyval.typ)).tempvar,s.c_str());
 
     if((curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1)&& checkobj(string((char*)((yyvsp[-2].typ)).type)) == 0){
@@ -8355,11 +8354,11 @@ emit("pop","ebp","","",-1);
   classname="";
   isaccess=0;
 }
-#line 8359 "parser.tab.c"
+#line 8358 "parser.tab.c"
     break;
 
   case 318: /* MethodInvocation: Primary DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET  */
-#line 4553 "parser.y"
+#line 4552 "parser.y"
                                                               {
   
   int pops = 0;
@@ -8388,20 +8387,20 @@ emit("pop","ebp","","",-1);
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       emit("param", oname, "", "", -1);
-      emit("sub","esp",to_string(funcargtypesz1),"",-1);
+      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       emit("call", cname + "." + mname, "", "", -1);
 
     }
     else{
-      emit("sub","esp",to_string(funcargtypesz1),"",-1);
+      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       emit("call", string((char*)(((yyvsp[-5].typ)).tempvar)),"", "", -1);
     }
   }
   // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
-  emit("add","esp",to_string(funcargtypesz1),"",-1);
+  emit("add","rsp",to_string(funcargtypesz1),"",-1);
   string tv3 = newtemp();
   emit("=", "popparam", "null", tv3.c_str(), -1);
-  emit("add", "esp", to_string(8), "", -1);
+  emit("add", "rsp", to_string(8), "", -1);
   strcpy(((yyval.typ)).tempvar, tv3.c_str());
 
   if(curr_table->lookup(string((char*)((yyvsp[-3].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[-3].lex)).str)) == 0){
@@ -8412,16 +8411,16 @@ emit("pop","ebp","","",-1);
   }
   isaccess=0;
 }
-#line 8416 "parser.tab.c"
+#line 8415 "parser.tab.c"
     break;
 
   case 319: /* MethodInvocation: Primary DOT Identifier OPENBRACKET CLOSEBRACKET  */
-#line 4605 "parser.y"
+#line 4604 "parser.y"
                                                  {
   string s = newtemp();
   emit("call",string((char*)((yyvsp[-4].typ)).tempvar) + string((char*)((yyvsp[-3].lex)).str) + string((char*)((yyvsp[-2].lex)).str)   ,"","",-1);
   emit("=", "popparam", "null", s.c_str(), -1);
-  emit("add", "esp", to_string(8), "", -1);
+  emit("add", "rsp", to_string(8), "", -1);
   strcpy(((yyval.typ)).tempvar,s.c_str());
 
   if(curr_table->lookup(string((char*)((yyvsp[-2].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[-2].lex)).str)) == 0){
@@ -8432,11 +8431,11 @@ emit("pop","ebp","","",-1);
   }
   isaccess=0;
 }
-#line 8436 "parser.tab.c"
+#line 8435 "parser.tab.c"
     break;
 
   case 320: /* MethodInvocation: SUPER DOT Identifier OPENBRACKET ArgumentList CLOSEBRACKET  */
-#line 4620 "parser.y"
+#line 4619 "parser.y"
                                                             {
   int pops = 0;
   string ar = "";
@@ -8464,16 +8463,16 @@ emit("pop","ebp","","",-1);
   }
   isaccess=0;
 }
-#line 8468 "parser.tab.c"
+#line 8467 "parser.tab.c"
     break;
 
   case 321: /* MethodInvocation: SUPER DOT Identifier OPENBRACKET CLOSEBRACKET  */
-#line 4647 "parser.y"
+#line 4646 "parser.y"
                                                {
   string s = newtemp();
   emit("call",string((char*)((yyvsp[-4].lex)).str) + string((char*)((yyvsp[-3].lex)).str) + string((char*)((yyvsp[-2].lex)).str),"","",-1);
   emit("=", "popparam", "null", s.c_str(), -1);
-  emit("add", "esp", to_string(8), "", -1);
+  emit("add", "rsp", to_string(8), "", -1);
   strcpy(((yyval.typ)).tempvar,s.c_str());
 
   if(curr_table->lookup(string((char*)((yyvsp[-2].lex)).str)).offset == -1 && checkobj(string((char*)((yyvsp[-2].lex)).str)) == 0){
@@ -8484,11 +8483,11 @@ emit("pop","ebp","","",-1);
   }
   isaccess=0;
 }
-#line 8488 "parser.tab.c"
+#line 8487 "parser.tab.c"
     break;
 
   case 322: /* ArrayAccess: Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET  */
-#line 4664 "parser.y"
+#line 4663 "parser.y"
                                                      {
   arrayname=((yyvsp[-3].typ)).type;
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -8632,11 +8631,11 @@ emit("pop","ebp","","",-1);
   }
   // yo="";
 }
-#line 8636 "parser.tab.c"
+#line 8635 "parser.tab.c"
     break;
 
   case 323: /* ArrayAccess: PrimaryNoNewArray OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET  */
-#line 4807 "parser.y"
+#line 4806 "parser.y"
                                                                    {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   string tp4;
@@ -8776,22 +8775,22 @@ emit("pop","ebp","","",-1);
   // }
   yo="";
 }
-#line 8780 "parser.tab.c"
+#line 8779 "parser.tab.c"
     break;
 
   case 324: /* PostfixExpression: Primary  */
-#line 4948 "parser.y"
+#line 4947 "parser.y"
         {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 8791 "parser.tab.c"
+#line 8790 "parser.tab.c"
     break;
 
   case 325: /* PostfixExpression: Name  */
-#line 4954 "parser.y"
+#line 4953 "parser.y"
       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
@@ -8803,32 +8802,32 @@ emit("pop","ebp","","",-1);
   }
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 8807 "parser.tab.c"
+#line 8806 "parser.tab.c"
     break;
 
   case 326: /* PostfixExpression: PostIncrementExpression  */
-#line 4965 "parser.y"
+#line 4964 "parser.y"
                          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 8817 "parser.tab.c"
+#line 8816 "parser.tab.c"
     break;
 
   case 327: /* PostfixExpression: PostDecrementExpression  */
-#line 4970 "parser.y"
+#line 4969 "parser.y"
                          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 8828 "parser.tab.c"
+#line 8827 "parser.tab.c"
     break;
 
   case 328: /* PostIncrementExpression: PostfixExpression PLUSPLUS  */
-#line 4977 "parser.y"
+#line 4976 "parser.y"
                            {
   // cout<<($1).type<<'\n';
   string tmp = newtemp();
@@ -8861,11 +8860,11 @@ emit("pop","ebp","","",-1);
   yo="";
 
 }
-#line 8865 "parser.tab.c"
+#line 8864 "parser.tab.c"
     break;
 
   case 329: /* PostDecrementExpression: PostfixExpression MINUSMINUS  */
-#line 5010 "parser.y"
+#line 5009 "parser.y"
                              {
 
   string tmp = newtemp();
@@ -8898,32 +8897,32 @@ emit("pop","ebp","","",-1);
   yo="";
   
 }
-#line 8902 "parser.tab.c"
+#line 8901 "parser.tab.c"
     break;
 
   case 330: /* UnaryExpression: PreIncrementExpression  */
-#line 5043 "parser.y"
+#line 5042 "parser.y"
                        {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 8913 "parser.tab.c"
+#line 8912 "parser.tab.c"
     break;
 
   case 331: /* UnaryExpression: PreDecrementExpression  */
-#line 5049 "parser.y"
+#line 5048 "parser.y"
                         {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 8923 "parser.tab.c"
+#line 8922 "parser.tab.c"
     break;
 
   case 332: /* UnaryExpression: PLUS UnaryExpression  */
-#line 5054 "parser.y"
+#line 5053 "parser.y"
                       {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("plus",((yyvsp[0].typ)).tempvar,"null",((yyval.typ)).tempvar, -1); 
@@ -8936,11 +8935,11 @@ emit("pop","ebp","","",-1);
   
   
 }
-#line 8940 "parser.tab.c"
+#line 8939 "parser.tab.c"
     break;
 
   case 333: /* UnaryExpression: MINUS UnaryExpression  */
-#line 5066 "parser.y"
+#line 5065 "parser.y"
                        {
 strcpy(((yyval.typ)).tempvar, newtemp().c_str());  
   emit("minus",((yyvsp[0].typ)).tempvar,"null",((yyval.typ)).tempvar, -1); 
@@ -8950,22 +8949,22 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 8954 "parser.tab.c"
+#line 8953 "parser.tab.c"
     break;
 
   case 334: /* UnaryExpression: UnaryExpressionNotPlusMinus  */
-#line 5075 "parser.y"
+#line 5074 "parser.y"
                              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
 }
-#line 8965 "parser.tab.c"
+#line 8964 "parser.tab.c"
     break;
 
   case 335: /* PreIncrementExpression: PLUSPLUS UnaryExpression  */
-#line 5083 "parser.y"
+#line 5082 "parser.y"
                          {
   string tmp = newtemp();
   emit("+",((yyvsp[0].typ)).tempvar,"1",tmp, -1);
@@ -8998,11 +8997,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   yo="";
   
 }
-#line 9002 "parser.tab.c"
+#line 9001 "parser.tab.c"
     break;
 
   case 336: /* PreDecrementExpression: MINUSMINUS UnaryExpression  */
-#line 5116 "parser.y"
+#line 5115 "parser.y"
                            {
   string tmp = newtemp();
   emit("-",((yyvsp[0].typ)).tempvar,"1",tmp, -1);
@@ -9032,20 +9031,20 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   else strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 9036 "parser.tab.c"
+#line 9035 "parser.tab.c"
     break;
 
   case 337: /* UnaryExpressionNotPlusMinus: PostfixExpression  */
-#line 5146 "parser.y"
+#line 5145 "parser.y"
                   {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 9045 "parser.tab.c"
+#line 9044 "parser.tab.c"
     break;
 
   case 338: /* UnaryExpressionNotPlusMinus: TILDA UnaryExpression  */
-#line 5150 "parser.y"
+#line 5149 "parser.y"
                        {
   
   if(invalidoperator(curr_table->lookup(string((char*)((yyvsp[0].typ)).type)).type,1) || !strcmp(curr_table->lookup(string((char*)((yyvsp[0].typ)).type)).type.c_str() ,"boolean" )){
@@ -9058,11 +9057,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   
   
 }
-#line 9062 "parser.tab.c"
+#line 9061 "parser.tab.c"
     break;
 
   case 339: /* UnaryExpressionNotPlusMinus: NOT UnaryExpression  */
-#line 5162 "parser.y"
+#line 5161 "parser.y"
                      {
  
    if(strcmp(curr_table->lookup(string((char*)((yyvsp[0].typ)).type)).type.c_str() ,"boolean" )){
@@ -9075,21 +9074,21 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   
   
 }
-#line 9079 "parser.tab.c"
+#line 9078 "parser.tab.c"
     break;
 
   case 340: /* UnaryExpressionNotPlusMinus: CastExpression  */
-#line 5174 "parser.y"
+#line 5173 "parser.y"
                 {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 9089 "parser.tab.c"
+#line 9088 "parser.tab.c"
     break;
 
   case 341: /* CastExpression: OPENBRACKET PrimitiveType Dims CLOSEBRACKET UnaryExpression  */
-#line 5180 "parser.y"
+#line 5179 "parser.y"
                                                             {
   string casttp= "cast_to_" + string((char*)((yyvsp[-3].typ)).tempvar) + string((char*)((yyvsp[-2].typ)).tempvar);
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -9116,11 +9115,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
     }
   }
 }
-#line 9120 "parser.tab.c"
+#line 9119 "parser.tab.c"
     break;
 
   case 342: /* CastExpression: OPENBRACKET PrimitiveType CLOSEBRACKET UnaryExpression  */
-#line 5206 "parser.y"
+#line 5205 "parser.y"
                                                         {
   string casttp= "cast_to_" + string((char*)((yyvsp[-2].typ)).tempvar);
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -9144,11 +9143,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   
   
 }
-#line 9148 "parser.tab.c"
+#line 9147 "parser.tab.c"
     break;
 
   case 343: /* CastExpression: OPENBRACKET Expression CLOSEBRACKET UnaryExpressionNotPlusMinus  */
-#line 5229 "parser.y"
+#line 5228 "parser.y"
                                                                  {
   string casttp= "cast_to_" + string((char*)((yyvsp[-2].typ)).tempvar);
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -9172,11 +9171,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   
   
 }
-#line 9176 "parser.tab.c"
+#line 9175 "parser.tab.c"
     break;
 
   case 344: /* CastExpression: OPENBRACKET Name Dims CLOSEBRACKET UnaryExpressionNotPlusMinus  */
-#line 5252 "parser.y"
+#line 5251 "parser.y"
                                                                 {
   string casttp= "cast_to_" + string((char*)((yyvsp[-3].typ)).tempvar) + string((char*)((yyvsp[-2].typ)).tempvar);
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -9208,11 +9207,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
     }
   }
 }
-#line 9212 "parser.tab.c"
+#line 9211 "parser.tab.c"
     break;
 
   case 345: /* MultiplicativeExpression: UnaryExpression  */
-#line 5284 "parser.y"
+#line 5283 "parser.y"
                 {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
@@ -9225,11 +9224,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
     strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   }
 }
-#line 9229 "parser.tab.c"
+#line 9228 "parser.tab.c"
     break;
 
   case 346: /* MultiplicativeExpression: MultiplicativeExpression STAR UnaryExpression  */
-#line 5296 "parser.y"
+#line 5295 "parser.y"
                                                {
 
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -9375,11 +9374,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
 
   
 }
-#line 9379 "parser.tab.c"
+#line 9378 "parser.tab.c"
     break;
 
   case 347: /* MultiplicativeExpression: MultiplicativeExpression FORWARDSLASH UnaryExpression  */
-#line 5441 "parser.y"
+#line 5440 "parser.y"
                                                        {
 
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -9523,11 +9522,11 @@ strcpy(((yyval.typ)).tempvar, newtemp().c_str());
     }
 }
 }
-#line 9527 "parser.tab.c"
+#line 9526 "parser.tab.c"
     break;
 
   case 348: /* MultiplicativeExpression: MultiplicativeExpression MODULO UnaryExpression  */
-#line 5584 "parser.y"
+#line 5583 "parser.y"
                                                  {
 //   strcpy(($$).tempvar, newtemp().c_str());
 //   emit("%",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -9670,22 +9669,22 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
     }
 }
 }
-#line 9674 "parser.tab.c"
+#line 9673 "parser.tab.c"
     break;
 
   case 349: /* AdditiveExpression: MultiplicativeExpression  */
-#line 5727 "parser.y"
+#line 5726 "parser.y"
                          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 9685 "parser.tab.c"
+#line 9684 "parser.tab.c"
     break;
 
   case 350: /* AdditiveExpression: AdditiveExpression PLUS MultiplicativeExpression  */
-#line 5733 "parser.y"
+#line 5732 "parser.y"
                                                   {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit("+",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -9830,11 +9829,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
     }
 }
 }
-#line 9834 "parser.tab.c"
+#line 9833 "parser.tab.c"
     break;
 
   case 351: /* AdditiveExpression: AdditiveExpression MINUS MultiplicativeExpression  */
-#line 5877 "parser.y"
+#line 5876 "parser.y"
                                                    {
 
   // strcpy(($$).tempvar, newtemp().c_str());
@@ -9977,11 +9976,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
     }
 }
 }
-#line 9981 "parser.tab.c"
+#line 9980 "parser.tab.c"
     break;
 
   case 352: /* ShiftExpression: AdditiveExpression  */
-#line 6021 "parser.y"
+#line 6020 "parser.y"
                    {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -9989,11 +9988,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 9993 "parser.tab.c"
+#line 9992 "parser.tab.c"
     break;
 
   case 353: /* ShiftExpression: ShiftExpression OPENANGULARBRACKETOPENANGULARBRACKET AdditiveExpression  */
-#line 6028 "parser.y"
+#line 6027 "parser.y"
                                                                          {
 
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
@@ -10013,11 +10012,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   else cout<<"Invalid shift operator on line "<< yylineno<<"\n";
 //  strcpy(($$).type,getorder(($1).type,($3).type,1).c_str());
 }
-#line 10017 "parser.tab.c"
+#line 10016 "parser.tab.c"
     break;
 
   case 354: /* ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression  */
-#line 6047 "parser.y"
+#line 6046 "parser.y"
                                                                             {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit(">>",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10039,11 +10038,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10043 "parser.tab.c"
+#line 10042 "parser.tab.c"
     break;
 
   case 355: /* ShiftExpression: ShiftExpression CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKET AdditiveExpression  */
-#line 6068 "parser.y"
+#line 6067 "parser.y"
                                                                                               {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("<<<",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10061,22 +10060,22 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   else cout<<"Invalid shift operator on line "<< yylineno<<"\n";
   
 }
-#line 10065 "parser.tab.c"
+#line 10064 "parser.tab.c"
     break;
 
   case 356: /* RelationalExpression: ShiftExpression  */
-#line 6086 "parser.y"
+#line 6085 "parser.y"
                 {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10076 "parser.tab.c"
+#line 10075 "parser.tab.c"
     break;
 
   case 357: /* RelationalExpression: RelationalExpression OPENANGULARBRACKET ShiftExpression  */
-#line 6092 "parser.y"
+#line 6091 "parser.y"
                                                          {
   // cout<<strcmp(($1).type,"boolean")<<" "<<($3).type<<"yo"<<(!strcmp(($1).type,"boolean")||!strcmp(($3).type,"boolean"))<<'\n';
   
@@ -10106,11 +10105,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   emit("<",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
   
 }
-#line 10110 "parser.tab.c"
+#line 10109 "parser.tab.c"
     break;
 
   case 358: /* RelationalExpression: RelationalExpression CLOSEANGULARBRACKET ShiftExpression  */
-#line 6121 "parser.y"
+#line 6120 "parser.y"
                                                           {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit(">",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -10141,11 +10140,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   emit(">",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
   
 }
-#line 10145 "parser.tab.c"
+#line 10144 "parser.tab.c"
     break;
 
   case 359: /* RelationalExpression: RelationalExpression OPENANGULARBRACKETEQUAL ShiftExpression  */
-#line 6151 "parser.y"
+#line 6150 "parser.y"
                                                               {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit("<=",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -10175,11 +10174,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("<=",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
 }
-#line 10179 "parser.tab.c"
+#line 10178 "parser.tab.c"
     break;
 
   case 360: /* RelationalExpression: RelationalExpression CLOSEANGULARBRACKETEQUAL ShiftExpression  */
-#line 6180 "parser.y"
+#line 6179 "parser.y"
                                                                {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit(">=",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -10211,20 +10210,20 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10215 "parser.tab.c"
+#line 10214 "parser.tab.c"
     break;
 
   case 361: /* RelationalExpression: RelationalExpression INSTANCEOF ReferenceType  */
-#line 6211 "parser.y"
+#line 6210 "parser.y"
                                                {
   
   
 }
-#line 10224 "parser.tab.c"
+#line 10223 "parser.tab.c"
     break;
 
   case 362: /* EqualityExpression: RelationalExpression  */
-#line 6216 "parser.y"
+#line 6215 "parser.y"
                      {
   
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
@@ -10232,11 +10231,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10236 "parser.tab.c"
+#line 10235 "parser.tab.c"
     break;
 
   case 363: /* EqualityExpression: EqualityExpression EQUALEQUAL RelationalExpression  */
-#line 6223 "parser.y"
+#line 6222 "parser.y"
                                                     {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit("==",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -10268,11 +10267,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10272 "parser.tab.c"
+#line 10271 "parser.tab.c"
     break;
 
   case 364: /* EqualityExpression: EqualityExpression NOTEQUAL RelationalExpression  */
-#line 6254 "parser.y"
+#line 6253 "parser.y"
                                                   {
   // strcpy(($$).tempvar, newtemp().c_str());
   // emit("!=",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -10304,11 +10303,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10308 "parser.tab.c"
+#line 10307 "parser.tab.c"
     break;
 
   case 365: /* AndExpression: EqualityExpression  */
-#line 6286 "parser.y"
+#line 6285 "parser.y"
                    {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -10316,11 +10315,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 10320 "parser.tab.c"
+#line 10319 "parser.tab.c"
     break;
 
   case 366: /* AndExpression: AndExpression AND EqualityExpression  */
-#line 6293 "parser.y"
+#line 6292 "parser.y"
                                       {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("&",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10328,11 +10327,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
  strcpy(((yyval.typ)).type,getorder(((yyvsp[-2].typ)).type,((yyvsp[0].typ)).type,0).c_str());
   
 }
-#line 10332 "parser.tab.c"
+#line 10331 "parser.tab.c"
     break;
 
   case 367: /* ExclusiveOrExpression: AndExpression  */
-#line 6301 "parser.y"
+#line 6300 "parser.y"
               {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -10340,11 +10339,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 10344 "parser.tab.c"
+#line 10343 "parser.tab.c"
     break;
 
   case 368: /* ExclusiveOrExpression: ExclusiveOrExpression XOR AndExpression  */
-#line 6308 "parser.y"
+#line 6307 "parser.y"
                                          {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("^",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10352,22 +10351,22 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10356 "parser.tab.c"
+#line 10355 "parser.tab.c"
     break;
 
   case 369: /* InclusiveOrExpression: ExclusiveOrExpression  */
-#line 6316 "parser.y"
+#line 6315 "parser.y"
                       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10367 "parser.tab.c"
+#line 10366 "parser.tab.c"
     break;
 
   case 370: /* InclusiveOrExpression: InclusiveOrExpression OR ExclusiveOrExpression  */
-#line 6322 "parser.y"
+#line 6321 "parser.y"
                                                 {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("|",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10375,22 +10374,22 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
  strcpy(((yyval.typ)).type,getorder(((yyvsp[-2].typ)).type,((yyvsp[0].typ)).type,0).c_str());
 
 }
-#line 10379 "parser.tab.c"
+#line 10378 "parser.tab.c"
     break;
 
   case 371: /* ConditionalAndExpression: InclusiveOrExpression  */
-#line 6330 "parser.y"
+#line 6329 "parser.y"
                       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
    strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10390 "parser.tab.c"
+#line 10389 "parser.tab.c"
     break;
 
   case 372: /* ConditionalAndExpression: ConditionalAndExpression ANDAND InclusiveOrExpression  */
-#line 6336 "parser.y"
+#line 6335 "parser.y"
                                                        {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("&&",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
@@ -10399,72 +10398,72 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   
   
 }
-#line 10403 "parser.tab.c"
+#line 10402 "parser.tab.c"
     break;
 
   case 373: /* ConditionalOrExpression: ConditionalAndExpression  */
-#line 6345 "parser.y"
+#line 6344 "parser.y"
                          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10414 "parser.tab.c"
+#line 10413 "parser.tab.c"
     break;
 
   case 374: /* ConditionalOrExpression: ConditionalOrExpression OROR ConditionalAndExpression  */
-#line 6351 "parser.y"
+#line 6350 "parser.y"
                                                        {
   strcpy(((yyval.typ)).tempvar, newtemp().c_str());
   emit("||",((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
   strcpy(((yyval.typ)).type,"boolean");
 }
-#line 10424 "parser.tab.c"
+#line 10423 "parser.tab.c"
     break;
 
   case 375: /* ConditionalExpression: ConditionalOrExpression  */
-#line 6357 "parser.y"
+#line 6356 "parser.y"
                         {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
 }
-#line 10435 "parser.tab.c"
+#line 10434 "parser.tab.c"
     break;
 
   case 376: /* ConditionalExpression: ConditionalOrExpression QUESTION Expression COLON ConditionalExpression  */
-#line 6363 "parser.y"
+#line 6362 "parser.y"
                                                                          {
  strcpy(((yyval.typ)).type,getorder(((yyvsp[-2].typ)).type,((yyvsp[0].typ)).type,1).c_str());
 }
-#line 10443 "parser.tab.c"
+#line 10442 "parser.tab.c"
     break;
 
   case 377: /* AssignmentExpression: ConditionalExpression  */
-#line 6367 "parser.y"
+#line 6366 "parser.y"
                       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   ((yyval.typ)).ndim=((yyvsp[0].typ)).ndim;
 }
-#line 10454 "parser.tab.c"
+#line 10453 "parser.tab.c"
     break;
 
   case 378: /* AssignmentExpression: Assignment  */
-#line 6373 "parser.y"
+#line 6372 "parser.y"
             {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type, ((yyvsp[0].typ)).type);
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
 }
-#line 10464 "parser.tab.c"
+#line 10463 "parser.tab.c"
     break;
 
   case 379: /* Assignment: LeftHandSide AssignmentOperator AssignmentExpression  */
-#line 6380 "parser.y"
+#line 6379 "parser.y"
                                                      {
   // cout<<"FFF"<<($1).type<<($3).type<<arrtype<<'\n';
   if(!strcmp(((yyvsp[-1].typ)).tempvar,"="))
@@ -10483,7 +10482,7 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
         string classname1 = curr_table->lookup(o1).type;
         int tp21 = offsetobj(classname1, v1);
         string tp31 = "*(" + objtotemp[o1] + "+" + to_string(tp21) + ")";
-        emit("=",tp31.c_str(),"null",tp3.c_str(), -1);
+        emit("=",tp31.c_str(),"null",tp3.c_str(), -2);
       }
       else{
         string tv10 = newtemp();
@@ -10491,27 +10490,18 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
         int offset1 = curr_table->lookup(string((char*)((yyvsp[0].typ)).tempvar)).offset;
         int offset2 = curr_table->lookup(tp3).offset;
         if(offset1 != -1 && offset2 != -1){
-          emit("=",("*(" + tv10 + "+" + to_string(offset1)+ ")").c_str(),"null",("*(" + tv10 + "+" + to_string(offset2)+ ")").c_str(), -1);
+          emit("=",("*(" + tv10 + "+" + to_string(offset1)+ ")").c_str(),"null",("*(" + tv10 + "+" + to_string(offset2)+ ")").c_str(), -2);
         }
         else{
-        emit("=",((yyvsp[0].typ)).tempvar,"null",tp3.c_str(), -1);
+        emit("=",((yyvsp[0].typ)).tempvar,"null",tp3.c_str(), -2);
         }
       }
       strcpy(((yyval.typ)).tempvar, tp3.c_str());
     }
     else{
-      string tv10 = newtemp();
-        emit("=","popparam","null",tv10.c_str() , -1);
-        int offset1 = curr_table->lookup(string((char*)((yyvsp[0].typ)).tempvar)).offset;
-        int offset2 = curr_table->lookup(string((char*)((yyvsp[-2].typ)).tempvar)).offset;
+        // cout<<"HEYA "<<($3).tempvar<<" "<<($1).tempvar<<'\n';
         string tv11 = string((char*)((yyvsp[0].typ)).tempvar), tv12 = string((char*)((yyvsp[-2].typ)).tempvar);
-        if(offset1 != -1 && curr_table->lookup(tv11).scope_name.substr(0,5) == "Class"){
-          tv11 = "*(" + tv10 + "+" + to_string(offset1)+ ")";
-        }
-        if(offset2 != -1 && curr_table->lookup(tv12).scope_name.substr(0,5) == "Class"){
-          tv12 = "*(" + tv10 + "+" + to_string(offset2)+ ")";
-        }
-        emit("=",tv11.c_str(),"null",tv12.c_str(), -1);
+        emit("=",tv11.c_str(),"null",tv12.c_str(), -2);
     }
     
     //emit(($2).tempvar,($$).tempvar,"null",($1).tempvar, -1); This is an optimization
@@ -10522,7 +10512,7 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
     string a=((yyvsp[-1].typ)).tempvar;
     a=a.substr(0,a.size()-1);
     emit(a,((yyvsp[-2].typ)).tempvar,((yyvsp[0].typ)).tempvar,((yyval.typ)).tempvar, -1);
-    emit("=",((yyval.typ)).tempvar,"null",((yyvsp[-2].typ)).tempvar, -1);
+    emit("=",((yyval.typ)).tempvar,"null",((yyvsp[-2].typ)).tempvar, -2);
   }
   // emit("=",($3).tempvar,"null",($$).tempvar, -1);
   // emit(($2).tempvar,($$).tempvar,"null",($1).tempvar, -1);
@@ -10609,11 +10599,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   }
   arrtype="null";
 }
-#line 10613 "parser.tab.c"
+#line 10603 "parser.tab.c"
     break;
 
   case 380: /* LeftHandSide: Name  */
-#line 6525 "parser.y"
+#line 6515 "parser.y"
      {
   // cout<<"shrey"<<($1).type<<'\n';
   if(curr_table->lookup(string((char*)((yyvsp[0].typ)).type)).offset == -1 && checkobj(string((char*)((yyvsp[0].typ)).type)) == 0){
@@ -10627,11 +10617,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   isaccess=0;
 }
-#line 10631 "parser.tab.c"
+#line 10621 "parser.tab.c"
     break;
 
   case 381: /* LeftHandSide: FieldAccess  */
-#line 6538 "parser.y"
+#line 6528 "parser.y"
              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type, ((yyvsp[0].typ)).type);
@@ -10639,11 +10629,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   
 }
-#line 10643 "parser.tab.c"
+#line 10633 "parser.tab.c"
     break;
 
   case 382: /* LeftHandSide: ArrayAccess  */
-#line 6545 "parser.y"
+#line 6535 "parser.y"
              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   // cout<<"shubhan\n";
@@ -10653,111 +10643,111 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   arrtype="null";
 }
-#line 10657 "parser.tab.c"
+#line 10647 "parser.tab.c"
     break;
 
   case 383: /* AssignmentOperator: EQUAL  */
-#line 6556 "parser.y"
+#line 6546 "parser.y"
       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
   
 }
-#line 10667 "parser.tab.c"
+#line 10657 "parser.tab.c"
     break;
 
   case 384: /* AssignmentOperator: STAREQUAL  */
-#line 6561 "parser.y"
+#line 6551 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10676 "parser.tab.c"
+#line 10666 "parser.tab.c"
     break;
 
   case 385: /* AssignmentOperator: FORWARDSLASHEQUAL  */
-#line 6565 "parser.y"
+#line 6555 "parser.y"
                    {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10685 "parser.tab.c"
+#line 10675 "parser.tab.c"
     break;
 
   case 386: /* AssignmentOperator: PLUSEQUAL  */
-#line 6569 "parser.y"
+#line 6559 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10694 "parser.tab.c"
+#line 10684 "parser.tab.c"
     break;
 
   case 387: /* AssignmentOperator: MINUSEQUAL  */
-#line 6573 "parser.y"
+#line 6563 "parser.y"
             {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10703 "parser.tab.c"
+#line 10693 "parser.tab.c"
     break;
 
   case 388: /* AssignmentOperator: OPENANGULARBRACKETOPENANGULARBRACKETEQUAL  */
-#line 6577 "parser.y"
+#line 6567 "parser.y"
                                            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10712 "parser.tab.c"
+#line 10702 "parser.tab.c"
     break;
 
   case 389: /* AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL  */
-#line 6581 "parser.y"
+#line 6571 "parser.y"
                                              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10721 "parser.tab.c"
+#line 10711 "parser.tab.c"
     break;
 
   case 390: /* AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL  */
-#line 6585 "parser.y"
+#line 6575 "parser.y"
                                                                 {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10730 "parser.tab.c"
+#line 10720 "parser.tab.c"
     break;
 
   case 391: /* AssignmentOperator: ANDEQUAL  */
-#line 6589 "parser.y"
+#line 6579 "parser.y"
           {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10739 "parser.tab.c"
+#line 10729 "parser.tab.c"
     break;
 
   case 392: /* AssignmentOperator: XOREQUAL  */
-#line 6593 "parser.y"
+#line 6583 "parser.y"
           {
   
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
 }
-#line 10748 "parser.tab.c"
+#line 10738 "parser.tab.c"
     break;
 
   case 393: /* AssignmentOperator: OREQUAL  */
-#line 6597 "parser.y"
+#line 6587 "parser.y"
          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10757 "parser.tab.c"
+#line 10747 "parser.tab.c"
     break;
 
   case 394: /* Expression: AssignmentExpression  */
-#line 6602 "parser.y"
+#line 6592 "parser.y"
                      {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -10768,21 +10758,21 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
 
   
 }
-#line 10772 "parser.tab.c"
+#line 10762 "parser.tab.c"
     break;
 
   case 395: /* ConstantExpression: Expression  */
-#line 6613 "parser.y"
+#line 6603 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 10782 "parser.tab.c"
+#line 10772 "parser.tab.c"
     break;
 
 
-#line 10786 "parser.tab.c"
+#line 10776 "parser.tab.c"
 
       default: break;
     }
@@ -11006,7 +10996,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 6618 "parser.y"
+#line 6608 "parser.y"
 
 
 // Begin Declarations
@@ -11021,6 +11011,8 @@ typedef struct x86_code{
 } x86_code;
 
 vector<x86_code> asmcode;
+
+int inassign = 1;
 
 // End Declarations
 
@@ -11059,9 +11051,66 @@ string dectohex(string dec){
   return hex;
 }
 
-void addition(quad q)
+void addtox86(string func, string arg1, string arg2){
+        x86_code temp;
+        temp.func = func;
+        temp.arg1 = arg1;
+        temp.arg2 = arg2;
+        asmcode.push_back(temp);
+}
+
+string optofunc(string op){
+  string ans = "";
+  if(op == "+int"){
+    ans = "addl";
+  }
+  else if(op == "*int"){
+    ans = "imull";
+  }
+  else if(op == "-int"){
+    ans = "subl";
+  }
+  return ans;
+}
+
+void opt(quad q)
 {
- 
+  string op = q.op;
+  if(op == "/int"){
+    addtox86("cltd", "", "");
+    addtox86("idivl", q.arg2, "");
+  }
+  else{
+    if(q.arg1[0]=='#' && q.arg2[0] == '#'){
+      addtox86(optofunc(q.op), "%eax", "%edx");
+      last_reg_used = 1;
+    }
+    else if(q.arg1[0] == '#'){
+      if(last_reg_used == 0)
+        addtox86(optofunc(q.op), q.arg2, "%eax");
+      else{
+        addtox86(optofunc(q.op), q.arg2, "%edx");
+        last_reg_used = 1;
+      }
+    }
+    else if(q.arg2[0] == '#'){
+      if(last_reg_used == 0)
+        addtox86(optofunc(q.op), "%eax", q.arg1);
+      else{
+        addtox86(optofunc(q.op), "%edx", q.arg1);
+        last_reg_used = 1;
+      }
+    }
+    else{
+      addtox86("movl", q.arg1, "%eax");  
+      addtox86(optofunc(q.op), q.arg2, "%eax");
+      if(inassign == 1){
+        addtox86("movl", "%eax", "%edx");
+        inassign = 0;
+        last_reg_used = 1;
+      }
+    }
+  }
 }
 
 // End Codegen
@@ -11083,16 +11132,17 @@ int main(int argc, char *argv[])
   }
   yyparse();
 
-  for(auto it: list_of_Symbol_Tables){
-    // cout<<"NEW TABLE"<<'\n';
-    it->print_table();
-    cout<<"Classwidth: "<<it->classwidth<<endl;
-    cout<<'\n';
-  }
+  // for(auto it: list_of_Symbol_Tables){
+  //   // cout<<"NEW TABLE"<<'\n';
+  //   it->print_table();
+  //   cout<<"Classwidth: "<<it->classwidth<<endl;
+  //   cout<<'\n';
+  // }
 
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
+    fout<<inassign<<'\n';
    // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
     if(true)
     {
@@ -11120,10 +11170,70 @@ fout.open("TAC.txt");
         }
       else 
         {
-        fout<<'\t'<<it.res<<' '<<"="<<' '<<it.arg1<<"\n";
+        fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
+        if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
+          addtox86("movq", "%" + it.arg1, "%" + it.res);
         }
+        else if(it.res[0] == '[' || it.arg1[0] == '['){
+          if(isliteral(it.arg1))
+            it.arg1 = "$" + it.arg1;
+
+            if(it.res[0] == '['){
+              string off;
+              int i = 4;
+              while(it.res[i]!=']'){
+                off.push_back(it.res[i]);
+                i++;
+              }
+              it.res = off + "(%" + it.res.substr(1, 3) + ")";
+            }
+            else if(it.res[0] == '#'){
+              if(last_reg_used == 1)
+                it.res = "%edx";
+              else
+                it.res = "%eax";
+              last_reg_used = 0;
+            }
+
+            if(it.arg1[0] == '['){
+              int i = 4;
+              string off;
+              while(it.arg1[i]!=']'){
+                off.push_back(it.arg1[i]);
+                i++;
+              }
+              it.arg1 = off + "(%" + it.arg1.substr(1, 3) + ")";
+            }
+            else if(it.arg1[0] == '#'){
+              if(last_reg_used == 1)
+                it.arg1 = "%edx";
+              else
+                it.arg1 = "%eax";
+              last_reg_used = 0;
+            }
+
+            addtox86("movl", it.arg1, it.res);
+        }
+        else{
+          addtox86("movl1", it.arg1, it.res);
+        }
+        
+        }
+        cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
+        if(it.idx == -2){
+          inassign = 1;
+        }
+        
       }
-      else if(it.op=="param"||it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop" || it.op == "push")
+      else if(it.op == "push" && it.arg1 == "rbp"){
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+        addtox86("pushq", "%rbp", "");
+      }
+      else if(it.op == "pop" && it.arg1 == "rbp"){
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+        addtox86("popq", "%rbp", "");
+      }
+      else if(it.op=="param"||it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop" ||it.op == "push")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
       }
@@ -11142,6 +11252,7 @@ fout.open("TAC.txt");
       {
         // fout<<'\t';
         fout<<it.op<<it.arg1<<"\n";
+        addtox86(it.op, it.arg1, "");
       }
       else if(it.arg1=="new")
       {
@@ -11150,17 +11261,30 @@ fout.open("TAC.txt");
       else if(it.op=="ret")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
+        addtox86(it.op, "", "");
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
-      {
-        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+      { 
+        string op;
+        op.push_back(it.op[0]);
+        if(find(ops.begin(), ops.end(), op) != ops.end()){
+          opt(it);
+        }
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<" IDX"<<it.idx<<"\n";
       }
 
       }
+    }
+
+    for(auto it: asmcode){
+      if(it.arg1 == ":")
+      cout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      else
+      cout<<'\t'<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
     }
 
   return 0;
