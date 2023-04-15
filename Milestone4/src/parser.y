@@ -1829,6 +1829,7 @@ curr_table->classwidth = offset;
   // cout<<"I was here"<<($1).type<<endl;
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
+
 curr_table->classwidth = offset;
  string tv5 = string((char*)(($3).type));
  string tv6 = "";
@@ -1862,6 +1863,7 @@ curr_table->classwidth = offset;
  }
   else{
   strcpy(($$).tempvar, ($3).tempvar);
+  emit("=", ($3).tempvar, "null", ($1).tempvar, -1);
   objtotemp[string((char*)(($1).type))] = string((char*)(($3).tempvar));
   }
   // arrname=($1).type;
@@ -6615,6 +6617,62 @@ Expression {
 };
 %%
 
+// Begin Declarations
+
+string classcode;
+string funccode;
+
+typedef struct x86_code{
+  string func;
+  string arg1;
+  string arg2;
+} x86_code;
+
+vector<x86_code> asmcode;
+
+// End Declarations
+
+// Codegen functions
+
+vector<string> registers = {"rax", "rbx", "rcx", "rdx", "eax", "ebx", "ecx", "edx", "r8b", "r9b", "r10b", "r11b", "r12b", "r13b", "r14b", "r15b"};
+
+int last_reg_used = 0;
+
+void update_reg(){
+  last_reg_used ++ ;
+  last_reg_used %= 16;
+  return;
+}
+
+map<pair<string,string>, string> reg_map;
+
+bool isliteral(string s){  // Returns true if it is a literal and false in case of var names
+  for(auto it: s){
+    if( it < '0' || it > '9') return false;
+  }
+  return true;
+}
+
+string dectohex(string dec){
+  int num = stoi(dec);
+  string hex = "";
+  while(num){
+    int rem = num % 16;
+    if(rem < 10) hex += (char)(rem + '0');
+    else hex += (char)(rem - 10 + 'a');
+    num /= 16;
+  }
+  reverse(hex.begin(), hex.end());
+  hex = "0x" + hex ;
+  return hex;
+}
+
+void addition(quad q)
+{
+ 
+}
+
+// End Codegen
 
 int main(int argc, char *argv[])
 {  string executible_name(argv[0]);
@@ -6650,8 +6708,9 @@ fout.open("TAC.txt");
        {
         
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
-        if(it.op=="EndClass") fout<<'\n'; 
-        
+        if(it.op=="EndClass"){
+          fout<<'\n';
+        }
       }
       else if(it.arg2=="null" && it.res=="null")
       {
