@@ -28,6 +28,7 @@
     int isstatic=0;
     int isfieldprivate=0;
     string curr_class="";
+    string curr_func = "";
     stack<string> currfunc;
     int arraccess=0;
     int arrinit=0;
@@ -43,6 +44,7 @@
     int parse_count = 0;
     string constpass;
     int totalstack = 0;
+    map<string, string> vartostack;
     
     #define YYERROR_VERBOSE 1
 
@@ -2462,6 +2464,7 @@ Identifier OPENBRACKET CLOSEBRACKET {
     ismainstatic=1;
     isvoid=1;
   }
+  curr_func = string((char*)($1).str);
 }
 |Identifier OPENBRACKET FormalParameterList CLOSEBRACKET {
   emit(($1).str,":","","",-1);
@@ -2477,6 +2480,7 @@ Identifier OPENBRACKET CLOSEBRACKET {
     ismainstatic=1;
     isvoid=1;
   }
+  curr_func = string((char*)($1).str);
 }
 |MethodDeclarator OPENSQUAREBRACKET CLOSESQUAREBRACKET {
 
@@ -6778,7 +6782,7 @@ fout.open("TAC.txt");
         }
       else 
         {
-        fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
+        // fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
         }
@@ -6827,7 +6831,7 @@ fout.open("TAC.txt");
         }
         
         }
-        cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
+        // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
         if(it.idx == -2){
           inassign = 1;
         }
@@ -6882,7 +6886,7 @@ fout.open("TAC.txt");
         if(find(ops.begin(), ops.end(), op) != ops.end()){
           opt(it);
         }
-        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<" IDX"<<it.idx<<"\n";
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
 
       }

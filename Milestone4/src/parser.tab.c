@@ -11142,7 +11142,7 @@ int main(int argc, char *argv[])
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
-    fout<<inassign<<'\n';
+    // fout<<inassign<<'\n';
    // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
     if(true)
     {
@@ -11170,7 +11170,7 @@ fout.open("TAC.txt");
         }
       else 
         {
-        fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
+        // fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
         }
@@ -11219,7 +11219,7 @@ fout.open("TAC.txt");
         }
         
         }
-        cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
+        // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
         if(it.idx == -2){
           inassign = 1;
         }
@@ -11274,7 +11274,7 @@ fout.open("TAC.txt");
         if(find(ops.begin(), ops.end(), op) != ops.end()){
           opt(it);
         }
-        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<" IDX"<<it.idx<<"\n";
+        fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
 
       }
