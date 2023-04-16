@@ -6385,6 +6385,7 @@ ConditionalExpression {
 
 Assignment:
 LeftHandSide AssignmentOperator AssignmentExpression {
+  
   if(!strcmp(($2).tempvar,"="))
   {
     string p = string((char*)($1).tempvar);
@@ -6418,8 +6419,8 @@ LeftHandSide AssignmentOperator AssignmentExpression {
       strcpy(($$).tempvar, tp3.c_str());
     }
     else{
-        // cout<<"HEYA "<<($3).tempvar<<" "<<($1).tempvar<<'\n';
         string tv11 = string((char*)($3).tempvar), tv12 = string((char*)($1).tempvar);
+        cout<<tv11<<" "<<tv12<<" HEYA"<<endl;
         emit("=",tv11.c_str(),"null",tv12.c_str(), -2);
     }
     
@@ -6809,7 +6810,7 @@ fout.open("TAC.txt");
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_func = newblock;
       }
-      if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
+      else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
         
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
@@ -6833,9 +6834,39 @@ fout.open("TAC.txt");
         }
       else 
         {
-        // fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
+        fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<'\n';
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
+        }
+        else if(it.res[0] == '[' && it.arg1[0] == '['){
+          if(it.res[0] == '['){
+              string off;
+              int i = 4;
+              while(it.res[i]!=']'){
+                off.push_back(it.res[i]);
+                i++;
+              }
+              it.res = off + "(%" + it.res.substr(1, 3) + ")";
+          }
+          if(it.arg1[0] == '['){
+              int i = 4;
+              string off;
+              while(it.arg1[i]!=']'){
+                off.push_back(it.arg1[i]);
+                i++;
+              }
+              it.arg1 = off + "(%" + it.arg1.substr(1, 3) + ")";
+            }
+            if(last_reg_used == 1)
+              addtox86("movl", it.arg1, "%edx");
+            else
+              addtox86("movl", it.arg1, "%eax");
+            
+            if(last_reg_used == 1)
+              addtox86("movl", "%edx", it.res);
+            else
+              addtox86("movl", "%eax", it.res);
+          
         }
         else if(it.res[0] == '[' || it.arg1[0] == '['){
           if(isliteral(it.arg1))
@@ -6906,10 +6937,13 @@ fout.open("TAC.txt");
       else if(it.res=="Ifz")
       {
         fout<<'\t'<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        addtox86("cmpl", "$0", it.arg1);
+        addtox86("je", it.arg2, "");
       }
       else if(it.op=="Goto")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+        addtox86("jmp", it.arg2, "");
       }
       else if(it.arg1==":")
       {

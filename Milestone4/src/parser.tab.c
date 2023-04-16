@@ -1411,8 +1411,8 @@ static const yytype_int16 yyrline[] =
     5740,  5884,  6028,  6035,  6054,  6075,  6093,  6099,  6128,  6158,
     6187,  6218,  6223,  6230,  6261,  6293,  6300,  6308,  6315,  6323,
     6329,  6337,  6343,  6352,  6358,  6364,  6370,  6374,  6380,  6387,
-    6522,  6535,  6542,  6553,  6558,  6562,  6566,  6570,  6574,  6578,
-    6582,  6586,  6590,  6594,  6599,  6610
+    6523,  6536,  6543,  6554,  6559,  6563,  6567,  6571,  6575,  6579,
+    6583,  6587,  6591,  6595,  6600,  6611
 };
 #endif
 
@@ -10473,6 +10473,7 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   case 379: /* Assignment: LeftHandSide AssignmentOperator AssignmentExpression  */
 #line 6387 "parser.y"
                                                      {
+  
   if(!strcmp(((yyvsp[-1].typ)).tempvar,"="))
   {
     string p = string((char*)((yyvsp[-2].typ)).tempvar);
@@ -10506,8 +10507,8 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
       strcpy(((yyval.typ)).tempvar, tp3.c_str());
     }
     else{
-        // cout<<"HEYA "<<($3).tempvar<<" "<<($1).tempvar<<'\n';
         string tv11 = string((char*)((yyvsp[0].typ)).tempvar), tv12 = string((char*)((yyvsp[-2].typ)).tempvar);
+        cout<<tv11<<" "<<tv12<<" HEYA"<<endl;
         emit("=",tv11.c_str(),"null",tv12.c_str(), -2);
     }
     
@@ -10606,11 +10607,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   }
   arrtype="null";
 }
-#line 10610 "parser.tab.c"
+#line 10611 "parser.tab.c"
     break;
 
   case 380: /* LeftHandSide: Name  */
-#line 6522 "parser.y"
+#line 6523 "parser.y"
      {
   // cout<<"shrey"<<($1).type<<'\n';
   if(curr_table->lookup(string((char*)((yyvsp[0].typ)).type)).offset == -1 && checkobj(string((char*)((yyvsp[0].typ)).type)) == 0){
@@ -10624,11 +10625,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   isaccess=0;
 }
-#line 10628 "parser.tab.c"
+#line 10629 "parser.tab.c"
     break;
 
   case 381: /* LeftHandSide: FieldAccess  */
-#line 6535 "parser.y"
+#line 6536 "parser.y"
              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type, ((yyvsp[0].typ)).type);
@@ -10636,11 +10637,11 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   
 }
-#line 10640 "parser.tab.c"
+#line 10641 "parser.tab.c"
     break;
 
   case 382: /* LeftHandSide: ArrayAccess  */
-#line 6542 "parser.y"
+#line 6543 "parser.y"
              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   // cout<<"shubhan\n";
@@ -10650,111 +10651,111 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
   ((yyval.typ)).sz = ((yyvsp[0].typ)).sz;
   arrtype="null";
 }
-#line 10654 "parser.tab.c"
+#line 10655 "parser.tab.c"
     break;
 
   case 383: /* AssignmentOperator: EQUAL  */
-#line 6553 "parser.y"
+#line 6554 "parser.y"
       {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
   
 }
-#line 10664 "parser.tab.c"
+#line 10665 "parser.tab.c"
     break;
 
   case 384: /* AssignmentOperator: STAREQUAL  */
-#line 6558 "parser.y"
+#line 6559 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10673 "parser.tab.c"
+#line 10674 "parser.tab.c"
     break;
 
   case 385: /* AssignmentOperator: FORWARDSLASHEQUAL  */
-#line 6562 "parser.y"
+#line 6563 "parser.y"
                    {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10682 "parser.tab.c"
+#line 10683 "parser.tab.c"
     break;
 
   case 386: /* AssignmentOperator: PLUSEQUAL  */
-#line 6566 "parser.y"
+#line 6567 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10691 "parser.tab.c"
+#line 10692 "parser.tab.c"
     break;
 
   case 387: /* AssignmentOperator: MINUSEQUAL  */
-#line 6570 "parser.y"
+#line 6571 "parser.y"
             {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10700 "parser.tab.c"
+#line 10701 "parser.tab.c"
     break;
 
   case 388: /* AssignmentOperator: OPENANGULARBRACKETOPENANGULARBRACKETEQUAL  */
-#line 6574 "parser.y"
+#line 6575 "parser.y"
                                            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10709 "parser.tab.c"
+#line 10710 "parser.tab.c"
     break;
 
   case 389: /* AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL  */
-#line 6578 "parser.y"
+#line 6579 "parser.y"
                                              {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10718 "parser.tab.c"
+#line 10719 "parser.tab.c"
     break;
 
   case 390: /* AssignmentOperator: CLOSEANGULARBRACKETCLOSEANGULARBRACKETCLOSEANGULARBRACKETEQUAL  */
-#line 6582 "parser.y"
+#line 6583 "parser.y"
                                                                 {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10727 "parser.tab.c"
+#line 10728 "parser.tab.c"
     break;
 
   case 391: /* AssignmentOperator: ANDEQUAL  */
-#line 6586 "parser.y"
+#line 6587 "parser.y"
           {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10736 "parser.tab.c"
+#line 10737 "parser.tab.c"
     break;
 
   case 392: /* AssignmentOperator: XOREQUAL  */
-#line 6590 "parser.y"
+#line 6591 "parser.y"
           {
   
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
 }
-#line 10745 "parser.tab.c"
+#line 10746 "parser.tab.c"
     break;
 
   case 393: /* AssignmentOperator: OREQUAL  */
-#line 6594 "parser.y"
+#line 6595 "parser.y"
          {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].lex)).str);
   
 }
-#line 10754 "parser.tab.c"
+#line 10755 "parser.tab.c"
     break;
 
   case 394: /* Expression: AssignmentExpression  */
-#line 6599 "parser.y"
+#line 6600 "parser.y"
                      {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
 
@@ -10765,21 +10766,21 @@ if(curr_table->lookup(string((char*)((yyvsp[-2].typ)).type)).offset == -1&&curr_
 
   
 }
-#line 10769 "parser.tab.c"
+#line 10770 "parser.tab.c"
     break;
 
   case 395: /* ConstantExpression: Expression  */
-#line 6610 "parser.y"
+#line 6611 "parser.y"
            {
   strcpy(((yyval.typ)).tempvar, ((yyvsp[0].typ)).tempvar);
   strcpy(((yyval.typ)).type,((yyvsp[0].typ)).type);
   
 }
-#line 10779 "parser.tab.c"
+#line 10780 "parser.tab.c"
     break;
 
 
-#line 10783 "parser.tab.c"
+#line 10784 "parser.tab.c"
 
       default: break;
     }
@@ -11003,7 +11004,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 6615 "parser.y"
+#line 6616 "parser.y"
 
 
 // Begin Declarations
@@ -11201,7 +11202,7 @@ fout.open("TAC.txt");
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_func = newblock;
       }
-      if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
+      else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
         
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
@@ -11225,9 +11226,39 @@ fout.open("TAC.txt");
         }
       else 
         {
-        // fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<" HEY"<<"\n";
+        fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<'\n';
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
+        }
+        else if(it.res[0] == '[' && it.arg1[0] == '['){
+          if(it.res[0] == '['){
+              string off;
+              int i = 4;
+              while(it.res[i]!=']'){
+                off.push_back(it.res[i]);
+                i++;
+              }
+              it.res = off + "(%" + it.res.substr(1, 3) + ")";
+          }
+          if(it.arg1[0] == '['){
+              int i = 4;
+              string off;
+              while(it.arg1[i]!=']'){
+                off.push_back(it.arg1[i]);
+                i++;
+              }
+              it.arg1 = off + "(%" + it.arg1.substr(1, 3) + ")";
+            }
+            if(last_reg_used == 1)
+              addtox86("movl", it.arg1, "%edx");
+            else
+              addtox86("movl", it.arg1, "%eax");
+            
+            if(last_reg_used == 1)
+              addtox86("movl", "%edx", it.res);
+            else
+              addtox86("movl", "%eax", it.res);
+          
         }
         else if(it.res[0] == '[' || it.arg1[0] == '['){
           if(isliteral(it.arg1))
@@ -11298,10 +11329,13 @@ fout.open("TAC.txt");
       else if(it.res=="Ifz")
       {
         fout<<'\t'<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
+        addtox86("cmpl", "$0", it.arg1);
+        addtox86("je", it.arg2, "");
       }
       else if(it.op=="Goto")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+        addtox86("jmp", it.arg2, "");
       }
       else if(it.arg1==":")
       {
