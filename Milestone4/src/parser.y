@@ -44,7 +44,7 @@
     int parse_count = 0;
     string constpass;
     int totalstack = 0;
-    map<string, string> vartostack;
+    map<pair<string, string>, string> vartostack;
     
     #define YYERROR_VERBOSE 1
 
@@ -1777,7 +1777,6 @@ VariableDeclarator {
 VariableDeclarator:
 VariableDeclaratorId {
   strcpy(($$).tempvar,($1).tempvar);
-
   strcpy(($$).type,"Dishay");
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
@@ -1991,6 +1990,7 @@ MethodHeader MethodBody {
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
+  
   infunction=0;
   if(strcmp(functype.c_str(),"void")&&!isreturn)
   {
@@ -2005,6 +2005,7 @@ MethodHeader MethodBody {
   currfunc.pop();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
+  
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   infunction=0;
@@ -2587,6 +2588,7 @@ Modifiers ConstructorDeclarator Throws ConstructorBody {
 
 ConstructorHeader: SimpleName OPENBRACKET{
   emit("BeginCtor","","","",-1);
+  curr_func = string((char*)(($1).type));
 }
 
 ConstructorDeclarator:
@@ -3047,12 +3049,14 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       emit("sub","rsp",to_string(sizeparam[i]),"",-1);
 totalstack += sizeparam[i];
-      if(-(offset - funcargtypesz(1, currfunc.top())) - 4 < 0)
+      if(-(offset - funcargtypesz(1, currfunc.top())) - 4 < 0){
       emit("=", tempparam[i] , "null",  "[rbp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
+        vartostack[{funcparam[i].first, curr_class + "_" + curr_func}] =   "[rbp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]";
+      }
       else{
         emit("=", tempparam[i] , "null",  "[rbp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
+        vartostack[{funcparam[i].first, curr_class + "_" + curr_func}] =   "[rbp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]";
       }
-
       offset += sizeparam[i];
       // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
@@ -6381,7 +6385,6 @@ ConditionalExpression {
 
 Assignment:
 LeftHandSide AssignmentOperator AssignmentExpression {
-  // cout<<"FFF"<<($1).type<<($3).type<<arrtype<<'\n';
   if(!strcmp(($2).tempvar,"="))
   {
     string p = string((char*)($1).tempvar);
@@ -6625,6 +6628,7 @@ typedef struct x86_code{
 vector<x86_code> asmcode;
 
 int inassign = 1;
+string newblock;
 
 // End Declarations
 
@@ -6685,8 +6689,25 @@ string optofunc(string op){
   return ans;
 }
 
+string baseptr(string boxrep){
+  if(boxrep[0] == '['){
+    string off;
+    int i = 4;
+    while(boxrep[i]!=']'){
+      off.push_back(boxrep[i]);
+      i++;
+    }
+    boxrep = off + "(%" + boxrep.substr(1, 3) + ")";
+    return boxrep;
+  }
+  else return boxrep;
+}
+
 void opt(quad q)
 {
+  q.arg1 = baseptr(q.arg1);
+  q.arg2 = baseptr(q.arg2);
+  q.res = baseptr(q.res);
   string op = q.op;
   if(op == "/int"){
     addtox86("cltd", "", "");
@@ -6725,6 +6746,15 @@ void opt(quad q)
   }
 }
 
+string search_in_stack(string var){
+  for(auto it: vartostack){
+    if(it.first.first == var && it.first.second == ("Class" + curr_class + "_" + curr_func)){
+      return it.second;
+    }
+  }
+  return "Not Found";
+}
+
 // End Codegen
 
 int main(int argc, char *argv[])
@@ -6751,14 +6781,35 @@ int main(int argc, char *argv[])
   //   cout<<'\n';
   // }
 
+  // for(auto it: vartostack){
+  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  // }
+
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
     // fout<<inassign<<'\n';
    // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+   if(search_in_stack(it.arg1) != "Not Found"){
+    it.arg1 = search_in_stack(it.arg1);
+   }
+   if(search_in_stack(it.arg2) != "Not Found"){
+    it.arg2 = search_in_stack(it.arg2);
+   }
+   if(search_in_stack(it.res) != "Not Found"){
+    it.res = search_in_stack(it.res);
+   }
     if(true)
     {
-      if(it.op=="BeginFunc" || it.op=="BeginClass"|| it.op=="EndFunc"|| it.op=="EndClass" || it.op=="BeginCtor" || it.op=="EndCtor")
+      if(it.op == "BeginClass"){
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+        curr_class = newblock;
+      }
+      else if(it.op == "BeginFunc" || it.op == "BeginCtor"){
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+        curr_func = newblock;
+      }
+      if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
         
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
@@ -6865,6 +6916,7 @@ fout.open("TAC.txt");
         // fout<<'\t';
         fout<<it.op<<it.arg1<<"\n";
         addtox86(it.op, it.arg1, "");
+        newblock = it.op;
       }
       else if(it.arg1=="new")
       {
