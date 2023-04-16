@@ -7760,7 +7760,7 @@ emit("pop","rbp","","",-1);
 #line 4051 "parser.y"
                                      {
 
-  strcpy(((yyval.typ)).tempvar, strcat(((yyvsp[-2].lex)).str, strcat(((yyvsp[-1].typ)).tempvar, ((yyvsp[0].lex)).str)));
+  strcpy(((yyval.typ)).tempvar, ((yyvsp[-1].typ)).tempvar);
   
   strcpy(((yyval.typ)).type,((yyvsp[-1].typ)).type);
   
@@ -11120,10 +11120,17 @@ void opt(quad q)
       }
     }
     else if(q.arg2[0] == '#'){
-      if(last_reg_used == 0)
+      if(last_reg_used == 0){
+        addtox86("movl", q.arg1, "%ecx");
         addtox86(optofunc(q.op), "%eax", q.arg1);
+        addtox86("movl", q.arg1, "%eax");
+        addtox86("movl", "ecx", q.arg1);
+      }
       else{
+        addtox86("movl", q.arg1, "%ecx");
         addtox86(optofunc(q.op), "%edx", q.arg1);
+        addtox86("movl", q.arg1, "%edx");
+        addtox86("movl", "ecx", q.arg1);
         last_reg_used = 1;
       }
     }
