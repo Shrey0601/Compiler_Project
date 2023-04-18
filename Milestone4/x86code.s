@@ -4,21 +4,36 @@
 	.text
 	.globl    main
 GFG : 
+sum : 
+	pushq %rbp
+	movq %rsp, %rbp
+	movq 16(%rbp), %rdx
+	movq %rdx, -8(%rbp)
+	movq 24(%rbp), %rdx
+	movq %rdx, -16(%rbp)
+	subq $64, %rsp
+	movq -8(%rbp), %rax
+	movq -16(%rbp), %rdx
+	addq %rax, %rdx
+	movq %rdx, -32(%rbp)
+	movq -32(%rbp), %rax
+	movq %rax, -24(%rbp)
+	movq -24(%rbp), %rax
+	leave 
+	ret 
 main : 
 	pushq %rbp
 	movq %rsp, %rbp
-	movq $4, -8(%rbp)
-	movq $3, -16(%rbp)
-	movq $8, -24(%rbp)
-	movq $7, -32(%rbp)
-	movq -8(%rbp), %rcx
-	movq $8, %rax
-	movq $3, -8(%rbp)
-	cltd 
-	idivq -8(%rbp)
-	movq %rdx, -48(%rbp)
-	movq %rcx, -8(%rbp)
-	movq -48(%rbp), %rax
+	subq $64, %rsp
+	movq $69, -8(%rbp)
+	movq $12, -16(%rbp)
+	movq $12, -24(%rbp)
+	movq $2, -32(%rbp)
+	pushq -8(%rbp)
+	pushq -16(%rbp)
+	call sum
+	movq %rax, -56(%rbp)
+	movq -56(%rbp), %rax
 	movq %rax, -40(%rbp)
 	movq -40(%rbp), %rax
 	movq %rax, %rsi

@@ -1,20 +1,41 @@
 GFG:
 	BeginClass 
+sum:
+	BeginFunc 
+	push rbp
+	rbp = rsp
+	sub rsp 8
+	sub rsp 8
+	#t1 = [rbp-8] +int [rbp-16]
+	sub rsp 8
+	[rbp-24] = #t1
+	add rsp 24
+	pop rbp
+	addretval [rbp-24]
+	ret 
+	EndFunc 
 main:
 	BeginFunc 
 	push rbp
 	rbp = rsp
 	sub rsp 8
-	[rbp-8] = 4
+	[rbp-8] = 69
 	sub rsp 8
-	[rbp-16] = 3
+	[rbp-16] = 12
 	sub rsp 8
-	[rbp-24] = 8
+	[rbp-24] = 12
 	sub rsp 8
-	[rbp-32] = 7
-	#t1 = 8 %int 3
+	[rbp-32] = 2
+	param [rbp-8]
+	param [rbp-16]
+	sub rsp 16
+	call sum 
+	add rsp 16
+	#t2 = popparam
+	add rsp 8
 	sub rsp 8
-	[rbp-40] = #t1
+	[rbp-40] = #t2
+	call print 1 [rbp-40]
 	add rsp 40
 	pop rbp
 	ret 
