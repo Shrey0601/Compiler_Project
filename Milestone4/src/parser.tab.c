@@ -630,7 +630,7 @@
       return temp_var;
     }
     string newLabel(){
-      string temp_var = "#L"+to_string(counter1++);
+      string temp_var = "L"+to_string(counter1++);
       return temp_var;
     }
 
@@ -11067,13 +11067,13 @@ int isret = 0;
 
 // Codegen functions
 
-vector<string> registers = {"rax", "rbx", "rcx", "rdx", "eax", "ebx", "ecx", "edx", "r8b", "r9b", "r10b", "r11b", "r12b", "r13b", "r14b", "r15b"};
+vector<string> registers = {"rax", "rbx", "rcx", "rdx", "r8b", "r9b", "r10b", "r11b", "r12b", "r13b", "r14b", "r15b"};
 
 int last_reg_used = 0;
 
 void update_reg(){
   last_reg_used ++ ;
-  last_reg_used %= 16;
+  last_reg_used %= 12;
   return;
 }
 
@@ -11279,6 +11279,81 @@ void opt(quad q, int lasize)  // lasize stores sum of sizes of locals and params
         addtox86("idivq", arg2, "");
         addtox86("movq", "%rdx", res);
     }
+  }
+  
+  // Comparision Operators
+
+  if(q.op == "=="){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("sete", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "!="){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("setne", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "||"){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "$1");
+    addtox86("sete", "%al", "");
+    addtox86("cmp", "%rcx", "$1");
+    addtox86("sete", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "&&"){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("sete", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == ">="){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("setle", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "<="){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("setge", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "<"){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("setg", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == ">"){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("cmp", "%rax", "%rcx");
+    addtox86("setl", "%al", "");
+    addtox86("movzbq", "%al", "%rbx");
+    addtox86("movq", "%rbx", res);
+  }
+  else if(q.op == "^"){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rcx");
+    addtox86("xorq", "%rcx", "%rax");
+    addtox86("movq", "%rax", res);
   }
 
   op = optofunc(q.op);
@@ -11503,7 +11578,13 @@ fout.open("TAC.txt");
       else if(it.res=="Ifz")
       {
         fout<<'\t'<<it.res<<" "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
-        addtox86("cmpl", "$0", it.arg1);
+        it.arg1 = baseptr(it.arg1);
+        it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
+        if(isliteral(it.arg1)){
+          it.arg1 = "$" + it.arg1;
+        }
+        addtox86("movq", it.arg1, "%rax");
+        addtox86("cmp", "$0", "%rax");
         addtox86("je", it.arg2, "");
       }
       else if(it.op=="Goto")
