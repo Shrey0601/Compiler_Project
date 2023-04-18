@@ -305,6 +305,7 @@
     Sym_Table* curr_table = new Sym_Table(NULL);
     
     string curr_scope = "Global";
+    map<string,string> vartottemp;
     stack<Sym_Table*> tables;
     stack<int> offsets;
     stack<string> scope_names;
@@ -539,8 +540,8 @@
 
     vector<quad> code; 
 
-    long long counter = 0;
-    long long counter1 = 0;
+    long long counter = 1;
+    long long counter1 = 1;
 
     void emit(string op, string arg1, string arg2, string res, int idx){
         quad temp;
@@ -895,22 +896,26 @@ IntegerLiteral {
   dimint=stoi(($1).str);
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"int");
-  sz = getsz(string((char*)(($$).type)));
+  // sz = getsz(string((char*)(($$).type)));
+sz = 8;
 }
 |FloatingPointLiteral  {
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"float");
-  sz = getsz(string((char*)(($$).type)));
+  // sz = getsz(string((char*)(($$).type)));
+sz = 8;
 }
 |BooleanLiteral  {
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"boolean");
-  sz = getsz(string((char*)(($$).type)));
+  // sz = getsz(string((char*)(($$).type)));
+sz = 8;
 }
 |CharacterLiteral  {
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"char");
-  sz = getsz(string((char*)(($$).type)));
+  // sz = getsz(string((char*)(($$).type)));
+sz = 8;
 }
 |StringLiteral  {
   strcpy(($$).tempvar,($1).str);
@@ -987,19 +992,19 @@ IntegralType:
 BYTE {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).sz = 1;
+  ($$).sz = 8;
   strcpy(($$).type, "byte"); 
 }
 |SHORT  {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).sz = 2;
+  ($$).sz = 8;
   strcpy(($$).type, "short");
 }
 |INT  {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).sz = 4;
+  ($$).sz = 8;
   strcpy(($$).type, "int");
 }
 |LONG {
@@ -1011,7 +1016,7 @@ BYTE {
 |CHAR {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).sz = 2;
+  ($$).sz = 8;
   strcpy(($$).type, "char");
 };
 
@@ -1019,7 +1024,7 @@ FloatingPointType:
 FLOAT {
   strcpy(($$).tempvar,($1).str);
 
-  ($$).sz = 4;
+  ($$).sz = 8;
   strcpy(($$).type, "float");
 }
 |DOUBLE {
@@ -1133,7 +1138,8 @@ Identifier {
   // objtotemp[string((char*)($1).str)]= tv8 ;
   strcpy(($$).tempvar, ($1).str);
   strcpy(($$).type, ($1).str);
-  ($$).sz = (string((char*)($1).str)).size();
+  // ($$).sz = (string((char*)($1).str)).size();
+  ($$).sz = 8;
 };
 
 QualifiedName:
@@ -1176,7 +1182,8 @@ Name DOT Identifier {
     }
     isclassaccess=0;
     // issystem=0;
-    ($$).sz = ($1).sz + 1 + (string((char*)(($3).str))).size();
+    // ($$).sz = ($1).sz + 1 + (string((char*)(($3).str))).size();
+    ($$).sz = 8;
     // cout<<"GGG"<<($$).type<<'\n';
 };
 CompilationUnit:
@@ -1831,7 +1838,7 @@ curr_table->classwidth = offset;
   // cout<<"I was here"<<($1).type<<endl;
 //   curr_table->entry(string((char*)($1).type), "Identifier", type, offset, curr_scope, yylineno, -1);
 //   offset += sz;
-
+// cout<<($1).tempvar<<" "<<($3).tempvar<<endl;
 curr_table->classwidth = offset;
  string tv5 = string((char*)(($3).type));
  string tv6 = "";
@@ -1851,6 +1858,7 @@ curr_table->classwidth = offset;
       sizealloc *= ent;
     }
     sizealloc  = sizealloc*getsz(tv6);
+    // cout<<($1).tempvar<<" "<<($3).tempvar<<endl;
     emit("=", to_string(sizealloc), "null", tv4, -1);
     emit("param",tv4,"","",-1);
     // emit("stackpointer","+" + to_string(sizealloc),"","",-1);
@@ -1861,12 +1869,21 @@ curr_table->classwidth = offset;
     string tv2 = newtemp();
     emit("=", "popparam", "null", tv2, -1);
     strcpy(($$).tempvar, tv2.c_str());
-    objtotemp[string((char*)(($1).type))] = tv2;;
+    objtotemp[string((char*)(($1).type))] = tv2;
  }
   else{
   strcpy(($$).tempvar, ($3).tempvar);
-  objtotemp[string((char*)(($1).type))] = string((char*)(($3).tempvar));
+  // cout<<($1).tempvar<<" "<<($3).tempvar<<endl;
+  if(vartottemp[string((char*)(($1).type))] != ""){
+    objtotemp[vartottemp[string((char*)(($1).type))]] = string((char*)(($3).tempvar));
   }
+  else{
+    objtotemp[string((char*)(($1).type))] = string((char*)(($3).tempvar));
+  }
+    // emit("=", ($3).tempvar, "null", ($1).tempvar, -1);
+
+  }
+  // objtotemp[string((char*)(($1).type))] = string((char*)(($3).tempvar));
   // arrname=($1).type;
   // cout<<"YYYY"<<($1).type<<($3).type<<'\n';
   // emit(">=",($1).tempvar,($3).tempvar,($$).tempvar, -1);
@@ -1896,7 +1913,7 @@ curr_table->classwidth = offset;
     ndim=0;
   }
   else ndim=0;
-  funcparam.push_back({string((char*)($1).type), {type, -1}});
+  funcparam.push_back({string((char*)($1).type), {type, -2}});
   sizeparam.push_back(sz);
   // cout<<($1).type<<" "<<sz<<endl;
   tempparam.push_back(string((char*)(($$).tempvar)));
@@ -2067,7 +2084,9 @@ Modifiers Type MethodDeclarator Throws {
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
 curr_table->classwidth = offset;
       fl = 0;
@@ -2124,7 +2143,9 @@ tempparam.clear();
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2180,7 +2201,7 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2234,7 +2255,9 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
       curr_table->classwidth = offset;
 
@@ -2284,7 +2307,9 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2335,7 +2360,7 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2386,7 +2411,9 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -2439,7 +2466,9 @@ tempparam.clear();
       // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
-      emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
+      vartostack[{tempparam[i], curr_class + "_" + curr_func}] =   "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -3050,16 +3079,14 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-totalstack += sizeparam[i];
-      if(-(offset - funcargtypesz(1, currfunc.top())) - 4 < 0){
-      emit("=", tempparam[i] , "null",  "[rbp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
-        vartostack[{funcparam[i].first, curr_class + "_" + curr_func}] =   "[rbp" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]";
+      totalstack += sizeparam[i];
+      if(funcparam[i].second.second!=-1){
+          emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+          // cout<<tempparam[i]<<" HEYA"<<endl;
+          emit("=", tempparam[i] , "null",  "[rbp" + to_string(-(offset + 8)) + "]" , -1);
       }
-      else{
-        emit("=", tempparam[i] , "null",  "[rbp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]" , -1);
-        vartostack[{funcparam[i].first, curr_class + "_" + curr_func}] =   "[rbp+" + to_string(-(offset - funcargtypesz(1, currfunc.top())) - 4) + "]";
-      }
+      vartostack[{funcparam[i].first, curr_class + "_" + curr_func}] =   "[rbp" + to_string(-(offset + 8)) + "]";
+      vartottemp[funcparam[i].first] = "[rbp-" + to_string(offset + 8) + "]";
       offset += sizeparam[i];
       // cout<<"fbrfgruifhriufg "<<offset - funcargtypesz(1, currfunc.top()) - 4<<endl;
       curr_table->classwidth = offset;
@@ -4352,7 +4379,16 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   int pops = 0;
   string ar = "";
   stack<string> args2;
-  while(!args.empty())
+  
+  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
+  // emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
+
+  if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
+  {
+    emit("call", "print 1", args.top().first, "", -1);
+  }
+  else{
+    while(!args.empty())
   {
     auto arg = args.top();
     args2.push(arg.first);
@@ -4360,14 +4396,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     pops += arg.second;
     args.pop();
   }
-  int funcargtypesz1 = funcargtypesz(1, string((char*)(($1).type)));
-  // emit("stackpointer", "+" + to_string(funcargtypesz1), "", "", -1);
 
-  if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
-  {
-    emit("call", "print 1", "", "", -1);
-  }
-  else{
     string tv9 = string((char*)(($1).tempvar));
     string oname = tv9.substr(0, tv9.find('.'));
     string cname = curr_table->lookup(oname).type;
@@ -4383,13 +4412,14 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
     }
-  }
+  
   // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
   emit("add","rsp",to_string(funcargtypesz1),"",-1);
   string tv3 = newtemp();
   emit("=", "popparam", "null", tv3.c_str(), -1);
   emit("add", "rsp", to_string(8), "", -1);
   strcpy(($$).tempvar, tv3.c_str());
+  }
   //emit("EndFunc","","","",-1)
 
   // if(curr_table->lookup(string((char*)($1).type))->offset == -1){
@@ -6382,7 +6412,6 @@ ConditionalExpression {
 
 Assignment:
 LeftHandSide AssignmentOperator AssignmentExpression {
-  
   if(!strcmp(($2).tempvar,"="))
   {
     string p = string((char*)($1).tempvar);
@@ -6417,7 +6446,11 @@ LeftHandSide AssignmentOperator AssignmentExpression {
     }
     else{
         string tv11 = string((char*)($3).tempvar), tv12 = string((char*)($1).tempvar);
-        cout<<tv11<<" "<<tv12<<" HEYA"<<endl;
+        if(vartottemp[tv11] != "")
+          tv11 = vartottemp[tv11];
+        if(vartottemp[tv12] != "")
+          tv12 = vartottemp[tv12];
+        // cout<<tv11<<" "<<tv12<<" HEYA"<<endl;
         emit("=",tv11.c_str(),"null",tv12.c_str(), -2);
     }
     
@@ -6675,16 +6708,26 @@ void addtox86(string func, string arg1, string arg2){
 
 string optofunc(string op){
   string ans = "";
-  if(op == "+int"){
-    ans = "addl";
+  if(op[0] == '+'){
+    ans = "addq";
   }
-  else if(op == "*int"){
-    ans = "imull";
+  else if(op[0] == '*'){
+    ans = "imulq";
   }
-  else if(op == "-int"){
-    ans = "subl";
+  else if(op[0] == '-'){
+    ans = "subq";
   }
   return ans;
+}
+
+string temptoaddr(string arg, int lasize){
+  if(arg[0] == '#'){
+    int tempno = 0;
+    string temp = arg.substr(2, arg.size()-1);
+    arg = to_string(-(lasize + 8*stoi(temp)));
+    arg = arg + "(%rbp)";
+  }
+  return arg;
 }
 
 string baseptr(string boxrep){
@@ -6701,54 +6744,153 @@ string baseptr(string boxrep){
   else return boxrep;
 }
 
-void opt(quad q)
+void opt(quad q, int lasize)  // lasize stores sum of sizes of locals and params
 {
-  q.arg1 = baseptr(q.arg1);
-  q.arg2 = baseptr(q.arg2);
-  q.res = baseptr(q.res);
-  string op = q.op;
-  if(op == "/int"){
-    addtox86("cltd", "", "");
-    addtox86("idivl", q.arg2, "");
+  string arg1, arg2, op, res;
+  if(q.arg2[0] == '#'){
+    int tempno = 0;
+    string temp = q.arg2.substr(2, q.arg2.size()-1);
+    arg2 = to_string(-(lasize + 8*stoi(temp)));
+    arg2 = arg2 + "(%rbp)";
   }
   else{
-    if(q.arg1[0]=='#' && q.arg2[0] == '#'){
-      addtox86(optofunc(q.op), "%eax", "%edx");
-      last_reg_used = 1;
+    arg2 = q.arg2;
+  }
+
+  if(q.arg1[0] == '#'){
+    int tempno = 0;
+    string temp = q.arg1.substr(2, q.arg1.size()-1);
+    arg1 = to_string(-(lasize + 8*stoi(temp)));
+    arg1 = arg1 + "(%rbp)";
+  }
+  else{
+    arg1 = q.arg1;
+  }
+
+  if(q.res[0] == '#'){
+    int tempno = 0;
+    string temp = q.res.substr(2, q.res.size()-1);
+    res = to_string(-(lasize + 8*stoi(temp)));
+    res = res + "(%rbp)";
+  }
+  else{
+    res = q.res;
+  }
+
+  if(isliteral(arg1)){
+    arg1 = "$" + arg1;
+  }
+  if(isliteral(arg2)){
+    arg2 = "$" + arg2;
+  }
+
+
+  arg1 = baseptr(arg1);
+  arg2 = baseptr(arg2);
+  res = baseptr(res);
+
+  // Shift Expressions
+  if( q.op == "<<"){
+    addtox86("movq", arg2, "%rax");
+    addtox86("movq", arg1, "%rdx");
+    addtox86("movq", "%rax", "%rcx");
+    addtox86("salq", "%rcx", "%rdx");
+    addtox86("movq", "%rdx", "%rax");
+    addtox86("movq", "%rax", res);
+    return;
+  }
+  else if( q.op == ">>"){
+    addtox86("movq", arg2, "%rax");
+    addtox86("movq", arg1, "%rdx");
+    addtox86("movq", "%rax", "%rcx");
+    addtox86("sarq", "%rcx", "%rdx");
+    addtox86("movq", "%rdx", "%rax");
+    addtox86("movq", "%rax", res);
+  } 
+
+
+  // Division Expression
+  if(q.op[0] == '/'){
+    if(arg1[0] == '$' && arg2[0] == '$'){
+        string temploc = "-8(%rbp)";
+        addtox86("movq", temploc, "%rcx");
+        addtox86("movq", arg1, "%rax");
+        addtox86("movq", arg2, temploc);
+        addtox86("cltd","", "");
+        addtox86("idivq", temploc, "");
+        addtox86("movq", "%rax", res);
+        addtox86("movq", "%rcx", temploc);
     }
-    else if(q.arg1[0] == '#'){
-      if(last_reg_used == 0)
-        addtox86(optofunc(q.op), q.arg2, "%eax");
-      else{
-        addtox86(optofunc(q.op), q.arg2, "%edx");
-        last_reg_used = 1;
-      }
+    else if(arg1[0] == '$'){
+        addtox86("movq", arg1, "%rax");
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg2, "");
+        addtox86("movq", "%rax", res);
     }
-    else if(q.arg2[0] == '#'){
-      if(last_reg_used == 0){
-        addtox86("movl", q.arg1, "%ecx");
-        addtox86(optofunc(q.op), "%eax", q.arg1);
-        addtox86("movl", q.arg1, "%eax");
-        addtox86("movl", "ecx", q.arg1);
-      }
-      else{
-        addtox86("movl", q.arg1, "%ecx");
-        addtox86(optofunc(q.op), "%edx", q.arg1);
-        addtox86("movl", q.arg1, "%edx");
-        addtox86("movl", "ecx", q.arg1);
-        last_reg_used = 1;
-      }
+    else if(arg2[0] == '$'){
+        addtox86("movq", arg1, "%rax");
+        addtox86("movq", arg1, "%rcx");
+        addtox86("movq", arg2, arg1);
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg1, "");
+        addtox86("movq", "%rax", res);
+        addtox86("movq", "%rcx", arg1);
     }
     else{
-      addtox86("movl", q.arg1, "%eax");  
-      addtox86(optofunc(q.op), q.arg2, "%eax");
-      if(inassign == 1){
-        addtox86("movl", "%eax", "%edx");
-        inassign = 0;
-        last_reg_used = 1;
-      }
+        addtox86("movq", arg1, "%rax");
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg2, "");
+        addtox86("movq", "%rax", res);
     }
   }
+
+  //Modulo Expression
+    if(q.op[0] == '%'){
+    if(arg1[0] == '$' && arg2[0] == '$'){
+        string temploc = "-8(%rbp)";
+        addtox86("movq", temploc, "%rcx");
+        addtox86("movq", arg1, "%rax");
+        addtox86("movq", arg2, temploc);
+        addtox86("cltd","", "");
+        addtox86("idivq", temploc, "");
+        addtox86("movq", "%rdx", res);
+        addtox86("movq", "%rcx", temploc);
+    }
+    else if(arg1[0] == '$'){
+        addtox86("movq", arg1, "%rax");
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg2, "");
+        addtox86("movq", "%rdx", res);
+    }
+    else if(arg2[0] == '$'){
+        addtox86("movq", arg1, "%rax");
+        addtox86("movq", arg1, "%rcx");
+        addtox86("movq", arg2, arg1);
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg1, "");
+        addtox86("movq", "%rdx", res);
+        addtox86("movq", "%rcx", arg1);
+    }
+    else{
+        addtox86("movq", arg1, "%rax");
+        addtox86("cltd", "", "");
+        addtox86("idivq", arg2, "");
+        addtox86("movq", "%rdx", res);
+    }
+  }
+
+  op = optofunc(q.op);
+
+  // Add Mul Sub Expressions
+  if(op != ""){
+    addtox86("movq", arg1, "%rax");
+    addtox86("movq", arg2, "%rdx");
+    addtox86(op, "%rax", "%rdx");
+    if(op == "subq")
+      addtox86("neg", "%rdx", "");
+    addtox86("movq", "%rdx", res);
+  }
+
 }
 
 string search_in_stack(string var){
@@ -6790,15 +6932,15 @@ int main(int argc, char *argv[])
     cout<<it.first<<" "<<it.second<<'\n';
   }
 
-  // for(auto it: vartostack){
-  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
-  // }
+  for(auto it: vartostack){
+    cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  }
 
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
     // fout<<inassign<<'\n';
-   // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
+  //  cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
    if(search_in_stack(it.arg1) != "Not Found"){
     it.arg1 = search_in_stack(it.arg1);
    }
@@ -6808,6 +6950,7 @@ fout.open("TAC.txt");
    if(search_in_stack(it.res) != "Not Found"){
     it.res = search_in_stack(it.res);
    }
+   
     if(true)
     {
       if(it.op == "BeginClass"){
@@ -6847,80 +6990,26 @@ fout.open("TAC.txt");
         fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<'\n';
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
-        }
-        else if(it.res[0] == '[' && it.arg1[0] == '['){
-          if(it.res[0] == '['){
-              string off;
-              int i = 4;
-              while(it.res[i]!=']'){
-                off.push_back(it.res[i]);
-                i++;
-              }
-              it.res = off + "(%" + it.res.substr(1, 3) + ")";
-          }
-          if(it.arg1[0] == '['){
-              int i = 4;
-              string off;
-              while(it.arg1[i]!=']'){
-                off.push_back(it.arg1[i]);
-                i++;
-              }
-              it.arg1 = off + "(%" + it.arg1.substr(1, 3) + ")";
-            }
-            if(last_reg_used == 1)
-              addtox86("movl", it.arg1, "%edx");
-            else
-              addtox86("movl", it.arg1, "%eax");
-            
-            if(last_reg_used == 1)
-              addtox86("movl", "%edx", it.res);
-            else
-              addtox86("movl", "%eax", it.res);
-          
-        }
-        else if(it.res[0] == '[' || it.arg1[0] == '['){
-          if(isliteral(it.arg1))
-            it.arg1 = "$" + it.arg1;
-
-            if(it.res[0] == '['){
-              string off;
-              int i = 4;
-              while(it.res[i]!=']'){
-                off.push_back(it.res[i]);
-                i++;
-              }
-              it.res = off + "(%" + it.res.substr(1, 3) + ")";
-            }
-            else if(it.res[0] == '#'){
-              if(last_reg_used == 1)
-                it.res = "%edx";
-              else
-                it.res = "%eax";
-              last_reg_used = 0;
-            }
-
-            if(it.arg1[0] == '['){
-              int i = 4;
-              string off;
-              while(it.arg1[i]!=']'){
-                off.push_back(it.arg1[i]);
-                i++;
-              }
-              it.arg1 = off + "(%" + it.arg1.substr(1, 3) + ")";
-            }
-            else if(it.arg1[0] == '#'){
-              if(last_reg_used == 1)
-                it.arg1 = "%edx";
-              else
-                it.arg1 = "%eax";
-              last_reg_used = 0;
-            }
-
-            addtox86("movl", it.arg1, it.res);
+          // addtox86("subq", "$" + to_string(funcsize["Class" + curr_class + "_" + curr_func] + 8*counter), "%rsp");   // Changes the stack pointer to accomodate the function local variables and parameters
         }
         else{
-          addtox86("movl1", it.arg1, it.res);
+          if(isliteral(it.arg1)){
+            it.arg1 = "$" + it.arg1;
+          }
+          
+          it.res = baseptr(it.res);
+          it.arg1 = baseptr(it.arg1);
+          it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
+          it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
+          if(it.arg1[0] == '$'){
+            addtox86("movq", it.arg1, it.res);
+          }
+          else{
+            addtox86("movq", it.arg1, "%rax");
+            addtox86("movq", "%rax", it.res);
+          }
         }
+        
         
         }
         // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
@@ -6935,14 +7024,25 @@ fout.open("TAC.txt");
       }
       else if(it.op == "pop" && it.arg1 == "rbp"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
-        addtox86("popq", "%rbp", "");
+        // addtox86("popq", "%rbp", "");
       }
       else if(it.op == "param"){
+        fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+        it.arg1 = baseptr(it.arg1);
         addtox86("pushq", it.arg1, "");
       }
       else if(it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop" ||it.op == "push")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
+      }
+      else if (it.op == "call" && it.arg1 == "print 1"){
+        it.arg2 = baseptr(it.arg2);
+        addtox86("movq", it.arg2, "%rax");
+        addtox86("movq", "%rax", "%rsi");
+        addtox86("leaq", ".LC0(%rip)", "%rax");
+        addtox86("movq", "%rax", "%rdi");
+        addtox86("movq", "$0", "%rax");
+        addtox86("call", "printf@PLT", "");
       }
       else if(it.op == "call"|| it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -6972,6 +7072,7 @@ fout.open("TAC.txt");
       else if(it.op=="ret")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
+        addtox86("movq", "$0", "%rax");  // Harcoding the return value
         addtox86("leave", "", "");
         addtox86(it.op, "", "");
       }
@@ -6984,7 +7085,7 @@ fout.open("TAC.txt");
         string op;
         op.push_back(it.op[0]);
         if(find(ops.begin(), ops.end(), op) != ops.end()){
-          opt(it);
+          opt(it, funcsize["Class" + curr_class + "_" + curr_func]);
         }
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.op<<" "<<it.arg2<<"\n";
       }
@@ -6992,11 +7093,31 @@ fout.open("TAC.txt");
       }
     }
 
+    fout.close();
+    fout.open("x86code.s");
+
+    fout<<"\t.file    \"test.c\" " << '\n';
+    fout << "\t.section    .rodata" << '\n';
+    fout<<".LC0:" << '\n';
+    fout<< "\t.string    \"%d\\n\""<<'\n';
+    fout<<"\t.text"<<'\n';
+    fout<<"\t.globl    main"<<'\n';
+
     for(auto it: asmcode){
-      if(it.arg1 == ":")
+      if(it.arg1 == ":"){
       cout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
-      else
-      cout<<'\t'<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      fout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      }
+      else{
+        if(it.arg2 != ""){
+          cout<<'\t'<<it.func<<' '<<it.arg1<<", "<<it.arg2<<'\n';
+          fout<<'\t'<<it.func<<' '<<it.arg1<<", "<<it.arg2<<'\n';
+        }
+        else{
+          cout<<'\t'<<it.func<<' '<<it.arg1<<'\n';
+          fout<<'\t'<<it.func<<' '<<it.arg1<<'\n';
+        }
+      }
     }
 
   return 0;
