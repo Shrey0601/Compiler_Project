@@ -1,0 +1,6 @@
+parser.y: In function ‘int main(int, char**)’:
+parser.y:6984:12: error: ‘arg2’ was not declared in this scope; did you mean ‘argc’?
+ 6984 |         if(arg2!=""){
+      |            ^~~~
+      |            argc
+make: *** [Makefile:22: bison.o] Error 1
