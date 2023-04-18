@@ -46,6 +46,7 @@
     int totalstack = 0;
     map<pair<string, string>, string> vartostack;
     map<string, int> funcsize;
+    map<string, int> numfuncargs;
     
     #define YYERROR_VERBOSE 1
 
@@ -7096,7 +7097,6 @@ fout.open("TAC.txt");
     fout.close();
     fout.open("x86code.s");
 
-    fout<<"\t.file    \"test.c\" " << '\n';
     fout << "\t.section    .rodata" << '\n';
     fout<<".LC0:" << '\n';
     fout<< "\t.string    \"%d\\n\""<<'\n';

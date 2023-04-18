@@ -11487,8 +11487,7 @@ fout.open("TAC.txt");
 
     fout.close();
     fout.open("x86code.s");
-
-    fout<<"\t.file    \"test.c\" " << '\n';
+    
     fout << "\t.section    .rodata" << '\n';
     fout<<".LC0:" << '\n';
     fout<< "\t.string    \"%d\\n\""<<'\n';
