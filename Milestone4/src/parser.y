@@ -47,6 +47,7 @@
     map<pair<string, string>, string> vartostack;
     map<string, int> funcsize;
     map<string, int> numfuncargs;
+    int num_forstatements = 1;
     
     #define YYERROR_VERBOSE 1
 
@@ -545,14 +546,28 @@
     long long counter = 1;
     long long counter1 = 1;
 
+    string offsetlookup(string s){
+      auto it = curr_table->lookup(s);
+      if(it.offset < 0){
+        return s;
+      }
+      else{
+        return "[rbp-" + to_string(it.offset + 8) + "]";
+      }
+    }
+
     void emit(string op, string arg1, string arg2, string res, int idx){
         quad temp;
         temp.op = op;
+        arg1 = offsetlookup(arg1);
+        arg2 = offsetlookup(arg2);
+        res = offsetlookup(res);
         temp.arg1 = arg1;
         temp.arg2 = arg2;
         temp.res = res;
         temp.idx = idx;
         // if(idx < 0) temp.idx = code.size();
+
         code.push_back(temp);
     }
 
@@ -7261,7 +7276,7 @@ fout.open("TAC.txt");
       else if(it.op=="Goto")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-        addtox86("jmp", it.arg2, "");
+        addtox86("jmp", it.arg1, "");
       }
       else if(it.arg1==":")
       {
