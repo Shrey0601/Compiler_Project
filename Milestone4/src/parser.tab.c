@@ -11408,15 +11408,25 @@ int nextPowerOf2(int n) {
 //   last_array %= 4;
 //   return regforarray[last_array];
 // }
-
+int ctr=0;
 string checkarray(string arg, string cl, string fn){
   if(arg[0] == '*'){
     arg = arg.substr(1);
     arg = baseptr(arg);
     arg = temptoaddr(arg, funcsize["Class" + cl + "_" + fn]); 
+    if(ctr)
+    {
     string next = "%r12";
     addtox86("movq", arg, next);
     arg = "(%r12)";
+    ctr=0;
+    }
+    else{
+      string next = "%r13";
+    addtox86("movq", arg, next);
+    arg = "(%r13)";
+    ctr=1;
+    }
     return arg;
   }
   else{
