@@ -1,34 +1,47 @@
 GFG:
 	BeginClass 
-sum:
-	BeginFunc 
-	push rbp
-	rbp = rsp
-	sub rsp 8
-	sub rsp 8
-	#t1 = [rbp-8] +int [rbp-16]
-	sub rsp 8
-	[rbp-24] = #t1
-	add rsp 24
-	pop rbp
-	addretval [rbp-24]
-	ret 
-	EndFunc 
 main:
 	BeginFunc 
 	push rbp
 	rbp = rsp
+	#t1 = 160
+	param #t1
+	add rsp 160
+	call allocmem 1
+	sub rsp 160
+	#t2 = popparam
 	sub rsp 8
-	[rbp-8] = 1
-	sub rsp 8
-	[rbp-16] = 5
-	sub rsp 8
-	[rbp-24] = 4
-	#t2 = [rbp-16] ^ 2
-	sub rsp 8
-	[rbp-32] = #t2
-	call print 1 [rbp-32]
-	add rsp 32
+	[rbp-8] = #t2
+	#t4 = 40
+	#t5 = #t2 + #t4
+	#t3 = #t5
+	#t7 = 12
+	#t6 = #t3+#t7
+	(%r12) = 100
+	#t9 = 60
+	#t10 = #t2 + #t9
+	#t8 = #t10
+	#t12 = 8
+	#t11 = #t8+#t12
+	(%r12) = 1000
+	#t14 = 40
+	#t15 = #t2 + #t14
+	#t13 = #t15
+	#t17 = 12
+	#t16 = #t13+#t17
+	#t19 = 60
+	#t20 = #t2 + #t19
+	#t18 = #t20
+	#t22 = 8
+	#t21 = #t18+#t22
+	(%r12) = (%r12)
+	#t24 = 40
+	#t25 = #t2 + #t24
+	#t23 = #t25
+	#t27 = 12
+	#t26 = #t23+#t27
+	call print 1 (%r12)
+	add rsp 8
 	pop rbp
 	ret 
 	EndFunc 

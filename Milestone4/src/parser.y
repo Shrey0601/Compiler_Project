@@ -81,6 +81,7 @@
           count++;
         }
       }
+      return 8;
       s = t;
       if(s=="char")
       return 2;
@@ -4777,7 +4778,10 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     arrayaccesscount -- ;
   }
   else{
-    tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
+    string tv13 = newtemp();
+    emit("*",string((char*)($3).tempvar), "8" , tv13 , -1);
+    // tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
+    tp8 = tv13;
     arrayaccesscount --;
   }
   if(objtotemp[tp8] != ""){
@@ -4793,7 +4797,9 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     strcpy(($1).tempvar, objtotemp[string((char*)(($1).tempvar))].c_str());
   }
   emit("=",tp8,"null",tp7,-1);
-  string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
+  string tv14 = newtemp();
+  emit("+",string((char*)($1).tempvar), tp7 , tv14 , -1);
+  string tp6 = tv14;
   if(objtotemp[tp6] != ""){
     tp6 = objtotemp[tp6];
   }
@@ -6670,6 +6676,7 @@ vector<x86_code> asmcode;
 int inassign = 1;
 string newblock;
 int isret = 0;
+int curracces = 0;
 
 // End Declarations
 
@@ -7001,6 +7008,30 @@ int nextPowerOf2(int n) {
     }
 }
 
+// vector<string> regforarray = {"%r12", "%r13", "%r14", "%r15"};
+
+// int last_array = 0;
+
+// string next_array_reg(){
+//   last_array %= 4;
+//   return regforarray[last_array];
+// }
+
+string checkarray(string arg, string cl, string fn){
+  if(arg[0] == '*'){
+    arg = arg.substr(1);
+    arg = baseptr(arg);
+    arg = temptoaddr(arg, funcsize["Class" + cl + "_" + fn]); 
+    string next = "%r12";
+    addtox86("movq", arg, next);
+    arg = "(%r12)";
+    return arg;
+  }
+  else{
+    return arg;
+  }
+}
+
 // End Codegen
 
 int main(int argc, char *argv[])
@@ -7042,6 +7073,7 @@ int main(int argc, char *argv[])
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
+    curracces ++ ;
     // fout<<inassign<<'\n';
   //  cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
    if(search_in_stack(it.arg1) != "Not Found"){
@@ -7053,7 +7085,11 @@ fout.open("TAC.txt");
    if(search_in_stack(it.res) != "Not Found"){
     it.res = search_in_stack(it.res);
    }
-   
+
+
+   it.arg1 = checkarray(it.arg1, curr_class, curr_func);
+   it.arg2 = checkarray(it.arg2, curr_class, curr_func);
+   it.res = checkarray(it.res, curr_class, curr_func);
     if(true)
     {
       if(it.op == "addretval"){
@@ -7095,6 +7131,7 @@ fout.open("TAC.txt");
       }
       else if(it.arg2=="null" && it.res!="null")
       {
+
       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
         {
       fout<<'\t'<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
@@ -7160,7 +7197,11 @@ fout.open("TAC.txt");
         if(isliteral(it.arg1)){
           it.arg1 = "$" + it.arg1;
         }
-        addtox86("pushq", it.arg1, "");
+        if(code[curracces+1].arg1 == "allocmem"){
+          addtox86("movq", it.arg1, "%rdi");
+        }
+        else
+          addtox86("pushq", it.arg1, "");
       }
       else if(it.op=="Popparams"||it.op == "stackpointer"|| it.op == "pop" ||it.op == "push")
       {
@@ -7168,7 +7209,15 @@ fout.open("TAC.txt");
       }
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
+        if(it.arg2[0] == '*'){
+          it.arg2 = it.arg2.substr(1);
+          it.arg2 = baseptr(it.arg2);
+          it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
+          addtox86("movq", it.arg2, "%rax");
+          it.arg2 = "(%rax)";
+        }
         it.arg2 = baseptr(it.arg2);
+        it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
         addtox86("movq", it.arg2, "%rax");
         addtox86("movq", "%rax", "%rsi");
         addtox86("leaq", ".LC0(%rip)", "%rax");
@@ -7178,7 +7227,11 @@ fout.open("TAC.txt");
       }
       else if(it.op == "call"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
-        addtox86("call", it.arg1, it.arg2);
+        if(it.arg1 == "allocmem"){
+          addtox86("call", "malloc@PLT", "");
+        }
+        else
+          addtox86("call", it.arg1, it.arg2);
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -7241,7 +7294,7 @@ fout.open("TAC.txt");
 
     fout << "\t.section    .rodata" << '\n';
     fout<<".LC0:" << '\n';
-    fout<< "\t.string    \"%d\\n\""<<'\n';
+    fout<< "\t.string    \"%ld\\n\""<<'\n';
     fout<<"\t.text"<<'\n';
     fout<<"\t.globl    main"<<'\n';
 
