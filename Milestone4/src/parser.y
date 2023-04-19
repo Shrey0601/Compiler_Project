@@ -551,7 +551,31 @@
       if(it.offset < 0){
         string o = s.substr(0, s.find('.'));
         if(o != s){
-
+          string attr = s.substr(s.find('.')+1);
+          auto it1 = curr_table->lookup(o);
+          if(it1.offset < 0){
+            return s;
+          }
+          else{
+            // string cln = it1.type;
+            // for(auto it2: list_of_Symbol_Tables){
+            //   auto tab = it2->table;
+            //   for(auto it3 = tab.begin(); it3 != tab.end(); it3++){
+            //       if(it3->second.scope_name == "Class" + cln){
+            //           if(it3->first == attr){
+            //             emit("load", "[rbp-" + to_string(it1.offset + 8) + "]", "", "%r14", -1);
+            //             emit("+", "%r14", to_string(it3->second.offset), "%r14", -1);
+            //             return "(%r14)";
+            //           }
+            //       }
+            //       else{
+            //           break;
+            //       }
+            //   }
+            // }
+            return "@[rbp-" + to_string(it1.offset + 8) + "]@" + it1.type + "@" + attr;
+            
+          }
         }
         return s;
       }
@@ -4962,19 +4986,6 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   if(objtotemp[string((char*)(($1).tempvar))] != ""){
     strcpy(($1).tempvar, objtotemp[string((char*)(($1).tempvar))].c_str());
   }
-  // emit("=",tp8,"null",tp7,-1);
-  // string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
-  // if(objtotemp[tp6] != ""){
-  //   tp6 = objtotemp[tp6];
-  // }
-  // emit("=",tp6,"null",string((char*)($$).tempvar),-1);
-  // arraccess=1;
-  // if(arrayaccesscount == 0){
-  //   // cout<<($$).tempvar<<endl;
-  //   string tv7 = string((char*)(($$).tempvar));
-  //   tv7 = "*" + tv7;
-  //   strcpy(($$).tempvar, tv7.c_str());
-  // }
   emit("=",tp8,"null",tp7,-1);
   string tv14 = newtemp();
   emit("+",string((char*)($1).tempvar), tp7 , tv14 , -1);
@@ -6714,6 +6725,7 @@ int inassign = 1;
 string newblock;
 int isret = 0;
 int curracces = 0;
+int mainwidth = 0;
 
 // End Declarations
 
@@ -6796,6 +6808,58 @@ string baseptr(string boxrep){
     return boxrep;
   }
   else return boxrep;
+}
+
+string objtoattr(string s){
+  if(s[0] == '@'){
+    string addr;
+    int ind = 1;
+    while(s[ind] != ']'){
+      addr.push_back(s[ind]);
+      ind ++;
+    }
+    addr.push_back(']');
+    addr = baseptr(addr);
+
+    addtox86("movq", addr, "%r14");
+    addtox86("movq", addr, "%r15");
+    addtox86("movq", addr, "%rcx");
+
+    string cln;
+    ind += 2 ;
+
+    while(s[ind] != '@'){
+      cln.push_back(s[ind]);
+      ind ++ ;
+    }
+
+    string attr;
+    ind ++ ;
+
+    while(ind < s.length()){
+      attr.push_back(s[ind]);
+      ind ++ ;
+    }
+
+    for(auto it2: list_of_Symbol_Tables){
+      auto tab = it2->table;
+      for(auto it3 = tab.begin(); it3 != tab.end(); it3++){
+          if(it3->second.scope_name == "Class" + cln){
+              if(it3->first == attr){
+                addtox86("addq", "$" + to_string(it3->second.offset), "%rcx");
+                return "(%rcx)";
+              }
+          }
+          else{
+              break;
+          }
+      }
+    }
+
+  }
+  else{
+    return s; 
+  }
 }
 
 void opt(quad q, int lasize)  // lasize stores sum of sizes of locals and params
@@ -7113,6 +7177,10 @@ int main(int argc, char *argv[])
 
   for(auto it: funcsize){
     cout<<it.first<<" "<<it.second<<'\n';
+    string cl = it.first.substr(it.first.find("_") + 1);
+    if(cl == "main"){
+      mainwidth = it.second;
+    }
   }
 
   for(auto it: vartostack){
@@ -7148,6 +7216,11 @@ fout.open("TAC.txt");
    it.arg1 = checkarray(it.arg1, curr_class, curr_func);
    it.arg2 = checkarray(it.arg2, curr_class, curr_func);
    it.res = checkarray(it.res, curr_class, curr_func);
+
+   it.arg1 = objtoattr(it.arg1);
+   it.arg2 = objtoattr(it.arg2);
+   it.res = objtoattr(it.res);    
+
     if(true)
     {
       if(it.op == "addretval"){

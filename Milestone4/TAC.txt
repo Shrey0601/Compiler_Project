@@ -1,46 +1,27 @@
+GFG:
+	BeginClass 
+	EndClass 
+
 Main:
 	BeginClass 
 main:
 	BeginFunc 
 	push rbp
 	rbp = rsp
-	#t1 = 200
+	#t1 = 16
 	param #t1
-	add rsp 200
+	sub rsp 8
 	call allocmem 1
-	sub rsp 200
+	add rsp 8
 	#t2 = popparam
+	param #t2
+	call GFG 
 	sub rsp 8
 	[rbp-8] = #t2
-	#t4 = 40
-	#t5 = #t2 + #t4
-	#t3 = #t5
-	#t7 = 16
-	#t8 = #t3 + #t7
-	#t6 = #t8
-	(%r13) = 5
-	#t10 = 40
-	#t11 = #t2 + #t10
-	#t9 = #t11
-	#t13 = 24
-	#t14 = #t9 + #t13
-	#t12 = #t14
-	(%r12) = 10
-	#t16 = 40
-	#t17 = #t2 + #t16
-	#t15 = #t17
-	#t19 = 16
-	#t20 = #t15 + #t19
-	#t18 = #t20
-	call print 1 (%r13)
-	#t22 = 40
-	#t23 = #t2 + #t22
-	#t21 = #t23
-	#t25 = 24
-	#t26 = #t21 + #t25
-	#t24 = #t26
-	call print 1 (%r12)
-	add rsp 8
+	sub rsp 8
+	[rbp-16] = (%rcx)
+	call print 1 [rbp-16]
+	add rsp 16
 	pop rbp
 	ret 
 	EndFunc 
