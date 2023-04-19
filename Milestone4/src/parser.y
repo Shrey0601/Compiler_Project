@@ -48,6 +48,8 @@
     map<string, int> funcsize;
     map<string, int> numfuncargs;
     int num_forstatements = 1;
+    map<string, vector < pair<string,int> > > classfield;
+    vector<pair<string,int>> fieldvar;
     
     #define YYERROR_VERBOSE 1
 
@@ -580,6 +582,9 @@
         return s;
       }
       else{
+        if(it.scope_name.substr(0,5) == "Class"){
+          return "!" + to_string(it.offset);
+        }
         return "[rbp-" + to_string(it.offset + 8) + "]";
       }
     }
@@ -1339,6 +1344,8 @@ CLASS Identifier Super Interfaces {
   offset = new_offset; 
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1375,6 +1382,8 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1411,6 +1420,8 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1435,6 +1446,8 @@ ClassBody {
   offset = new_offset;
 } 
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1459,6 +1472,8 @@ ClassBody {
   offset = new_offset;
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1496,6 +1511,8 @@ ClassBody {
   isfieldprivate=0;
 } 
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1520,6 +1537,8 @@ ClassBody {
   offset = new_offset;
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1557,6 +1576,8 @@ ClassBody {
   isfieldprivate=0;
 }
 ClassBody {
+classfield[curr_class] = fieldvar;
+ fieldvar.clear();
   curr_table->classwidth = offset;
   curr_table = tables.top(); tables.pop();
   curr_scope = scope_names.top(); scope_names.pop();
@@ -1656,6 +1677,7 @@ Modifiers Type VariableDeclarators SEMICOLON {
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      fieldvar.push_back({funcparam[i].first, offset});
       offset += sizeparam[i];
       curr_table->classwidth = offset;
       
@@ -1705,6 +1727,7 @@ issystem=0;
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
+      fieldvar.push_back({funcparam[i].first, offset});
       offset += sizeparam[i];
 curr_table->classwidth = offset;
 
@@ -6727,6 +6750,8 @@ int isret = 0;
 int curracces = 0;
 int mainwidth = 0;
 
+
+
 // End Declarations
 
 // Codegen functions
@@ -6744,6 +6769,7 @@ void update_reg(){
 map<pair<string,string>, string> reg_map;
 
 bool isliteral(string s){  // Returns true if it is a literal and false in case of var names
+  if(s.size() == 0) return false;
   for(auto it: s){
     if( it < '0' || it > '9') return false;
   }
@@ -7149,6 +7175,65 @@ string checkarray(string arg, string cl, string fn){
   }
 }
 
+int objreg = 0;
+
+string fieldacc(string s){
+  if(s[0] == '!'){
+    if(objreg == 0){
+      addtox86("movq", "%r14", "%r8");
+      addtox86("addq", "$" + s.substr(1), "%r8");
+      objreg = 1 - objreg;
+      return "(%r8)";
+    }
+    else{
+      addtox86("movq", "%r14", "%r9");
+      addtox86("addq", "$" + s.substr(1), "%r9");
+      objreg = 1 - objreg;
+      return "(%r9)";
+    }
+  }
+  else{
+    return s;
+  }
+}
+
+int thisreg = 0;
+
+string thisptr(string s){
+  if(s[0] == '+'){
+    if(thisreg == 0){
+      addtox86("movq", "%r14", "%r8");
+      thisreg = 1 - thisreg;
+      return "%r8";
+    }
+    else{
+      addtox86("movq", "%r14", "%r9");
+      thisreg = 1 - thisreg;
+      return "%r9";
+    }
+  }
+  else{
+    return s;
+  }
+}
+
+int isvar(string s){
+  if(isliteral(s)){
+    return 0;
+  }
+  else{
+    if(s[0] > 'a' && s[0] < 'z'){
+      return 1;
+    }
+    else if(s[0] > 'A' && s[0] < 'Z'){
+      return 1;
+    }
+    else if(s[0] == '_'){
+      return 1;
+    }
+  }
+}
+
 // End Codegen
 
 int main(int argc, char *argv[])
@@ -7196,6 +7281,13 @@ int main(int argc, char *argv[])
     cout<<it.first<<" "<<it.second<<endl;
   }
 
+  for(auto it: classfield){
+    cout<<it.first<<'\n';
+    for(auto it1 : it.second){
+      cout<<it1.first<<' '<<it1.second<<'\n';
+    }
+  }
+
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -7212,14 +7304,35 @@ fout.open("TAC.txt");
     it.res = search_in_stack(it.res);
    }
 
+   it.arg1 = fieldacc(it.arg1);
+   it.arg2 = fieldacc(it.arg2);
+   it.res = fieldacc(it.res);
+
+   if(isliteral(it.arg1)) it.arg1 = "$" + it.arg1;
+   if(isliteral(it.arg2)) it.arg2 = "$" + it.arg2;
+   if(isliteral(it.res)) it.res = "$" + it.res;
+
 
    it.arg1 = checkarray(it.arg1, curr_class, curr_func);
    it.arg2 = checkarray(it.arg2, curr_class, curr_func);
    it.res = checkarray(it.res, curr_class, curr_func);
 
-   it.arg1 = objtoattr(it.arg1);
-   it.arg2 = objtoattr(it.arg2);
-   it.res = objtoattr(it.res);    
+   it.arg1 = baseptr(it.arg1);
+   it.arg2 = baseptr(it.arg2);
+   it.res = baseptr(it.res);
+
+   it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
+   it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
+   it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
+
+
+   it.arg1 = thisptr(it.arg1);
+   it.arg2 = thisptr(it.arg2);
+   it.res = thisptr(it.res);
+
+  //  it.arg1 = objtoattr(it.arg1);
+  //  it.arg2 = objtoattr(it.arg2);
+  //  it.res = objtoattr(it.res);    
 
     if(true)
     {
@@ -7285,6 +7398,12 @@ fout.open("TAC.txt");
               addtox86("movq", "%rdx", to_string(-8 - i*8) + "(%rbp)");
             }
           }
+          if(curr_func == "main"){
+            addtox86("movq", "$" + to_string(mainwidth), "%rdi");
+            addtox86("call", "malloc@PLT", "");
+            addtox86("movq", "%rax", "%r15");
+            addtox86("movq", "%rax", "%r14");
+          }
           int subesp = funcsize["Class" + curr_class + "_" + curr_func] + 8*counter;
           subesp = nextPowerOf2(subesp);
           addtox86("subq", "$" + to_string(subesp), "%rsp");   // Changes the stack pointer to accomodate the function local variables and parameters
@@ -7347,6 +7466,9 @@ fout.open("TAC.txt");
       }
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
+        if(isvar(it.arg2)){
+          it.arg2 = "(%r8)";
+        }
         if(it.arg2[0] == '*'){
           it.arg2 = it.arg2.substr(1);
           it.arg2 = baseptr(it.arg2);

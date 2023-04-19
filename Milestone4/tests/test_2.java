@@ -28,11 +28,11 @@ public class TypeCheck1 {
         TypeCheck1 obj = new TypeCheck1(1, 2);
 
         // Same names
-        int a = obj.a;
-        float b = obj.b;
+        // int a = obj.a;
+        // float b = obj.b;
 
-        // Different names
-        int c = obj.a;
-        float d = obj.b;
+        // // Different names
+        // int c = obj.a;
+        // float d = obj.b;
     }
 }

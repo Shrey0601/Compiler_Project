@@ -1,21 +1,12 @@
-class GFG {
-    int x = 2, y =3;
-    // GFG(){
-
-    // }
-}
-
-
-public class Main{
-    int a;
-    // int sum(){
-    //     a = 9;
-    // }
-    public static void main(){
-        GFG a = new GFG();
-        int x = a.x;
-        System.out.println(x);
-        // int a = 2;
-        // System.out.println(a);
-    }
+public class Main
+{
+        int sum(int a, int b, int c){
+                return a + b + c ;
+        }
+	public static void main() {
+        int a = 1, b = 2, c = 3 ;
+        int d = sum(a,b*c, c) ;
+        System.out.println(d) ;
+        return ;
+	}
 }

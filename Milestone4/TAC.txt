@@ -1,27 +1,42 @@
-GFG:
-	BeginClass 
-	EndClass 
-
 Main:
 	BeginClass 
+sum:
+	BeginFunc 
+	push rbp
+	rbp = rsp
+	sub rsp $8
+	sub rsp $8
+	sub rsp $8
+	-32(%rbp) = -8(%rbp) +int -16(%rbp)
+	-40(%rbp) = -32(%rbp) +int -24(%rbp)
+	add rsp $24
+	pop rbp
+	addretval -40(%rbp)
+	ret 
+	EndFunc 
 main:
 	BeginFunc 
 	push rbp
 	rbp = rsp
-	#t1 = 16
-	param #t1
-	sub rsp 8
-	call allocmem 1
-	add rsp 8
-	#t2 = popparam
-	param #t2
-	call GFG 
-	sub rsp 8
-	[rbp-8] = #t2
-	sub rsp 8
-	[rbp-16] = (%rcx)
-	call print 1 [rbp-16]
-	add rsp 16
+	sub rsp $8
+	-8(%rbp) = $1
+	sub rsp $8
+	-16(%rbp) = $2
+	sub rsp $8
+	-24(%rbp) = $3
+	-56(%rbp) = -16(%rbp) *int -24(%rbp)
+	param -24(%rbp)
+	param -56(%rbp)
+	param -8(%rbp)
+	sub rsp $24
+	call sum 
+	add rsp $24
+	-64(%rbp) = popparam
+	add rsp $8
+	sub rsp $8
+	-32(%rbp) = -64(%rbp)
+	call print 1 -32(%rbp)
+	add rsp $32
 	pop rbp
 	ret 
 	EndFunc 
