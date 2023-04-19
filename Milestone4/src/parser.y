@@ -549,6 +549,10 @@
     string offsetlookup(string s){
       auto it = curr_table->lookup(s);
       if(it.offset < 0){
+        string o = s.substr(0, s.find('.'));
+        if(o != s){
+
+        }
         return s;
       }
       else{
@@ -559,9 +563,11 @@
     void emit(string op, string arg1, string arg2, string res, int idx){
         quad temp;
         temp.op = op;
-        arg1 = offsetlookup(arg1);
-        arg2 = offsetlookup(arg2);
-        res = offsetlookup(res);
+        if(op != "call"){
+          arg1 = offsetlookup(arg1);
+          arg2 = offsetlookup(arg2);
+          res = offsetlookup(res);
+        }
         temp.arg1 = arg1;
         temp.arg2 = arg2;
         temp.res = res;
@@ -4766,6 +4772,7 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     size=2;
   }
   else size=8;
+  size=8;
   // cout<<"GGGG"<<arraytypeval<<size<<'\n';
   if(arrayaccesscount != 1){
     vector<int> v = curr_table->lookup(arrayname).dims;
@@ -4906,6 +4913,7 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     size=2;
   }
   else size=8;
+  size=8;
   // cout<<"GGGG"<<arrayname<<'\n';
   if(arrayaccesscount != 1){
     vector<int> v = curr_table->lookup(arrayname).dims;
@@ -4954,15 +4962,29 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   if(objtotemp[string((char*)(($1).tempvar))] != ""){
     strcpy(($1).tempvar, objtotemp[string((char*)(($1).tempvar))].c_str());
   }
+  // emit("=",tp8,"null",tp7,-1);
+  // string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
+  // if(objtotemp[tp6] != ""){
+  //   tp6 = objtotemp[tp6];
+  // }
+  // emit("=",tp6,"null",string((char*)($$).tempvar),-1);
+  // arraccess=1;
+  // if(arrayaccesscount == 0){
+  //   // cout<<($$).tempvar<<endl;
+  //   string tv7 = string((char*)(($$).tempvar));
+  //   tv7 = "*" + tv7;
+  //   strcpy(($$).tempvar, tv7.c_str());
+  // }
   emit("=",tp8,"null",tp7,-1);
-  string tp6 = string((char*)($1).tempvar) + "+" + tp7 ;
+  string tv14 = newtemp();
+  emit("+",string((char*)($1).tempvar), tp7 , tv14 , -1);
+  string tp6 = tv14;
   if(objtotemp[tp6] != ""){
     tp6 = objtotemp[tp6];
   }
   emit("=",tp6,"null",string((char*)($$).tempvar),-1);
-  arraccess=1;
+
   if(arrayaccesscount == 0){
-    // cout<<($$).tempvar<<endl;
     string tv7 = string((char*)(($$).tempvar));
     tv7 = "*" + tv7;
     strcpy(($$).tempvar, tv7.c_str());
@@ -7023,14 +7045,20 @@ int nextPowerOf2(int n) {
     }
 }
 
-// vector<string> regforarray = {"%r12", "%r13", "%r14", "%r15"};
+map<string, int> classconstructor;   // Stores 1 if class has constructor, else 0
 
-// int last_array = 0;
+void init_constructor(){
+  for(auto it : list_of_Symbol_Tables){
+    auto tab = it->table;
+    for(auto it2 : tab){
+      string scope = it2.second.scope_name;
+      if(scope.substr(0,5) == "Class" && scope.substr(5) == it2.first && it2.second.token == "Constructor"){
+        classconstructor[it2.first] = 1;
+      }
+    }
+  }
+}
 
-// string next_array_reg(){
-//   last_array %= 4;
-//   return regforarray[last_array];
-// }
 int ctr=0;
 string checkarray(string arg, string cl, string fn){
   if(arg[0] == '*'){
@@ -7095,6 +7123,11 @@ int main(int argc, char *argv[])
     cout<<it.first<<" "<<it.second<<endl;
   }
 
+  init_constructor();
+  for(auto it: classconstructor){
+    cout<<it.first<<" "<<it.second<<endl;
+  }
+
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -7131,6 +7164,13 @@ fout.open("TAC.txt");
         inassign = 1;
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_class = newblock;
+        if(classconstructor[curr_class] == 0){
+          addtox86("pushq", "%rbp", "");
+          addtox86("movq", "%rsp", "%rbp");
+          addtox86("movq", "$0", "%rax");
+          addtox86("leave", "", "");
+          addtox86("ret", "", "");
+        }
       }
       else if(it.op == "BeginFunc" || it.op == "BeginCtor"){
         isret = 0;
