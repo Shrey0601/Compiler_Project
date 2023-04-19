@@ -4431,10 +4431,7 @@ Primary DOT Identifier {
   }
   if(strcmp(($1).type,"this")==0)
   {
-    string s = newtemp();
-    emit("=", string((char*)(($1).tempvar)) + " + " + to_string(curr_table->lookup(string((char*)($3).str)).offset), "null", s, -1);
-    s = "*" + s;
-    strcpy(($$).tempvar, s.c_str());
+    strcpy(($$).tempvar, (string((char*)(($3).str)) + "!").c_str());
     strcpy(($$).type,curr_table->thislookup(($3).str).c_str());
   }
 }
@@ -7182,13 +7179,22 @@ string fieldacc(string s){
     if(objreg == 0){
       addtox86("movq", "%r14", "%r8");
       addtox86("addq", "$" + s.substr(1), "%r8");
-      objreg = 1 - objreg;
+      objreg ++ ;
+      objreg %= 3;
       return "(%r8)";
+    }
+    else if(objreg == 1){
+      addtox86("movq", "%r14", "%r10");
+      addtox86("addq", "$" + s.substr(1), "%r10");
+      objreg ++ ;
+      objreg %= 3;
+      return "(%r10)";
     }
     else{
       addtox86("movq", "%r14", "%r9");
       addtox86("addq", "$" + s.substr(1), "%r9");
-      objreg = 1 - objreg;
+      objreg ++ ;
+      objreg %= 3;
       return "(%r9)";
     }
   }
@@ -7197,18 +7203,36 @@ string fieldacc(string s){
   }
 }
 
-int thisreg = 0;
-
-string thisptr(string s){
-  if(s[0] == '+'){
-    if(thisreg == 0){
-      addtox86("movq", "%r14", "%r8");
-      thisreg = 1 - thisreg;
+string thisptr(string s, string cln, string fn){
+  if(s.substr(0,4) == "this"){
+    if(objreg == 0){
+      // addtox86("movq", "%r14", "%r8");
+      if(s[5] == '#'){
+        string temp = s.substr(6, s.size()-1);
+        addtox86("addq", "$" + to_string(funcsize["Class" + cln + "_" + fn] +  8*stoi(temp)), "%r8");
+      }
+      objreg ++ ;
+      objreg %= 3;
       return "%r8";
     }
+    else if(objreg == 1){
+      // addtox86("movq", "%r14", "%r8");
+      if(s[5] == '#'){
+        string temp = s.substr(6, s.size()-1);
+        addtox86("addq", "$" + to_string(funcsize["Class" + cln + "_" + fn] +  8*stoi(temp)), "%r10");
+      }
+      objreg ++ ;
+      objreg %= 3;
+      return "%r10";
+    }
     else{
-      addtox86("movq", "%r14", "%r9");
-      thisreg = 1 - thisreg;
+    //   // addtox86("movq", "%r14", "%r9");
+      if(s[5] == '#'){
+        string temp = s.substr(6, s.size()-1);
+        addtox86("addq", "$" + to_string(funcsize["Class" + cln + "_" + fn] +  8*stoi(temp)), "%r9");
+      }
+      objreg ++; 
+      objreg %= 3;
       return "%r9";
     }
   }
@@ -7222,15 +7246,48 @@ int isvar(string s){
     return 0;
   }
   else{
-    if(s[0] > 'a' && s[0] < 'z'){
+    if(s[0] >= 'a' && s[0] <= 'z'){
       return 1;
     }
-    else if(s[0] > 'A' && s[0] < 'Z'){
+    else if(s[0] >= 'A' && s[0] <= 'Z'){
       return 1;
     }
     else if(s[0] == '_'){
       return 1;
     }
+  }
+}
+
+int thisreg = 0;
+
+string checkifglobal(string s, string cln){
+  if(s[s.size() - 1] == '!'){
+    s = s.substr(0, s.size()-1);
+    string next;
+    if(thisreg == 0){
+      next = "%r11";
+    }
+    else if(thisreg == 1){
+      next = "%r12";
+    }
+    else{
+      next = "%r13";
+    }
+
+    thisreg ++;
+    thisreg %= 3;
+
+    for(auto it: classfield["Class" + cln]){
+      if(it.first == s){
+        addtox86("movq", "%r14", next);
+        addtox86("addq", "$" + to_string(it.second), next);
+        return "(" + next + ")";
+      }
+    }
+    return s;
+  }
+  else{
+    return s;
   }
 }
 
@@ -7304,6 +7361,10 @@ fout.open("TAC.txt");
     it.res = search_in_stack(it.res);
    }
 
+   it.arg1 = thisptr(it.arg1, curr_class, curr_func);
+   it.arg2 = thisptr(it.arg2, curr_class, curr_func);
+   it.res = thisptr(it.res, curr_class, curr_func);
+
    it.arg1 = fieldacc(it.arg1);
    it.arg2 = fieldacc(it.arg2);
    it.res = fieldacc(it.res);
@@ -7325,10 +7386,9 @@ fout.open("TAC.txt");
    it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
    it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
 
-
-   it.arg1 = thisptr(it.arg1);
-   it.arg2 = thisptr(it.arg2);
-   it.res = thisptr(it.res);
+   it.arg1 = checkifglobal(it.arg1, curr_class);
+   it.arg2 = checkifglobal(it.arg2, curr_class);
+   it.res = checkifglobal(it.res, curr_class);
 
   //  it.arg1 = objtoattr(it.arg1);
   //  it.arg2 = objtoattr(it.arg2);
@@ -7382,10 +7442,14 @@ fout.open("TAC.txt");
       }
       else if(it.arg2=="null" && it.res!="null")
       {
+      if(it.res == "%r8") it.res = "(%r8)";
+      else if(it.res == "%r9") it.res = "(%r9)";
+      if(it.arg1 == "%r8") it.arg1 = "(%r8)";
+      else if(it.arg1 == "%r9") it.arg1 = "(%r9)";
 
       if(it.op=="minus"||it.op=="plus"||it.op=="!"||it.op=="~")
         {
-      fout<<'\t'<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
+            fout<<'\t'<<it.res<<' '<<"= "<<it.op<<' '<<it.arg1<<'\n';
         }
       else 
         {
@@ -7430,10 +7494,7 @@ fout.open("TAC.txt");
             addtox86("movq", "%rax", it.res);
           }
         }
-        
-        
         }
-        // cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<' '<<it.idx<<'\n';
         if(it.idx == -2){
           inassign = 1;
         }
@@ -7467,7 +7528,18 @@ fout.open("TAC.txt");
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
         if(isvar(it.arg2)){
-          it.arg2 = "(%r8)";
+          for(auto it1 : classfield["Class" + curr_class]){
+            
+            if(it1.first == it.arg2){
+              addtox86("movq", "%r14", "%rbx");
+              addtox86("addq", "$" + to_string(it1.second), "%rbx");
+              it.arg2 = "(%rbx)";
+              break;
+            }
+          }
+          if(it.arg2 != "(%rbx)"){
+            it.arg2 = "(%r8)";
+          }
         }
         if(it.arg2[0] == '*'){
           it.arg2 = it.arg2.substr(1);
