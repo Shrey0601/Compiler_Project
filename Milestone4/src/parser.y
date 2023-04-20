@@ -50,9 +50,6 @@
     int num_forstatements = 1;
     map<string, vector < pair<string,int> > > classfield;
     vector<pair<string,int>> fieldvar;
-    map<string, string> storeobj;
-    string currtemp;
-    string currobj;
     
     #define YYERROR_VERBOSE 1
 
@@ -4051,7 +4048,8 @@ emit("pop","rbp","","",-1);
     ispopped = 0;
   
 }
-|RETURN Expression SEMICOLON {    
+|RETURN Expression SEMICOLON {   
+  
   newdim.clear();
   string p = string((char*)($2).tempvar);
     string o = p.substr(0, p.find('.'));
@@ -4063,11 +4061,13 @@ emit("pop","rbp","","",-1);
     }
     if(ispopped == 1){
     if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
-emit("pop","rbp","","",-1);
+    emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
-    emit("addretval", ($2).tempvar, "", "", -1);
-    emit("ret", "" , "", "", -1);
+    cout<<"FUCK\n"; 
+    
   }
+  emit("addretval", ($2).tempvar, "", "", -1);
+  emit("ret", "" , "", "", -1);
   if(!infunction)
   {
     cout<<"Invalid return on line "<<yylineno<<'\n';
@@ -4197,7 +4197,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
-  currtemp = tv2;
+
   int pops = 0;
   string ar = "";
   stack<string> args2;
@@ -4292,7 +4292,6 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("param",tv2,"","",-1);
   emit("call",string((char*)(($2).type)), "","",-1);
   strcpy(($$).tempvar, tv2.c_str());
-  currtemp = tv2;
 
   strcpy(($$).type,($2).type);
   if((curr_table->lookup(string((char*)($2).type)).offset == -1)&& checkobj(string((char*)($2).type)) == 0){
@@ -4470,9 +4469,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     }
     else{
       int offobj = curr_table->lookup(args.top().first.substr(0, args.top().first.find('.'))).offset;
-      string tv = newtemp();
-      emit("=", objtotemp[args.top().first.substr(0, args.top().first.find('.'))], "null", tv, -1);
-      emit("call", "print 1", "." + tv , args.top().first, -1);
+      emit("call", "print 1", args.top().first + "@" + to_string(offobj), "", -1);
     }
     // emit("call", "print 1", args.top().first, "", -1);
   }
@@ -6543,7 +6540,6 @@ LeftHandSide AssignmentOperator AssignmentExpression {
           emit("=",("*(" + tv5 + ")").c_str(),"null",("*(" + tv10 + tv6 + ")").c_str(), -2);
         }
         else{
-          storeobj[currtemp] = string((char*)(($1).tempvar));
         emit("=",($3).tempvar,"null",tp3.c_str(), -2);
         }
       }
@@ -7396,10 +7392,6 @@ int main(int argc, char *argv[])
     }
   }
 
-  for(auto it: storeobj){
-    cout<<it.first<<"// "<<it.second<<endl;
-  }
-
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -7462,6 +7454,8 @@ fout.open("TAC.txt");
           it.arg1 = "$" + it.arg1;
         }
         addtox86("movq", it.arg1, "%rax");
+        addtox86("leave","", "");
+        addtox86("ret","", "");
         isret = 1;
       }
       else if(it.op == "BeginClass"){
@@ -7484,7 +7478,10 @@ fout.open("TAC.txt");
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
-        
+        if(it.op=="EndFunc" ||it.op=="EndCtor"){
+          addtox86("leave","","");
+          addtox86("ret","","");
+        }
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         if(it.op=="EndClass"){
           fout<<'\n';
@@ -7588,9 +7585,11 @@ fout.open("TAC.txt");
       }
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
-        if(it.arg2[0] == '.'){
-          string o = it.arg1.substr(0, it.arg1.find('.'));
-          string attr = it.arg1.substr(it.arg2.find('.') + 1);
+        if(ifclass(it.arg2, curr_class)){
+          string o = it.arg2.substr(0, it.arg2.find('.'));
+          it.arg2 = it.arg2.substr(it.arg2.find('.') + 1);
+          string attr = it.arg2.substr(0, it.arg2.find('@'));
+          string off = it.arg2.substr(it.arg2.find('@') + 1, it.arg2.size()-1);
           int offattr = 0;
           for(auto it: classfield["Class" + curr_class]){
             if(it.first == attr){
@@ -7598,10 +7597,9 @@ fout.open("TAC.txt");
               break;
             }
           }
-          addtox86("movq", it.arg2, "%r8");
+          addtox86("movq", "-" + off + "(%rbp)", "%r8");
           addtox86("addq", "$" + to_string(offattr), "%r8");
           it.arg2 = "(%r8)";
-
         }
         else if(isvar(it.arg2)){
           for(auto it1 : classfield["Class" + curr_class]){
@@ -7658,8 +7656,9 @@ fout.open("TAC.txt");
       }
       else if(it.op=="Goto")
       {
+        /* cout<<"LFKKS "<<code[curracces].op<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-        addtox86("jmp", it.arg1, "");
+        addtox86("jmp", it.arg2, "");
       }
       else if(it.arg1==":")
       {
@@ -7674,11 +7673,18 @@ fout.open("TAC.txt");
       }
       else if(it.op=="ret")
       {
+        if(code[curracces].op=="Goto")
+        {
+          addtox86("jmp", code[curracces].arg2, "");
+        }
+        /* cout<<"GHF "<<code[curracces].op<<code[curracces].arg1<<code[curracces].arg2<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
         if(isret == 0)
           addtox86("movq", "$0", "%rax");  // Harcoding the return value
-        addtox86("leave", "", "");
-        addtox86(it.op, "", "");
+        /* addtox86("leave", "", "");
+        addtox86(it.op, "", ""); */
+        /* cout<<"SHU "<<it.op<<'\n';
+         */
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
