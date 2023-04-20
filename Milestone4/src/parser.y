@@ -53,6 +53,11 @@
     map<string, string> storeobj;
     string currtemp;
     string currobj;
+    vector<string> objlist;
+    vector<string> templist;
+    int isobj = 0;
+    string curridf;
+    vector<string> accesslist;
     
     #define YYERROR_VERBOSE 1
 
@@ -2045,6 +2050,7 @@ curr_table->classwidth = offset;
 };
 VariableDeclaratorId:
 Identifier {
+  curridf = string((char*)(($1).str));
   strcpy(($$).tempvar, ($1).str);
 
   strcpy(($$).type,($1).str);
@@ -4184,12 +4190,13 @@ Literal {
 }
 |ArrayAccess {
   strcpy(($$).type,($1).type);
-  
   strcpy(($$).tempvar, ($1).tempvar);
 };
 
 ClassInstanceCreationExpression:
 NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
+  objlist.push_back(curridf);
+  isobj = 1;
   string tv1 = newtemp();
   emit("=", to_string(getclasswidth(string((char*)($2).type))), "null", tv1, -1);
   emit("param",tv1,"","",-1);
@@ -4286,6 +4293,8 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   
 }
 |NEW ClassType OPENBRACKET CLOSEBRACKET {
+  objlist.push_back(curridf);
+  isobj = 1;
   // string a = newtemp();
   // strcpy(($$).tempvar, a.c_str());
   string tv1 = newtemp();
@@ -4485,7 +4494,6 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       emit("call", "print 1", "." + tv , args.top().first, -1);
     }
     // emit("call", "print 1", args.top().first, "", -1);
-    args.pop();
   }
   else{
     while(!args.empty())
@@ -4841,7 +4849,8 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
   }
 
   string tp7 = newtemp();
-  string tp8 = curr_table->lookup(string((char*)(($1).type))).type;
+  // string tp8 = curr_table->lookup(string((char*)(($1).type))).type;
+  string tp8 = newtemp();
   string arraytypeval = "";
   for(auto it : tp8){
     if(it != '['){
@@ -4883,20 +4892,21 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     x=x*size;
     cout<<endl;
     // cout<<"LLL"<<($3).tempvar<<'\n';
-    string hello(($3).tempvar); 
-    stringstream str(hello); 
-    int y;  
-    str >> y;  
-    x=x*y;
+    // string hello(($3).tempvar); 
+    // stringstream str(hello); 
+    // int y;  
+    // str >> y;  
+    // x=x*y;
+    emit("*", to_string(x), string((char*)(($3).tempvar)), tp8, -1);
     // cout<<"YUI"<<y<<" "<<x<<'\n';
-    tp8 = to_string(x);
+    // tp8 = to_string(x);
     arrayaccesscount -- ;
   }
   else{
-    string tv13 = newtemp();
-    emit("*",string((char*)($3).tempvar), "8" , tv13 , -1);
+    // string tv13 = newtemp();
+    emit("*",string((char*)($3).tempvar), "8" , tp8 , -1);
     // tp8 = string((char*)($3).tempvar)+ "*" + to_string(getsz(arraytypeval));
-    tp8 = tv13;
+    // tp8 = tv13;
     arrayaccesscount --;
   }
   if(objtotemp[tp8] != ""){
@@ -4981,7 +4991,8 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     }
   }
   string tp7 = newtemp();
-  string tp8 = string((char*)(($1).type));
+  // string tp8 = string((char*)(($1).type));
+  string tp8 = newtemp();
   string arraytypeval = "";
   for(auto it : tp8){
     if(it != '['){
@@ -5024,24 +5035,28 @@ Name OPENSQUAREBRACKET Expression CLOSESQUAREBRACKET {
     x=x*size;
     // cout<<endl;
     // cout<<"LLL"<<($3).tempvar<<'\n';
-    string hello(($3).tempvar); 
-    stringstream str(hello); 
-    int y;  
-    str >> y;  
-    x=x*y;
+    // string hello(($3).tempvar); 
+    // stringstream str(hello); 
+    // int y;  
+    // str >> y;  
+    // string newt = newtemp();
+    emit("*", to_string(x), string((char*)(($3).tempvar)), tp8, -1);
+    // x=x*y;
     // cout<<"YUI"<<y<<" "<<x<<'\n';
-    tp8 = to_string(x);
+    // tp8 = to_string(x);
     arrayaccesscount -- ;
   }
   else{
-    string hello(($3).tempvar); 
-    stringstream str(hello); 
-    int y;  
-    str >> y;  
-    tp8 = to_string(size*y);
+    // string hello(($3).tempvar); 
+    // stringstream str(hello); 
+    // int y;  
+    // str >> y;  
+    // tp8 = to_string(size*y);
+    emit("*", to_string(8), string((char*)(($3).tempvar)), tp8, -1);
     arrayaccesscount --;
     // tp8 = string((char*)($3).tempvar)+ "*" + to_string(10);
   }
+  // cout<<"HEYAAAAAAAAAAAA "<<tp8<<endl;
 
   if(objtotemp[tp8] != ""){
     tp8 = objtotemp[tp8];
@@ -6766,6 +6781,7 @@ EQUAL {
   strcpy(($$).tempvar, ($1).str);
   
 };
+
 Expression:
 AssignmentExpression {
   strcpy(($$).tempvar, ($1).tempvar);
@@ -7220,6 +7236,7 @@ void init_constructor(){
 int ctr=0;
 string checkarray(string arg, string cl, string fn){
   if(arg[0] == '*' && arg[1] != '('){
+    // cout<<arg<<endl;
     arg = arg.substr(1);
     arg = baseptr(arg);
     arg = temptoaddr(arg, funcsize["Class" + cl + "_" + fn]); 
@@ -7382,7 +7399,7 @@ string checkifglobal(string s, string cln){
 }
 
 int clnreg = 0;
-
+string currobj1 = "main";
 int ifclass(string s, string cln){
   string o = s.substr(0, s.find('.'));
   if(o == s){
@@ -7392,6 +7409,8 @@ int ifclass(string s, string cln){
     return 1;
   }
 }
+
+int ismalloc = 1;
 
 // End Codegen
 
@@ -7412,61 +7431,66 @@ int main(int argc, char *argv[])
   }
   yyparse();
 
-  // for(auto it: list_of_Symbol_Tables){
-  //   // cout<<"NEW TABLE"<<'\n';
-  //   it->print_table();
-  //   cout<<"Classwidth: "<<it->classwidth<<endl;
-  //   cout<<'\n';
-  // }
+  for(auto it: list_of_Symbol_Tables){
+    // cout<<"NEW TABLE"<<'\n';
+    it->print_table();
+    cout<<"Classwidth: "<<it->classwidth<<endl;
+    cout<<'\n';
+  }
 
-  // for(auto it: funcsize){
-  //   cout<<it.first<<" "<<it.second<<'\n';
-  //   string cl = it.first.substr(it.first.find("_") + 1);
-  //   if(cl == "main"){
-  //     mainwidth = it.second;
-  //   }
-  // }
+  for(auto it: funcsize){
+    cout<<it.first<<" "<<it.second<<'\n';
+    string cl = it.first.substr(it.first.find("_") + 1);
+    if(cl == "main"){
+      mainwidth = it.second;
+    }
+  }
 
-  // for(auto it: vartostack){
-  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
-  // }
+  for(auto it: vartostack){
+    cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  }
 
-  // for(auto it: numfuncargs){
-  //   cout<<it.first<<" "<<it.second<<endl;
-  // }
+  for(auto it: numfuncargs){
+    cout<<it.first<<" "<<it.second<<endl;
+  }
 
-  // init_constructor();
-  // for(auto it: classconstructor){
-  //   cout<<it.first<<" "<<it.second<<endl;
-  // }
+  init_constructor();
+  for(auto it: classconstructor){
+    cout<<it.first<<" "<<it.second<<endl;
+  }
 
-  // for(auto it: classfield){
-  //   cout<<it.first<<'\n';
-  //   for(auto it1 : it.second){
-  //     cout<<it1.first<<' '<<it1.second<<'\n';
-  //   }
-  // }
+  for(auto it: classfield){
+    cout<<it.first<<'\n';
+    for(auto it1 : it.second){
+      cout<<it1.first<<' '<<it1.second<<'\n';
+    }
+  }
 
-  // for(auto it: storeobj){
-  //   cout<<it.first<<"// "<<it.second<<endl;
-  // }
-map<string,string> store;
+  for(auto it: storeobj){
+    cout<<it.first<<"// "<<it.second<<endl;
+  }
+
+  for(auto it: objlist){
+    cout<<it<<endl;
+  }
+
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
+    curracces ++ ;
+    // fout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<endl;
     if(it.arg1 == "shiftreg"){
       it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
       addtox86("movq", "%r14", it.res);
+      if(curracces >= 2)
+      addtox86("movq", temptoaddr(baseptr(code[curracces-2].arg1), funcsize["Class" + curr_class + "_" + curr_func]), "%r14");
       continue;
     }
     if(it.res == "shiftreg"){
       it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
-      addtox86("movq", "%r14", it.arg1);
+      addtox86("movq", it.arg1, "%r14");
       continue;
     }
-    curracces ++ ;
-    // fout<<inassign<<'\n';
-  //  cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
    if(search_in_stack(it.arg1) != "Not Found"){
     it.arg1 = search_in_stack(it.arg1);
    }
@@ -7476,6 +7500,8 @@ fout.open("TAC.txt");
    if(search_in_stack(it.res) != "Not Found"){
     it.res = search_in_stack(it.res);
    }
+
+
 
    it.arg1 = thisptr(it.arg1, curr_class, curr_func);
    it.arg2 = thisptr(it.arg2, curr_class, curr_func);
@@ -7539,23 +7565,12 @@ fout.open("TAC.txt");
           addtox86("leave", "", "");
           addtox86("ret", "", "");
         }
-        store[curr_class]=curr_class;
       }
       else if(it.op == "BeginFunc" || it.op == "BeginCtor"){
         isret = 0;
         inassign = 1;
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_func = newblock;
-        string a;
-        if(!(!strcmp(curr_func.c_str(),curr_class.c_str()) || !strcmp(curr_func.c_str(),"main")))
-        {   
-          a=curr_class+"."+curr_func;
-        }
-        else
-        {
-        a=curr_func;
-        }
-        store[curr_func]=a;
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
@@ -7719,12 +7734,10 @@ fout.open("TAC.txt");
         
         if(it.arg1 == "allocmem"){
           addtox86("call", "malloc@PLT", "");
+          ismalloc = 1;
         }
-        else{
-          if(store[it.arg1] != "") it.arg1 = store[it.arg1];
-          if(store[it.arg2] != "") it.arg2 = store[it.arg2];
+        else
           addtox86("call", it.arg1, it.arg2);
-        }
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -7764,11 +7777,7 @@ fout.open("TAC.txt");
       {
         if(code[curracces].op=="Goto")
         {
-          if(code[curracces].arg1=="")
-            addtox86("jmp", code[curracces].arg2, "");
-          else
-            addtox86("jmp", code[curracces].arg1, "");
-          // addtox86("jmp", code[curracces].arg2, "");
+          addtox86("jmp", code[curracces].arg2, "");
         }
         /* cout<<"GHF "<<code[curracces].op<<code[curracces].arg1<<code[curracces].arg2<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
@@ -7781,8 +7790,6 @@ fout.open("TAC.txt");
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
-        addtox86("movq", it.arg2, "%rax");
-        addtox86("movq", "%rax", it.res);
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
@@ -7808,17 +7815,9 @@ fout.open("TAC.txt");
     fout<<"\t.globl    main"<<'\n';
 
     for(auto it: asmcode){
-      if(it.arg1 == ":" ){
-      if(it.func[0]=='L')
-      {
+      if(it.arg1 == ":"){
       cout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
       fout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
-      } 
-      else
-      {
-      cout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
-      fout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
-      }
       }
       else{
         if(it.arg2 != ""){
@@ -7831,10 +7830,6 @@ fout.open("TAC.txt");
         }
       }
     }
-    // for(auto i:store)
-    // {
-    //   cout<<i.first<<" "<<i.second<<'\n';
-    // }
 
   return 0;
 }
