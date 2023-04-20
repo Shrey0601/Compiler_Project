@@ -7412,44 +7412,44 @@ int main(int argc, char *argv[])
   }
   yyparse();
 
-  for(auto it: list_of_Symbol_Tables){
-    // cout<<"NEW TABLE"<<'\n';
-    it->print_table();
-    cout<<"Classwidth: "<<it->classwidth<<endl;
-    cout<<'\n';
-  }
+  // for(auto it: list_of_Symbol_Tables){
+  //   // cout<<"NEW TABLE"<<'\n';
+  //   it->print_table();
+  //   cout<<"Classwidth: "<<it->classwidth<<endl;
+  //   cout<<'\n';
+  // }
 
-  for(auto it: funcsize){
-    cout<<it.first<<" "<<it.second<<'\n';
-    string cl = it.first.substr(it.first.find("_") + 1);
-    if(cl == "main"){
-      mainwidth = it.second;
-    }
-  }
+  // for(auto it: funcsize){
+  //   cout<<it.first<<" "<<it.second<<'\n';
+  //   string cl = it.first.substr(it.first.find("_") + 1);
+  //   if(cl == "main"){
+  //     mainwidth = it.second;
+  //   }
+  // }
 
-  for(auto it: vartostack){
-    cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
-  }
+  // for(auto it: vartostack){
+  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  // }
 
-  for(auto it: numfuncargs){
-    cout<<it.first<<" "<<it.second<<endl;
-  }
+  // for(auto it: numfuncargs){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
 
-  init_constructor();
-  for(auto it: classconstructor){
-    cout<<it.first<<" "<<it.second<<endl;
-  }
+  // init_constructor();
+  // for(auto it: classconstructor){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
 
-  for(auto it: classfield){
-    cout<<it.first<<'\n';
-    for(auto it1 : it.second){
-      cout<<it1.first<<' '<<it1.second<<'\n';
-    }
-  }
+  // for(auto it: classfield){
+  //   cout<<it.first<<'\n';
+  //   for(auto it1 : it.second){
+  //     cout<<it1.first<<' '<<it1.second<<'\n';
+  //   }
+  // }
 
-  for(auto it: storeobj){
-    cout<<it.first<<"// "<<it.second<<endl;
-  }
+  // for(auto it: storeobj){
+  //   cout<<it.first<<"// "<<it.second<<endl;
+  // }
 map<string,string> store;
 ofstream fout;
 fout.open("TAC.txt");
@@ -7552,7 +7552,9 @@ fout.open("TAC.txt");
           a=curr_class+"."+curr_func;
         }
         else
+        {
         a=curr_func;
+        }
         store[curr_func]=a;
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
@@ -7718,8 +7720,11 @@ fout.open("TAC.txt");
         if(it.arg1 == "allocmem"){
           addtox86("call", "malloc@PLT", "");
         }
-        else
-          addtox86("call", store[it.arg1], store[it.arg2]);
+        else{
+          if(store[it.arg1] != "") it.arg1 = store[it.arg1];
+          if(store[it.arg2] != "") it.arg2 = store[it.arg2];
+          addtox86("call", it.arg1, it.arg2);
+        }
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -7759,7 +7764,11 @@ fout.open("TAC.txt");
       {
         if(code[curracces].op=="Goto")
         {
-          addtox86("jmp", code[curracces].arg2, "");
+          if(code[curracces].arg1=="")
+            addtox86("jmp", code[curracces].arg2, "");
+          else
+            addtox86("jmp", code[curracces].arg1, "");
+          // addtox86("jmp", code[curracces].arg2, "");
         }
         /* cout<<"GHF "<<code[curracces].op<<code[curracces].arg1<<code[curracces].arg2<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
@@ -7824,7 +7833,7 @@ fout.open("TAC.txt");
     }
     // for(auto i:store)
     // {
-    //   cout<<i.first<<' '<<i.second<<'\n';
+    //   cout<<i.first<<" "<<i.second<<'\n';
     // }
 
   return 0;
