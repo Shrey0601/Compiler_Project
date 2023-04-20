@@ -7597,8 +7597,11 @@ fout.open("TAC.txt");
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
         if(it.arg2[0] == '.'){
-          string o = it.arg1.substr(0, it.arg1.find('.'));
-          string attr = it.arg1.substr(it.arg2.find('.') + 1);
+          it.arg2 = it.arg2.substr(1);
+          it.arg2 = baseptr(it.arg2);
+          it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
+          string o = it.res.substr(0, it.res.find('.'));
+          string attr = it.res.substr(it.res.find('.') + 1);
           int offattr = 0;
           for(auto it: classfield["Class" + curr_class]){
             if(it.first == attr){
@@ -7609,7 +7612,6 @@ fout.open("TAC.txt");
           addtox86("movq", it.arg2, "%r8");
           addtox86("addq", "$" + to_string(offattr), "%r8");
           it.arg2 = "(%r8)";
-
         }
         else if(isvar(it.arg2)){
           for(auto it1 : classfield["Class" + curr_class]){
