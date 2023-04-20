@@ -4485,6 +4485,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       emit("call", "print 1", "." + tv , args.top().first, -1);
     }
     // emit("call", "print 1", args.top().first, "", -1);
+    args.pop();
   }
   else{
     while(!args.empty())
