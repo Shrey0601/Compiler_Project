@@ -7451,7 +7451,7 @@ fout.open("TAC.txt");
    it.arg1 = objtoattr(it.arg1);
    it.arg2 = objtoattr(it.arg2);
    it.res = objtoattr(it.res);   
-   
+
   if(it.arg1[0] == '+') it.arg1 = it.arg1.substr(1);
    if(it.arg2[0] == '+') it.arg2 = it.arg2.substr(1);
    if(it.res[0] == '+') it.arg1 = it.res.substr(1); 
@@ -7669,9 +7669,11 @@ fout.open("TAC.txt");
       }
       else if(it.op=="Goto")
       {
-        /* cout<<"LFKKS "<<code[curracces].op<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-        addtox86("jmp", it.arg2, "");
+        if(it.arg1 == "")
+          addtox86("jmp", it.arg2, "");
+        else
+           addtox86("jmp", it.arg1, "");
       }
       else if(it.arg1==":")
       {
