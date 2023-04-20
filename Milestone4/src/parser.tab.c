@@ -11727,6 +11727,8 @@ string checkifglobal(string s, string cln){
   }
 }
 
+int clnreg = 0;
+
 int ifclass(string s, string cln){
   string o = s.substr(0, s.find('.'));
   if(o == s){
@@ -12002,9 +12004,28 @@ fout.open("TAC.txt");
               break;
             }
           }
-          addtox86("movq", it.arg2, "%r8");
-          addtox86("addq", "$" + to_string(offattr), "%r8");
-          it.arg2 = "(%r8)";
+          if(clnreg == 0){
+            addtox86("movq", it.arg2, "%r8");
+            addtox86("addq", "$" + to_string(offattr), "%r8");
+            it.arg2 = "(%r8)";
+            clnreg ++;
+            clnreg %= 3;
+          }
+          else if(clnreg == 1){
+            addtox86("movq", it.arg2, "%r9");
+            addtox86("addq", "$" + to_string(offattr), "%r9");
+            it.arg2 = "(%r9)";
+            clnreg ++;
+            clnreg %= 3;
+          }
+          else{
+            addtox86("movq", it.arg2, "%r10");
+            addtox86("addq", "$" + to_string(offattr), "%r10");
+            it.arg2 = "(%r10)";
+            clnreg ++;
+            clnreg %= 3;
+          }
+          
         }
         else if(isvar(it.arg2)){
           for(auto it1 : classfield["Class" + curr_class]){
