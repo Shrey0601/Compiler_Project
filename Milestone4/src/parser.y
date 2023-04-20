@@ -4051,7 +4051,8 @@ emit("pop","rbp","","",-1);
     ispopped = 0;
   
 }
-|RETURN Expression SEMICOLON {    
+|RETURN Expression SEMICOLON {   
+  
   newdim.clear();
   string p = string((char*)($2).tempvar);
     string o = p.substr(0, p.find('.'));
@@ -4063,11 +4064,13 @@ emit("pop","rbp","","",-1);
     }
     if(ispopped == 1){
     if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
-emit("pop","rbp","","",-1);
+    emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
-    emit("addretval", ($2).tempvar, "", "", -1);
-    emit("ret", "" , "", "", -1);
+    cout<<"FUCK\n"; 
+    
   }
+  emit("addretval", ($2).tempvar, "", "", -1);
+  emit("ret", "" , "", "", -1);
   if(!infunction)
   {
     cout<<"Invalid return on line "<<yylineno<<'\n';
@@ -7462,6 +7465,8 @@ fout.open("TAC.txt");
           it.arg1 = "$" + it.arg1;
         }
         addtox86("movq", it.arg1, "%rax");
+        addtox86("leave","", "");
+        addtox86("ret","", "");
         isret = 1;
       }
       else if(it.op == "BeginClass"){
@@ -7484,7 +7489,10 @@ fout.open("TAC.txt");
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
-        
+        if(it.op=="EndFunc" ||it.op=="EndCtor"){
+          addtox86("leave","","");
+          addtox86("ret","","");
+        }
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         if(it.op=="EndClass"){
           fout<<'\n';
@@ -7658,8 +7666,9 @@ fout.open("TAC.txt");
       }
       else if(it.op=="Goto")
       {
+        /* cout<<"LFKKS "<<code[curracces].op<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
-        addtox86("jmp", it.arg1, "");
+        addtox86("jmp", it.arg2, "");
       }
       else if(it.arg1==":")
       {
@@ -7674,11 +7683,18 @@ fout.open("TAC.txt");
       }
       else if(it.op=="ret")
       {
+        if(code[curracces].op=="Goto")
+        {
+          addtox86("jmp", code[curracces].arg2, "");
+        }
+        /* cout<<"GHF "<<code[curracces].op<<code[curracces].arg1<<code[curracces].arg2<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
         if(isret == 0)
           addtox86("movq", "$0", "%rax");  // Harcoding the return value
-        addtox86("leave", "", "");
-        addtox86(it.op, "", "");
+        /* addtox86("leave", "", "");
+        addtox86(it.op, "", ""); */
+        /* cout<<"SHU "<<it.op<<'\n';
+         */
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
