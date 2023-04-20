@@ -11250,6 +11250,8 @@ string baseptr(string boxrep){
   else return boxrep;
 }
 
+int regalloc = 0;
+
 string objtoattr(string s){
   if(s[0] == '@'){
     string addr;
@@ -11263,7 +11265,6 @@ string objtoattr(string s){
 
     addtox86("movq", addr, "%r14");
     addtox86("movq", addr, "%r15");
-    addtox86("movq", addr, "%rcx");
 
     string cln;
     ind += 2 ;
@@ -11286,8 +11287,22 @@ string objtoattr(string s){
       for(auto it3 = tab.begin(); it3 != tab.end(); it3++){
           if(it3->second.scope_name == "Class" + cln){
               if(it3->first == attr){
-                addtox86("addq", "$" + to_string(it3->second.offset), "%rcx");
-                return "(%rcx)";
+                if(regalloc == 0){
+                  addtox86("movq", addr, "%r9");
+                  addtox86("addq", "$" + to_string(it3->second.offset), "%r9");
+                  return "(%r9)";
+                }
+                else if(regalloc == 1){
+                  addtox86("movq", addr, "%r10");
+                  addtox86("addq", "$" + to_string(it3->second.offset), "%r10");
+                  return "(%r10)";
+                }
+                else{
+                  addtox86("movq", addr, "%r11");
+                  addtox86("addq", "$" + to_string(it3->second.offset), "%r11");
+                  return "(%r11)";
+                }
+                regalloc = (regalloc + 1)%3;
               }
           }
           else{
@@ -12004,27 +12019,9 @@ fout.open("TAC.txt");
               break;
             }
           }
-          if(clnreg == 0){
             addtox86("movq", it.arg2, "%r8");
             addtox86("addq", "$" + to_string(offattr), "%r8");
             it.arg2 = "(%r8)";
-            clnreg ++;
-            clnreg %= 3;
-          }
-          else if(clnreg == 1){
-            addtox86("movq", it.arg2, "%r9");
-            addtox86("addq", "$" + to_string(offattr), "%r9");
-            it.arg2 = "(%r9)";
-            clnreg ++;
-            clnreg %= 3;
-          }
-          else{
-            addtox86("movq", it.arg2, "%r10");
-            addtox86("addq", "$" + to_string(offattr), "%r10");
-            it.arg2 = "(%r10)";
-            clnreg ++;
-            clnreg %= 3;
-          }
           
         }
         else if(isvar(it.arg2)){
