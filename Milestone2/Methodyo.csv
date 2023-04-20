@@ -1,0 +1,2 @@
+Lexeme,Token,Type,Offset,Scope Name,Line Number
+x, Identifier, int, 0, Methodyo, 27

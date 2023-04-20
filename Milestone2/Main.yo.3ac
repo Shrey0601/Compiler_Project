@@ -1,0 +1,12 @@
+BeginFunc
+t0 = 1
+t1 = x == t0
+Ifz t1 Goto L0
+t2 = 2
+Return t2
+Goto L1
+L0:
+t3 = 5
+Return t3
+L1:
+EndFunc   

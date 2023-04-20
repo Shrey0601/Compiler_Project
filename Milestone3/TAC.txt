@@ -1,0 +1,33 @@
+Main:
+	BeginClass 
+yo:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	sub esp 4
+	x = [ebp+16]
+	t0 = x == 1
+	Ifz t0 Goto L0
+	add esp 4
+	pop ebp
+	push 2
+	ret 
+	Goto L1
+L0:
+L1:
+	EndFunc 
+main:
+	BeginFunc 
+	push ebp
+	ebp = esp
+	param 4
+	sub esp 4
+	call yo 
+	add esp 4
+	t1 = popparam
+	add esp 8
+	pop ebp
+	ret 
+	EndFunc 
+	EndClass 
+

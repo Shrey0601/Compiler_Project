@@ -1,0 +1,6 @@
+BeginFunc
+t4 = 4
+Pushparams t4
+t5 = Call yo(t4)
+Popparams 4
+EndFunc   

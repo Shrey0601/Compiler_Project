@@ -1,0 +1,6 @@
+Lexeme,Token,Type,Offset,Scope Name,Line Number
+main, Method, void, 12, ClassMain, 32
+x, Identifier, int, 0, ClassMain, 26
+y, Identifier, int, 4, ClassMain, 26
+yo, Method, int, 12, ClassMain, 27
+z, Identifier, int, 8, ClassMain, 26
