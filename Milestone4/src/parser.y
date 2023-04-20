@@ -7448,9 +7448,10 @@ fout.open("TAC.txt");
    it.arg2 = checkifglobal(it.arg2, curr_class);
    it.res = checkifglobal(it.res, curr_class);
 
-  //  it.arg1 = objtoattr(it.arg1);
-  //  it.arg2 = objtoattr(it.arg2);
-  //  it.res = objtoattr(it.res);   
+   it.arg1 = objtoattr(it.arg1);
+   it.arg2 = objtoattr(it.arg2);
+   it.res = objtoattr(it.res);   
+   
   if(it.arg1[0] == '+') it.arg1 = it.arg1.substr(1);
    if(it.arg2[0] == '+') it.arg2 = it.arg2.substr(1);
    if(it.res[0] == '+') it.arg1 = it.res.substr(1); 
