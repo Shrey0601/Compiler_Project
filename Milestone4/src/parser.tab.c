@@ -11672,7 +11672,7 @@ int main(int argc, char *argv[])
   for(auto it: storeobj){
     cout<<it.first<<"// "<<it.second<<endl;
   }
-
+map<string,string> store;
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -11761,12 +11761,21 @@ fout.open("TAC.txt");
           addtox86("leave", "", "");
           addtox86("ret", "", "");
         }
+        store[curr_class]=curr_class;
       }
       else if(it.op == "BeginFunc" || it.op == "BeginCtor"){
         isret = 0;
         inassign = 1;
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_func = newblock;
+        string a;
+        if(!(!strcmp(curr_func.c_str(),curr_class.c_str()) || !strcmp(curr_func.c_str(),"main")))
+        {   
+          a=curr_class+"."+curr_func;
+        }
+        else
+        a=curr_func;
+        store[curr_func]=a;
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
@@ -11932,7 +11941,7 @@ fout.open("TAC.txt");
           addtox86("call", "malloc@PLT", "");
         }
         else
-          addtox86("call", it.arg1, it.arg2);
+          addtox86("call", store[it.arg1], store[it.arg2]);
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -11985,6 +11994,8 @@ fout.open("TAC.txt");
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
+        addtox86("movq", it.arg2, "%rax");
+        addtox86("movq", "%rax", it.res);
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
@@ -12010,9 +12021,17 @@ fout.open("TAC.txt");
     fout<<"\t.globl    main"<<'\n';
 
     for(auto it: asmcode){
-      if(it.arg1 == ":"){
+      if(it.arg1 == ":" ){
+      if(it.func[0]=='L')
+      {
       cout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
       fout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      } 
+      else
+      {
+      cout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      fout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      }
       }
       else{
         if(it.arg2 != ""){
@@ -12025,6 +12044,10 @@ fout.open("TAC.txt");
         }
       }
     }
+    // for(auto i:store)
+    // {
+    //   cout<<i.first<<' '<<i.second<<'\n';
+    // }
 
   return 0;
 }
