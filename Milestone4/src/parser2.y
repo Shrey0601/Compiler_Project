@@ -1360,7 +1360,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1401,7 +1401,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1442,7 +1442,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1471,7 +1471,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1500,7 +1500,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1542,7 +1542,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1571,7 +1571,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1613,7 +1613,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -4531,6 +4531,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       emit("call", "print 1", "." + tv , args.top().first, -1);
     }
     // emit("call", "print 1", args.top().first, "", -1);
+    args.pop();
   }
   else{
     while(!args.empty())
@@ -7457,12 +7458,12 @@ int main(int argc, char *argv[])
   }
   yyparse();
 
-  for(auto it: list_of_Symbol_Tables){
-    // cout<<"NEW TABLE"<<'\n';
-    it->print_table();
-    cout<<"Classwidth: "<<it->classwidth<<endl;
-    cout<<'\n';
-  }
+  // for(auto it: list_of_Symbol_Tables){
+  //   // cout<<"NEW TABLE"<<'\n';
+  //   it->print_table();
+  //   cout<<"Classwidth: "<<it->classwidth<<endl;
+  //   cout<<'\n';
+  // }
 
   for(auto it: funcsize){
     cout<<it.first<<" "<<it.second<<'\n';
@@ -7472,9 +7473,9 @@ int main(int argc, char *argv[])
     }
   }
 
-  for(auto it: vartostack){
-    cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
-  }
+  // for(auto it: vartostack){
+  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  // }
 
   for(auto it: numfuncargs){
     cout<<it.first<<" "<<it.second<<endl;
@@ -7504,6 +7505,26 @@ x.open("TAC.txt");
     }
    }
 cout<<fielddeclist<<"\n"; */
+  // for(auto it: numfuncargs){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
+
+  // init_constructor();
+  // for(auto it: classconstructor){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
+
+  // for(auto it: classfield){
+  //   cout<<it.first<<'\n';
+  //   for(auto it1 : it.second){
+  //     cout<<it1.first<<' '<<it1.second<<'\n';
+  //   }
+  // }
+
+  // for(auto it: storeobj){
+  //   cout<<it.first<<"// "<<it.second<<endl;
+  // }
+map<string,string> store;
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -7623,7 +7644,8 @@ fout.open("TAC.txt");
               string yo="";
               for(int i=0;;i++)
               {
-                if(temp[i]=='#') break;
+                cout<<"GHF"<<temp.size();
+                if(temp[i]=='|') break;
                 if(temp[i]=='$')
                 {
                   yo=temp.substr(last,i-last);
@@ -7645,12 +7667,30 @@ fout.open("TAC.txt");
           addtox86("leave", "", "");
           addtox86("ret", "", "");
         }
+        if(classconstructor[curr_class] == 0){
+          addtox86("pushq", "%rbp", "");
+          addtox86("movq", "%rsp", "%rbp");
+          addtox86("movq", "$0", "%rax");
+          addtox86("leave", "", "");
+          addtox86("ret", "", "");
+        }
+        store[curr_class]=curr_class;
       }
       else if(it.op == "BeginFunc" || it.op == "BeginCtor"){
         isret = 0;
         inassign = 1;
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_func = newblock;
+        string a;
+        if(!(!strcmp(curr_func.c_str(),curr_class.c_str()) || !strcmp(curr_func.c_str(),"main")))
+        {   
+          a=curr_class+"."+curr_func;
+        }
+        else
+        {
+        a=curr_func;
+        }
+        store[curr_func]=a;
       }
       else if(it.op=="EndFunc" || it.op=="EndClass" || it.op=="EndCtor")
        {
@@ -7700,7 +7740,8 @@ fout.open("TAC.txt");
                 string yo="";
                 for(int i=0;;i++)
                 {
-                  if(temp[i]=='#') break;
+                  cout<<"GHF"<<temp.size();
+                  if(temp[i]=='|') break;
                   if(temp[i]=='$')
                   {
                     yo=temp.substr(last,i-last);
@@ -7847,8 +7888,11 @@ fout.open("TAC.txt");
         if(it.arg1 == "allocmem"){
           addtox86("call", "malloc@PLT", "");
         }
-        else
+        else{
+          if(store[it.arg1] != "") it.arg1 = store[it.arg1];
+          if(store[it.arg2] != "") it.arg2 = store[it.arg2];
           addtox86("call", it.arg1, it.arg2);
+        }
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
@@ -7888,7 +7932,11 @@ fout.open("TAC.txt");
       {
         if(code[curracces].op=="Goto")
         {
-          addtox86("jmp", code[curracces].arg2, "");
+          if(code[curracces].arg1=="")
+            addtox86("jmp", code[curracces].arg2, "");
+          else
+            addtox86("jmp", code[curracces].arg1, "");
+          // addtox86("jmp", code[curracces].arg2, "");
         }
         /* cout<<"GHF "<<code[curracces].op<<code[curracces].arg1<<code[curracces].arg2<<'\n'; */
         fout<<'\t'<<it.op<<" "<<it.arg1<<"\n";
@@ -7901,6 +7949,8 @@ fout.open("TAC.txt");
       }
       else if(it.arg1=="cast_to_int"||it.arg1=="cast_to_float"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_boolean"||it.arg1=="cast_to_byte"||it.arg1=="cast_to_short"||it.arg1=="cast_to_long"||it.arg1=="cast_to_double"||it.arg1=="cast_to_string")
       {
+        addtox86("movq", it.arg2, "%rax");
+        addtox86("movq", "%rax", it.res);
         fout<<'\t'<<it.res<<" = "<<it.arg1<<" "<<it.arg2<<"\n";
       }
       else
@@ -7926,9 +7976,17 @@ fout.open("TAC.txt");
     fout<<"\t.globl    main"<<'\n';
 
     for(auto it: asmcode){
-      if(it.arg1 == ":"){
+      if(it.arg1 == ":" ){
+      if(it.func[0]=='L')
+      {
       cout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
       fout<<it.func<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      } 
+      else
+      {
+      cout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      fout<<store[it.func]<<' '<<it.arg1<<' '<<it.arg2<<'\n';
+      }
       }
       else{
         if(it.arg2 != ""){
@@ -7941,6 +7999,10 @@ fout.open("TAC.txt");
         }
       }
     }
+    // for(auto i:store)
+    // {
+    //   cout<<i.first<<" "<<i.second<<'\n';
+    // }
 
   return 0;
 }
