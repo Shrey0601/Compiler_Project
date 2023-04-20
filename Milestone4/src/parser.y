@@ -6871,9 +6871,6 @@ string objtoattr(string s){
     addr.push_back(']');
     addr = baseptr(addr);
 
-    addtox86("movq", addr, "%r14");
-    addtox86("movq", addr, "%r15");
-
     string cln;
     ind += 2 ;
 
@@ -6898,19 +6895,21 @@ string objtoattr(string s){
                 if(regalloc == 0){
                   addtox86("movq", addr, "%r9");
                   addtox86("addq", "$" + to_string(it3->second.offset), "%r9");
+                  regalloc = (regalloc + 1)%3;
                   return "(%r9)";
                 }
                 else if(regalloc == 1){
                   addtox86("movq", addr, "%r10");
                   addtox86("addq", "$" + to_string(it3->second.offset), "%r10");
+                  regalloc = (regalloc + 1)%3;
                   return "(%r10)";
                 }
                 else{
                   addtox86("movq", addr, "%r11");
                   addtox86("addq", "$" + to_string(it3->second.offset), "%r11");
+                  regalloc = (regalloc + 1)%3;
                   return "(%r11)";
                 }
-                regalloc = (regalloc + 1)%3;
               }
           }
           else{
