@@ -50,9 +50,6 @@
     int num_forstatements = 1;
     map<string, vector < pair<string,int> > > classfield;
     vector<pair<string,int>> fieldvar;
-    map<string, string> storeobj;
-    string currtemp;
-    string currobj;
     
     #define YYERROR_VERBOSE 1
 
@@ -614,7 +611,7 @@
       return temp_var;
     }
     string newLabel(){
-      string temp_var = "L"+to_string(counter1++);
+      string temp_var = ".L"+to_string(counter1++);
       return temp_var;
     }
 
@@ -4063,7 +4060,7 @@ emit("pop","rbp","","",-1);
     }
     if(ispopped == 1){
     if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
-emit("pop","rbp","","",-1);
+    emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
     emit("addretval", ($2).tempvar, "", "", -1);
     emit("ret", "" , "", "", -1);
@@ -4197,7 +4194,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
-  currtemp = tv2;
+
   int pops = 0;
   string ar = "";
   stack<string> args2;
@@ -4216,7 +4213,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
     args2.pop();
     if(!args2.empty()) ar = ar + ",";
   }
-  emit("param",tv2,"","",-1);
+  // emit("param",tv2,"","",-1);
   emit("sub", "rsp", to_string(8 + pops),"", -1);
   emit("call",string((char*)(($2).type)), "","",-1);
   emit("add", "rsp", to_string(8 + pops),"", -1);
@@ -4289,10 +4286,9 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
-  emit("param",tv2,"","",-1);
+  // emit("param",tv2,"","",-1);
   emit("call",string((char*)(($2).type)), "","",-1);
   strcpy(($$).tempvar, tv2.c_str());
-  currtemp = tv2;
 
   strcpy(($$).type,($2).type);
   if((curr_table->lookup(string((char*)($2).type)).offset == -1)&& checkobj(string((char*)($2).type)) == 0){
@@ -4464,17 +4460,8 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 
   if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
   {
-    if(args.top().first == args.top().first.substr(0, args.top().first.find('.')))
-    {
-      emit("call", "print 1", args.top().first, "", -1);
-    }
-    else{
-      int offobj = curr_table->lookup(args.top().first.substr(0, args.top().first.find('.'))).offset;
-      string tv = newtemp();
-      emit("=", objtotemp[args.top().first.substr(0, args.top().first.find('.'))], "null", tv, -1);
-      emit("call", "print 1", "." + tv , args.top().first, -1);
-    }
-    // emit("call", "print 1", args.top().first, "", -1);
+    emit("call", "print 1", args.top().first, "", -1);
+    args.pop();
   }
   else{
     while(!args.empty())
@@ -4492,9 +4479,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     if(checkclass(cname)){
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
-      // emit("param", oname, "", "", -1);
+      emit("param", oname, "", "", -1);
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
-      emit("call", cname + "." + mname, "", "", -1);
+      // emit("call", cname + "." + mname, "", "", -1);
+emit("call", mname, "", "", -1);
 
     }
     else{
@@ -4621,6 +4609,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
   {
     emit("call", "print 1", "", "", -1);
+    args.pop();
   }
   else{
     string tv9 = string((char*)(($1).tempvar));
@@ -4629,7 +4618,8 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     if(checkclass(cname)){
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       emit("param", oname, "", "", -1);
-      emit("call", cname + "." + mname, "", "", -1);
+      // emit("call", cname + "." + mname, "", "", -1);
+emit("call", mname, "", "", -1);
 
     }
     else{
@@ -4692,6 +4682,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   if(!strcmp(string((char*)(($1).tempvar)).c_str(),"System.println"))
   {
     emit("call", "print 1", "", "", -1);
+    args.pop();
   }
   else{
     string tv9 = string((char*)(($1).tempvar));
@@ -4702,7 +4693,8 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       emit("param", oname, "", "", -1);
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
-      emit("call", cname + "." + mname, "", "", -1);
+      // emit("call", cname + "." + mname, "", "", -1);
+emit("call", mname, "", "", -1);
 
     }
     else{
@@ -4730,7 +4722,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
   emit("call",string((char*)($1).tempvar) + string((char*)($2).str) + string((char*)($3).str)   ,"","",-1);
   emit("=", "popparam", "null", s.c_str(), -1);
   emit("add", "rsp", to_string(8), "", -1);
-  strcpy(($$).tempvar, s.c_str());
+  strcpy(($$).tempvar,s.c_str());
 
   if(curr_table->lookup(string((char*)($3).str)).offset == -1 && checkobj(string((char*)($3).str)) == 0){
   if(!isaccess)
@@ -6519,16 +6511,12 @@ LeftHandSide AssignmentOperator AssignmentExpression {
       string v = p.substr(p.find('.')+1, p.size());
       string classname = curr_table->lookup(o).type;
       int tp2 = offsetobj(classname, v);
-      string tv5 = newtemp();
-      emit("+", objtotemp[o], to_string(tp2), tv5, -1);
-      string tp3 = "*(" + tv5 + ")";
+      string tp3 = "*(" + objtotemp[o] + "+" + to_string(tp2) + ")";
       if(p1 != o1){
         string v1 = p1.substr(p1.find('.')+1, p1.size());
         string classname1 = curr_table->lookup(o1).type;
         int tp21 = offsetobj(classname1, v1);
-        string tv7 = newtemp();
-        emit("+", objtotemp[o1], to_string(tp21), tv7, -1);
-        string tp31 = "*(" + tv7 + ")";
+        string tp31 = "*(" + objtotemp[o1] + "+" + to_string(tp21) + ")";
         emit("=",tp31.c_str(),"null",tp3.c_str(), -2);
       }
       else{
@@ -6537,13 +6525,9 @@ LeftHandSide AssignmentOperator AssignmentExpression {
         int offset1 = curr_table->lookup(string((char*)($3).tempvar)).offset;
         int offset2 = curr_table->lookup(tp3).offset;
         if(offset1 != -1 && offset2 != -1){
-          string tv5 = newtemp(), tv6 = newtemp();
-          emit("+", tv10, to_string(offset1), tv5, -1);
-          emit("+", tv10, to_string(offset2), tv6, -1);
-          emit("=",("*(" + tv5 + ")").c_str(),"null",("*(" + tv10 + tv6 + ")").c_str(), -2);
+          emit("=",("*(" + tv10 + "+" + to_string(offset1)+ ")").c_str(),"null",("*(" + tv10 + "+" + to_string(offset2)+ ")").c_str(), -2);
         }
         else{
-          storeobj[currtemp] = string((char*)(($1).tempvar));
         emit("=",($3).tempvar,"null",tp3.c_str(), -2);
         }
       }
@@ -7170,27 +7154,8 @@ void init_constructor(){
 
 int ctr=0;
 string checkarray(string arg, string cl, string fn){
-  if(arg[0] == '*' && arg[1] != '('){
+  if(arg[0] == '*'){
     arg = arg.substr(1);
-    arg = baseptr(arg);
-    arg = temptoaddr(arg, funcsize["Class" + cl + "_" + fn]); 
-    if(ctr)
-    {
-    string next = "%r12";
-    addtox86("movq", arg, next);
-    arg = "(%r12)";
-    ctr=0;
-    }
-    else{
-      string next = "%r13";
-    addtox86("movq", arg, next);
-    arg = "(%r13)";
-    ctr=1;
-    }
-    return arg;
-  }
-  else if(arg[0] == '*' && arg[1] == '('){
-    arg = arg.substr(2);
     arg = baseptr(arg);
     arg = temptoaddr(arg, funcsize["Class" + cl + "_" + fn]); 
     if(ctr)
@@ -7332,16 +7297,6 @@ string checkifglobal(string s, string cln){
   }
 }
 
-int ifclass(string s, string cln){
-  string o = s.substr(0, s.find('.'));
-  if(o == s){
-    return 0;
-  }
-  else{
-    return 1;
-  }
-}
-
 // End Codegen
 
 int main(int argc, char *argv[])
@@ -7396,10 +7351,6 @@ int main(int argc, char *argv[])
     }
   }
 
-  for(auto it: storeobj){
-    cout<<it.first<<"// "<<it.second<<endl;
-  }
-
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
@@ -7445,12 +7396,13 @@ fout.open("TAC.txt");
    it.arg2 = checkifglobal(it.arg2, curr_class);
    it.res = checkifglobal(it.res, curr_class);
 
+   if(it.arg1[0] == '+') it.arg1 = it.arg1.substr(1);
+   if(it.arg2[0] == '+') it.arg2 = it.arg2.substr(1);
+   if(it.res[0] == '+') it.arg1 = it.res.substr(1);
+
   //  it.arg1 = objtoattr(it.arg1);
   //  it.arg2 = objtoattr(it.arg2);
-  //  it.res = objtoattr(it.res);   
-  if(it.arg1[0] == '+') it.arg1 = it.arg1.substr(1);
-   if(it.arg2[0] == '+') it.arg2 = it.arg2.substr(1);
-   if(it.res[0] == '+') it.arg1 = it.res.substr(1); 
+  //  it.res = objtoattr(it.res);    
 
     if(true)
     {
@@ -7535,9 +7487,6 @@ fout.open("TAC.txt");
           it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
           addtox86("movq", "%rax", it.res);
         }
-        else if(it.res == "popparam"){
-          continue;
-        }
         else{
           if(isliteral(it.arg1)){
             it.arg1 = "$" + it.arg1;
@@ -7588,22 +7537,7 @@ fout.open("TAC.txt");
       }
       else if (it.op == "call" && it.arg1 == "print 1"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
-        if(it.arg2[0] == '.'){
-          string o = it.arg1.substr(0, it.arg1.find('.'));
-          string attr = it.arg1.substr(it.arg2.find('.') + 1);
-          int offattr = 0;
-          for(auto it: classfield["Class" + curr_class]){
-            if(it.first == attr){
-              offattr = it.second;
-              break;
-            }
-          }
-          addtox86("movq", it.arg2, "%r8");
-          addtox86("addq", "$" + to_string(offattr), "%r8");
-          it.arg2 = "(%r8)";
-
-        }
-        else if(isvar(it.arg2)){
+        if(isvar(it.arg2)){
           for(auto it1 : classfield["Class" + curr_class]){
             
             if(it1.first == it.arg2){
@@ -7617,7 +7551,7 @@ fout.open("TAC.txt");
             it.arg2 = "(%r8)";
           }
         }
-        else if(it.arg2[0] == '*'){
+        if(it.arg2[0] == '*'){
           it.arg2 = it.arg2.substr(1);
           it.arg2 = baseptr(it.arg2);
           it.arg2 = temptoaddr(it.arg2, funcsize["Class" + curr_class + "_" + curr_func]);
@@ -7659,14 +7593,24 @@ fout.open("TAC.txt");
       else if(it.op=="Goto")
       {
         fout<<'\t'<<it.op<<" "<<it.arg1<<it.arg2<<it.res<<"\n";
+        if(it.arg1 != "")
         addtox86("jmp", it.arg1, "");
+        else{
+          addtox86("jmp", it.arg2, "");
+        }
       }
       else if(it.arg1==":")
       {
         // fout<<'\t';
         fout<<it.op<<it.arg1<<"\n";
+        // if(it.op  == "main" || it.op == "Main")
+        // addtox86(it.op, it.arg1, "");
+        // else{
+        //   addtox86(curr_class + "." +it.op, it.arg1, "");
+        // }
         addtox86(it.op, it.arg1, "");
         newblock = it.op;
+
       }
       else if(it.arg1=="new")
       {
