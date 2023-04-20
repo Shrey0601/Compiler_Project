@@ -1365,7 +1365,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1406,7 +1406,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1447,7 +1447,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1476,7 +1476,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1505,7 +1505,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1547,7 +1547,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1576,7 +1576,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1618,7 +1618,7 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
-  emit("FLD",fielddeclistlast+"#","","",-1);
+  emit("FLD",fielddeclistlast+"|","","",-1);
   fielddeclistlast="";
   fielddeclist="";
   emit("EndClass","","","",-1);
@@ -1986,10 +1986,10 @@ curr_table->classwidth = offset;
     emit("=", to_string(sizealloc), "null", tv4, -1);
     emit("param",tv4,"","",-1);
     // emit("stackpointer","+" + to_string(sizealloc),"","",-1);
-    emit("add", "rsp", to_string(sizealloc), "", -1);
+    // emit("add", "rsp", to_string(sizealloc), "", -1);
     emit("call","allocmem","1","",-1);
     // emit("stackpointer","-" + to_string(sizealloc),"","",-1);
-    emit("sub", "rsp", to_string(sizealloc), "", -1);
+    // // emit("sub", "rsp", to_string(sizealloc), "", -1);
     string tv2 = newtemp();
     emit("=", "popparam", "null", tv2, -1);
     strcpy(($$).tempvar, tv2.c_str());
@@ -2207,8 +2207,8 @@ Modifiers Type MethodDeclarator Throws {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
@@ -2266,8 +2266,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
@@ -2326,8 +2326,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
@@ -2381,8 +2381,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
@@ -2434,8 +2434,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
@@ -2488,8 +2488,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
@@ -2540,8 +2540,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
@@ -2596,8 +2596,8 @@ tempparam.clear();
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
-      emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // emit("sub", "rsp", to_string(sizeparam[i]), "", -1);
 totalstack += sizeparam[i];
       // emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       vartottemp[tempparam[i]] =  "[rbp-" + to_string(offset + 8) + "]";
@@ -2687,7 +2687,7 @@ ClassType  {
 MethodBody:
 Block  {
     if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+    if(totalstack != 0){  ;}
 emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
@@ -2792,7 +2792,7 @@ ConstructorHeader FormalParameterList CLOSEBRACKET {
       curr_table->entry(funcparam[i].first, "Identifier", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       else 
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
-      emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+      // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
       totalstack += sizeparam[i];
       emit("=", "[rbp+" + to_string(offset + 16) + "]", "null", tempparam[i], -1);
       offset += sizeparam[i];
@@ -2834,7 +2834,7 @@ ConstructorBody:
 OPENCURLYBRACKET ExplicitConstructorInvocation BlockStatements CLOSECURLYBRACKET {
   
   if(ispopped == 1){
-    if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
+    if(totalstack != 0){ ;}
 emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
 emit("ret","","","",-1);
@@ -3214,7 +3214,7 @@ Type VariableDeclarators {
       curr_table->entry(funcparam[i].first, "Array", funcparam[i].second.first, offset, curr_scope, yylineno, funcparam[i].second.second);
       totalstack += sizeparam[i];
       if(funcparam[i].second.second!=-1){
-          emit("sub","rsp",to_string(sizeparam[i]),"",-1);
+          // // emit("sub","rsp",to_string(sizeparam[i]),"",-1);
           // cout<<tempparam[i]<<" HEYA"<<endl;
           emit("=", tempparam[i] , "null",  "[rbp" + to_string(-(offset + 8)) + "]" , -1);
       }
@@ -4118,7 +4118,7 @@ emit("pop","rbp","","",-1);
     if(totalstack != 0){ emit("add", "rsp", to_string(totalstack), "", -1); ;}
     emit("pop","rbp","","",-1);
     ispopped = 0;totalstack = 0;
-    cout<<"FUCK\n"; 
+    //cout<<"FUCK\n"; 
     
   }
   emit("addretval", ($2).tempvar, "", "", -1);
@@ -4247,11 +4247,11 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   string tv1 = newtemp();
   emit("=", to_string(getclasswidth(string((char*)($2).type))), "null", tv1, -1);
   emit("param",tv1,"","",-1);
-  // emit("sub","rsp","8","",-1);
-  emit("sub","rsp","8","",-1);
+  // // emit("sub","rsp","8","",-1);
+  // // emit("sub","rsp","8","",-1);
   emit("call","allocmem","1","",-1);
   // emit("add","rsp","8","",-1);
-  emit("add","rsp","8","",-1);
+  // emit("add","rsp","8","",-1);
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
   currtemp = tv2;
@@ -4274,7 +4274,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
     if(!args2.empty()) ar = ar + ",";
   }
   emit("param",tv2,"","",-1);
-  emit("sub", "rsp", to_string(8 + pops),"", -1);
+  // emit("sub", "rsp", to_string(8 + pops),"", -1);
 
   string o2 = newtemp();
   emit("=", "shiftreg", "null", o2, -1);
@@ -4347,7 +4347,7 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   string tv1 = newtemp();
   emit("=", to_string(getclasswidth(string((char*)($2).type))), "null", tv1, -1);
   emit("param",tv1,"","",-1);
-  emit("sub","rsp","8","",-1);
+  // // emit("sub","rsp","8","",-1);
   emit("call","allocmem","1","",-1);
   emit("add","rsp","8","",-1);
   string tv2 = newtemp();
@@ -4560,7 +4560,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       // emit("param", oname, "", "", -1);
-      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      // emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       string o2 = newtemp();
       emit("=", "shiftreg", "null", o2, -1);
       emit("call", cname + "." + mname, "", "", -1);
@@ -4568,7 +4568,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 
     }
     else{
-      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      // emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       string o2 = newtemp();
       emit("=", "shiftreg", "null", o2, -1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
@@ -4780,7 +4780,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       emit("param", oname, "", "", -1);
-      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      // emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       string o2 = newtemp();
       emit("=", "shiftreg", "null", o2, -1);
       emit("call", cname + "." + mname, "", "", -1);
@@ -4788,7 +4788,7 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 
     }
     else{
-      emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      // emit("sub","rsp",to_string(funcargtypesz1),"",-1);
       string o2 = newtemp();
   emit("=", "shiftreg", "null", o2, -1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
@@ -7479,44 +7479,44 @@ int main(int argc, char *argv[])
   }
   yyparse();
 
-  for(auto it: list_of_Symbol_Tables){
-    // cout<<"NEW TABLE"<<'\n';
-    it->print_table();
-    cout<<"Classwidth: "<<it->classwidth<<endl;
-    cout<<'\n';
-  }
+  // for(auto it: list_of_Symbol_Tables){
+  //   // cout<<"NEW TABLE"<<'\n';
+  //   it->print_table();
+  //   cout<<"Classwidth: "<<it->classwidth<<endl;
+  //   cout<<'\n';
+  // }
 
-  for(auto it: funcsize){
-    cout<<it.first<<" "<<it.second<<'\n';
-    string cl = it.first.substr(it.first.find("_") + 1);
-    if(cl == "main"){
-      mainwidth = it.second;
-    }
-  }
+  // for(auto it: funcsize){
+  //   cout<<it.first<<" "<<it.second<<'\n';
+  //   string cl = it.first.substr(it.first.find("_") + 1);
+  //   if(cl == "main"){
+  //     mainwidth = it.second;
+  //   }
+  // }
 
-  for(auto it: vartostack){
-    cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
-  }
+  // for(auto it: vartostack){
+  //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
+  // }
 
-  for(auto it: numfuncargs){
-    cout<<it.first<<" "<<it.second<<endl;
-  }
+  // for(auto it: numfuncargs){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
 
-  init_constructor();
-  for(auto it: classconstructor){
-    cout<<it.first<<" "<<it.second<<endl;
-  }
+  // init_constructor();
+  // for(auto it: classconstructor){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
 
-  for(auto it: classfield){
-    cout<<it.first<<'\n';
-    for(auto it1 : it.second){
-      cout<<it1.first<<' '<<it1.second<<'\n';
-    }
-  }
+  // for(auto it: classfield){
+  //   cout<<it.first<<'\n';
+  //   for(auto it1 : it.second){
+  //     cout<<it1.first<<' '<<it1.second<<'\n';
+  //   }
+  // }
 
-  for(auto it: storeobj){
-    cout<<it.first<<"// "<<it.second<<endl;
-  }
+  // for(auto it: storeobj){
+  //   cout<<it.first<<"// "<<it.second<<endl;
+  // }
 /* ofstream x;
 x.open("TAC.txt");
    for(auto it: code){
@@ -7530,25 +7530,25 @@ cout<<fielddeclist<<"\n"; */
   //   cout<<it.first<<" "<<it.second<<endl;
   // }
 
-  init_constructor();
-  for(auto it: classconstructor){
-    cout<<it.first<<" "<<it.second<<endl;
-  }
+  // init_constructor();
+  // for(auto it: classconstructor){
+  //   cout<<it.first<<" "<<it.second<<endl;
+  // }
 
-  for(auto it: classfield){
-    cout<<it.first<<'\n';
-    for(auto it1 : it.second){
-      cout<<it1.first<<' '<<it1.second<<'\n';
-    }
-  }
+  // for(auto it: classfield){
+  //   cout<<it.first<<'\n';
+  //   for(auto it1 : it.second){
+  //     cout<<it1.first<<' '<<it1.second<<'\n';
+  //   }
+  // }
 
-  for(auto it: storeobj){
-    cout<<it.first<<"// "<<it.second<<endl;
-  }
+  // for(auto it: storeobj){
+  //   cout<<it.first<<"// "<<it.second<<endl;
+  // }
 
-  for(auto it: objlist){
-    cout<<it<<endl;
-  }
+  // for(auto it: objlist){
+  //   cout<<it<<endl;
+  // }
 map<string,string> store;
 ofstream fout;
 fout.open("TAC.txt");
@@ -7558,8 +7558,10 @@ fout.open("TAC.txt");
     if(it.arg1 == "shiftreg"){
       it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
       addtox86("movq", "%r14", it.res);
-      if(curracces >= 2)
-      addtox86("movq", temptoaddr(baseptr(code[curracces-2].arg1), funcsize["Class" + curr_class + "_" + curr_func]), "%r14");
+      //cout<<"\\\\\\\\\\\\\\\\\\\\\n";
+      //cout<<code[curracces-2].op<<endl;
+      if(curracces >= 2 && code[curracces-2].op == "param")
+        addtox86("movq", temptoaddr(baseptr(code[curracces-2].arg1), funcsize["Class" + curr_class + "_" + curr_func]), "%r14");
       continue;
     }
     if(it.res == "shiftreg"){
@@ -7670,7 +7672,7 @@ fout.open("TAC.txt");
               string yo="";
               for(int i=0;;i++)
               {
-                if(temp[i]=='#') break;
+                if(temp[i]=='|') break;
                 if(temp[i]=='$')
                 {
                    if(i==last)
@@ -7767,7 +7769,7 @@ fout.open("TAC.txt");
                 string yo="";
                 for(int i=0;;i++)
                 {
-                  if(temp[i]=='#') break;
+                  if(temp[i]=='|') break;
                   if(temp[i]=='$')
                   {
                     if(i==last)
