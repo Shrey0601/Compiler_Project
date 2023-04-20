@@ -4221,7 +4221,11 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   }
   emit("param",tv2,"","",-1);
   emit("sub", "rsp", to_string(8 + pops),"", -1);
+
+  string o2 = newtemp();
+  emit("=", "shiftreg", "null", o2, -1);
   emit("call",string((char*)(($2).type)), "","",-1);
+  emit("=", o2, "null", "shiftreg", -1);
   emit("add", "rsp", to_string(8 + pops),"", -1);
   strcpy(($$).tempvar, tv2.c_str());
 
@@ -4293,7 +4297,10 @@ NEW ClassType OPENBRACKET ArgumentList CLOSEBRACKET {
   string tv2 = newtemp();
   emit("=", "popparam", "null", tv2, -1);
   emit("param",tv2,"","",-1);
+  string o2 = newtemp();
+  emit("=", "shiftreg", "null", o2, -1);
   emit("call",string((char*)(($2).type)), "","",-1);
+  emit("=", o2, "null", "shiftreg", -1);
   strcpy(($$).tempvar, tv2.c_str());
   currtemp = tv2;
 
@@ -4497,12 +4504,18 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       // emit("param", oname, "", "", -1);
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      string o2 = newtemp();
+      emit("=", "shiftreg", "null", o2, -1);
       emit("call", cname + "." + mname, "", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
 
     }
     else{
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      string o2 = newtemp();
+      emit("=", "shiftreg", "null", o2, -1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
     }
   
   // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
@@ -4632,11 +4645,17 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
     if(checkclass(cname)){
       string mname = tv9.substr(tv9.find('.')+1, tv9.size());
       emit("param", oname, "", "", -1);
+      string o2 = newtemp();
+      emit("=", "shiftreg", "null", o2, -1);
       emit("call", cname + "." + mname, "", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
 
     }
     else{
+      string o2 = newtemp();
+      emit("=", "shiftreg", "null", o2, -1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
     }
   }
   string s = newtemp();
@@ -4705,12 +4724,18 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
       funcargtypesz1 = funcargtypesz(1, mname) + 8;
       emit("param", oname, "", "", -1);
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      string o2 = newtemp();
+      emit("=", "shiftreg", "null", o2, -1);
       emit("call", cname + "." + mname, "", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
 
     }
     else{
       emit("sub","rsp",to_string(funcargtypesz1),"",-1);
+      string o2 = newtemp();
+  emit("=", "shiftreg", "null", o2, -1);
       emit("call", string((char*)(($1).tempvar)),"", "", -1);
+      emit("=", o2, "null", "shiftreg", -1);
     }
   }
   // emit("stackpointer", "-" + to_string(funcargtypesz1), "", "", -1);
@@ -4730,7 +4755,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |Primary DOT Identifier OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
+  string o2 = newtemp();
+  emit("=", "shiftreg", "null", o2, -1);
   emit("call",string((char*)($1).tempvar) + string((char*)($2).str) + string((char*)($3).str)   ,"","",-1);
+  emit("=", o2, "null", "shiftreg", -1);
   emit("=", "popparam", "null", s.c_str(), -1);
   emit("add", "rsp", to_string(8), "", -1);
   strcpy(($$).tempvar, s.c_str());
@@ -4772,7 +4800,10 @@ DummyMethodInvocation OPENBRACKET ArgumentList CLOSEBRACKET {
 }
 |SUPER DOT Identifier OPENBRACKET CLOSEBRACKET {
   string s = newtemp();
+  string o2 = newtemp();
+  emit("=", "shiftreg", "null", o2, -1);
   emit("call",string((char*)($1).str) + string((char*)($2).str) + string((char*)($3).str),"","",-1);
+  emit("=", o2, "", "shiftreg", -1);
   emit("=", "popparam", "null", s.c_str(), -1);
   emit("add", "rsp", to_string(8), "", -1);
   strcpy(($$).tempvar,s.c_str());
@@ -7663,11 +7694,21 @@ fout.open("TAC.txt");
       }
       else if(it.op == "call"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
+        if(it.arg1 == "shiftreg"){
+          it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
+          addtox86("movq", "%r14", it.res);
+        }
         if(it.arg1 == "allocmem"){
           addtox86("call", "malloc@PLT", "");
         }
         else
           addtox86("call", it.arg1, it.arg2);
+        
+
+        if(it.res == "shiftreg"){
+          it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
+          addtox86("movq", it.arg1, "%r14");
+        }
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
