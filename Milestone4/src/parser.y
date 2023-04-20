@@ -7453,6 +7453,16 @@ int main(int argc, char *argv[])
 ofstream fout;
 fout.open("TAC.txt");
    for(auto it: code){
+    if(it.arg1 == "shiftreg"){
+      it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
+      addtox86("movq", "%r14", it.res);
+      continue;
+    }
+    if(it.res == "shiftreg"){
+      it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
+      addtox86("movq", "%r14", it.arg1);
+      continue;
+    }
     curracces ++ ;
     // fout<<inassign<<'\n';
   //  cout<<it.op<<' '<<it.arg1<<' '<<it.arg2<<' '<<it.res<<'\n';
@@ -7694,21 +7704,12 @@ fout.open("TAC.txt");
       }
       else if(it.op == "call"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
-        if(it.arg1 == "shiftreg"){
-          it.res = temptoaddr(it.res, funcsize["Class" + curr_class + "_" + curr_func]);
-          addtox86("movq", "%r14", it.res);
-        }
+        
         if(it.arg1 == "allocmem"){
           addtox86("call", "malloc@PLT", "");
         }
         else
           addtox86("call", it.arg1, it.arg2);
-        
-
-        if(it.res == "shiftreg"){
-          it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
-          addtox86("movq", it.arg1, "%r14");
-        }
       }
       else if(it.op == "add"||it.op == "sub"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<" "<<it.arg2<<'\n';
