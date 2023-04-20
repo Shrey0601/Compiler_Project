@@ -7,6 +7,7 @@
     void yyerror(const char * s);
     int yylex();
     int nelem=0;
+    int lastfieldcount;
     vector<int> newdim;
     int dimint;
     int ispopped = 1;
@@ -16,6 +17,9 @@
     int issystem=0;
     int isfinal=0;
     int isreturn =0;
+    string fielddeclist="";
+     string fielddeclistlast="";
+    int fieldcount=0;
     int arrayaccesscount = 0;
     string fullname;
     string newhandle = "null";
@@ -948,6 +952,8 @@ CompilationUnit {
 Literal:
 IntegerLiteral {
   // cout<<"GYO"<<stoi(($1).str)<<'\n';
+  fielddeclist=fielddeclist+($1).str+"$"+to_string(fieldcount*8)+" ";
+  fieldcount++;
   dimint=stoi(($1).str);
   strcpy(($$).tempvar,($1).str);
   strcpy(($$).type,"int");
@@ -1354,6 +1360,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |Modifiers CLASS Identifier Interfaces {
@@ -1392,6 +1401,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |Modifiers CLASS Identifier Super {
@@ -1430,6 +1442,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |CLASS Identifier Interfaces {
@@ -1456,6 +1471,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |CLASS Identifier Super {
@@ -1482,6 +1500,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |Modifiers CLASS Identifier {
@@ -1521,6 +1542,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |CLASS Identifier {
@@ -1547,6 +1571,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 }
 |Modifiers CLASS Identifier Super Interfaces {
@@ -1586,6 +1613,9 @@ classfield[curr_class] = fieldvar;
   curr_scope = scope_names.top(); scope_names.pop();
   offset = offsets.top(); offsets.pop();
   objects.clear();
+  emit("FLD",fielddeclistlast+"#","","",-1);
+  fielddeclistlast="";
+  fielddeclist="";
   emit("EndClass","","","",-1);
 };
 Super:
@@ -1614,9 +1644,11 @@ InterfaceType {
 ClassBody:
 OPENCURLYBRACKET ClassBodyDeclarations CLOSECURLYBRACKET {
   isprivate=0;
+  fieldcount=0;
 }
 |OPENCURLYBRACKET CLOSECURLYBRACKET {
   isprivate=0;
+  fieldcount=0;
 };
 ClassBodyDeclarations:
 ClassBodyDeclaration {
@@ -1642,15 +1674,24 @@ ClassMemberDeclaration {
 };
 ClassMemberDeclaration:
 FieldDeclaration {
-  
+  fielddeclist="";
+  // fielddeclistlast+=fielddeclist;
+  fieldcount=lastfieldcount;
   
 }
 |MethodDeclaration {
-  
+  fielddeclist="";
+  // fielddeclistlast+=fielddeclist;
+  fieldcount=lastfieldcount;
   
 };
 FieldDeclaration:
 Modifiers Type VariableDeclarators SEMICOLON { 
+  // fielddeclist+="#";
+  fielddeclistlast+=fielddeclist;
+  lastfieldcount=fieldcount;
+  fielddeclist="";
+  // fieldcount=0;
   newdim.clear();   
   isfinal=0;
   isclassaccess=0;
@@ -1701,7 +1742,12 @@ tempparam.clear();
   isstatic=0;
 
 }
-|Type VariableDeclarators SEMICOLON {   
+|Type VariableDeclarators SEMICOLON { 
+  // fielddeclist+="#";
+  fielddeclistlast+=fielddeclist;
+  lastfieldcount=fieldcount;
+  fielddeclist="";  
+  // fieldcount=0;
   newdim.clear(); 
   strcpy(($$).tempvar, ($1).tempvar);
   isclassaccess=0;
@@ -7419,18 +7465,46 @@ int main(int argc, char *argv[])
   //   cout<<'\n';
   // }
 
-  // for(auto it: funcsize){
-  //   cout<<it.first<<" "<<it.second<<'\n';
-  //   string cl = it.first.substr(it.first.find("_") + 1);
-  //   if(cl == "main"){
-  //     mainwidth = it.second;
-  //   }
-  // }
+  for(auto it: funcsize){
+    cout<<it.first<<" "<<it.second<<'\n';
+    string cl = it.first.substr(it.first.find("_") + 1);
+    if(cl == "main"){
+      mainwidth = it.second;
+    }
+  }
 
   // for(auto it: vartostack){
   //   cout<<it.first.first<<" "<<it.first.second<<" "<<it.second<<'\n';
   // }
 
+  for(auto it: numfuncargs){
+    cout<<it.first<<" "<<it.second<<endl;
+  }
+
+  init_constructor();
+  for(auto it: classconstructor){
+    cout<<it.first<<" "<<it.second<<endl;
+  }
+
+  for(auto it: classfield){
+    cout<<it.first<<'\n';
+    for(auto it1 : it.second){
+      cout<<it1.first<<' '<<it1.second<<'\n';
+    }
+  }
+
+  for(auto it: storeobj){
+    cout<<it.first<<"// "<<it.second<<endl;
+  }
+/* ofstream x;
+x.open("TAC.txt");
+   for(auto it: code){
+    if(it.op=="FLD")
+    {
+      fielddeclist+=it.arg1;
+    }
+   }
+cout<<fielddeclist<<"\n"; */
   // for(auto it: numfuncargs){
   //   cout<<it.first<<" "<<it.second<<endl;
   // }
@@ -7461,7 +7535,7 @@ fout.open("TAC.txt");
     }
     if(it.res == "shiftreg"){
       it.arg1 = temptoaddr(it.arg1, funcsize["Class" + curr_class + "_" + curr_func]);
-      addtox86("movq", "%r14", it.arg1);
+      addtox86("movq",  it.arg1, "%r14");
       continue;
     }
     curracces ++ ;
@@ -7516,6 +7590,30 @@ fout.open("TAC.txt");
 
     if(true)
     {
+      /* if(it.op=="FLD")
+      {
+        string temp=it.arg1;
+        int last=0;
+        string yo="";
+        for(int i=0;;i++)
+        {
+          if(temp[i]=='#') break;
+          if(temp[i]=='$')
+          {
+            yo=temp.substr(last,i-last);
+            last=i+1;
+          }
+          if(temp[i]==' ')
+          {
+            addtox86("movq","%r14","%r9");
+            addtox86("movq","$"+temp.substr(last,i-last),"%r8");
+            addtox86("addq","%r8","%r9");
+            addtox86("movq","$"+yo,"(%r9)");
+            yo="";
+            last=i+1;
+          }
+        }
+      } */
       if(it.op == "addretval"){
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         it.arg1 = baseptr(it.arg1);
@@ -7532,6 +7630,44 @@ fout.open("TAC.txt");
         inassign = 1;
         fout<<'\t'<<it.op<<" "<<it.arg1<<'\n';
         curr_class = newblock;
+        if(classconstructor[curr_class] == 0){
+          addtox86("pushq", "%rbp", "");
+          addtox86("movq", "%rsp", "%rbp");
+          int sh=curracces;
+          for(sh;;sh++)
+          {
+            if(code[sh].op=="EndClass") break;
+            else if(code[sh].op=="FLD")
+            {
+              string temp=code[sh].arg1;
+              int last=0;
+              string yo="";
+              for(int i=0;;i++)
+              {
+                if(temp[i]=='#') break;
+                if(temp[i]=='$')
+                {
+                   if(i==last)
+                    break;
+                  yo=temp.substr(last,i-last);
+                  last=i+1;
+                }
+                if(temp[i]==' ')
+                {
+                  addtox86("movq","%r14","%r9");
+                  addtox86("movq","$"+temp.substr(last,i-last),"%r8");
+                  addtox86("addq","%r8","%r9");
+                  addtox86("movq","$"+yo,"(%r9)");
+                  yo="";
+                  last=i+1;
+                }
+              }
+            }
+          }
+          addtox86("movq", "$0", "%rax");
+          addtox86("leave", "", "");
+          addtox86("ret", "", "");
+        }
         if(classconstructor[curr_class] == 0){
           addtox86("pushq", "%rbp", "");
           addtox86("movq", "%rsp", "%rbp");
@@ -7592,6 +7728,40 @@ fout.open("TAC.txt");
         fout<<'\t'<<it.res<<' '<<"="<<" "<<it.arg1<<'\n';
         if(it.arg1 == "rbp" || it.arg1 == "rsp" ){
           addtox86("movq", "%" + it.arg1, "%" + it.res);
+          if(curr_func==curr_class)
+          {
+            int sh=curracces;
+            for(sh;;sh++)
+            {
+              if(code[sh].op=="EndClass") break;
+              else if(code[sh].op=="FLD")
+              {
+                string temp=code[sh].arg1;
+                int last=0;
+                string yo="";
+                for(int i=0;;i++)
+                {
+                  if(temp[i]=='#') break;
+                  if(temp[i]=='$')
+                  {
+                    if(i==last)
+                    break;
+                    yo=temp.substr(last,i-last);
+                    last=i+1;
+                  }
+                  if(temp[i]==' ')
+                  {
+                    addtox86("movq","%r14","%r9");
+                    addtox86("movq","$"+temp.substr(last,i-last),"%r8");
+                    addtox86("addq","%r8","%r9");
+                    addtox86("movq","$"+yo,"(%r9)");
+                    yo="";
+                    last=i+1;
+                  }
+                }
+              }
+            }
+          }
           if(it.arg1 == "rsp" && it.res == "rbp"){
             for(int i =0; i<numfuncargs["Class" + curr_class + "_" + curr_func]; ++i){
               addtox86("movq", to_string(16 + i*8) + "(%rbp)", "%rdx");
