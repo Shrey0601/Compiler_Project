@@ -1,44 +1,53 @@
-Main:
+Singleton:
 	BeginClass 
-sum:
+	BeginCtor 
+	push rbp
+	rbp = rsp
+	(%r8) = -16(%rbp)
+	add rsp $16
+	pop rbp
+	ret 
+	EndCtor 
+yo:
 	BeginFunc 
 	push rbp
 	rbp = rsp
-	sub rsp $8
-	sub rsp $8
-	sub rsp $8
-	-32(%rbp) = -8(%rbp) +int -16(%rbp)
-	-40(%rbp) = -32(%rbp) +int -24(%rbp)
-	add rsp $24
+	-24(%rbp) = -8(%rbp) +int -16(%rbp)
+	add rsp $16
 	pop rbp
-	addretval -40(%rbp)
+	addretval -24(%rbp)
 	ret 
 	EndFunc 
 main:
 	BeginFunc 
 	push rbp
 	rbp = rsp
-	sub rsp $8
-	-8(%rbp) = $1
-	sub rsp $8
-	-16(%rbp) = $2
-	sub rsp $8
-	-24(%rbp) = $3
-	-56(%rbp) = -16(%rbp) *int -24(%rbp)
+	-24(%rbp) = $16
 	param -24(%rbp)
-	param -56(%rbp)
-	param -8(%rbp)
-	sub rsp $24
-	call sum 
+	call allocmem $1
+	-32(%rbp) = popparam
+	param $1
+	param $5
+	param -32(%rbp)
+	call Singleton 
 	add rsp $24
-	-64(%rbp) = popparam
-	add rsp $8
-	sub rsp $8
-	-32(%rbp) = -64(%rbp)
-	call print 1 -32(%rbp)
-	add rsp $32
+	-8(%rbp) = -32(%rbp)
+	-48(%rbp) = -32(%rbp)
+	call print 1 .#t5
 	pop rbp
 	ret 
 	EndFunc 
+a:
+	BeginFunc 
+	push rbp
+	rbp = rsp
+	-8(%rbp) = $3
+	-16(%rbp) = $4
+	-72(%rbp) = -8(%rbp) +int -16(%rbp)
+	-24(%rbp) = -72(%rbp)
+	pop rbp
+	ret 
+	EndFunc 
+	 = 3$0 | FLD 
 	EndClass 
 

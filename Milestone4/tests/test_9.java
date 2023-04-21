@@ -20,8 +20,9 @@ class CatalnNumber {
 	public static void main(String[] args)
 	{
 		CatalnNumber cn = new CatalnNumber();
+		// System.out.println(cn.catalan(9));
 		for (int i = 0; i < 10; i++) {
-			cn.catalan(i);
+			System.out.println(cn.catalan(i));
 		}
 	}
 }

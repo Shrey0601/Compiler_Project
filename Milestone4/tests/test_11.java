@@ -1,82 +1,53 @@
+// A Dynamic Programming based solution
+// for 0-1 Knapsack problem
 
-class GFG {
+import java.io.*;
 
-	// A utility function to swap two elements
-	static void swap(int arr[], int i, int j)
-	{
-		int temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
-	}
+class Knapsack {
 
-	/* This function takes last element as pivot, places
-	the pivot element at its correct position in sorted
-	array, and places all smaller (smaller than pivot)
-	to left of pivot and all greater elements to right
-	of pivot */
-	static int partition(int arr[], int low, int high)
-	{
-
-		// pivot
-		int pivot = arr[high];
-
-		// Index of smaller element and
-		// indicates the right position
-		// of pivot found so far
-		int i = (low - 1);
-
-		for (int j = low; j <= high - 1; j++) {
-
-			// If current element is smaller
-			// than the pivot
-			if (arr[j] < pivot) {
-
-				// Increment index of
-				// smaller element
-				i++;
-				swap(arr, i, j);
-			}
+	// A utility function that returns
+	// maximum of two integers
+	static int max(int a, int b) {
+		if(a > b){
+			return a;
 		}
-		swap(arr, i + 1, high);
-		return (i + 1);
-	}
-
-	/* The main function that implements QuickSort
-			arr[] --> Array to be sorted,
-			low --> Starting index,
-			high --> Ending index
-	*/
-	static void quickSort(int arr[], int low, int high)
-	{
-		if (low < high) {
-
-			// pi is partitioning index, arr[p]
-			// is now at right place
-			int pi = partition(arr, low, high);
-
-			// Separately sort elements before
-			// partition and after partition
-			quickSort(arr, low, pi - 1);
-			quickSort(arr, pi + 1, high);
+		else{
+			return b;
 		}
-	}
+	 }
 
-	// Function to print an array
-	static void printArray(int arr[], int size)
-	{
-		for (int i = 0; i < size; i++);
-			//System.out.print(arr[i] + " ");
-	}
-
-	// Driver Code
+	// Driver code
 	public static void main(String args[])
 	{
-		int arr[] = { 10, 7, 8, 9, 1, 5 };
-		int n = 6;
+		int profit[] = new int[3];
+		profit[0] = 60;
+		profit[1] = 100;
+		profit[2] = 120;
+		int weight[] = new int[3];
+		weight[0] = 10;
+		weight[1] = 20;
+		weight[2] = 30;
+		int W = 50;
+		int n = 3;
+		int i, w;
+		int K[][] = new int[n + 1][W + 1];
 
-		quickSort(arr, 0, n - 1);
-		System.out.println("Sorted array: ");
-		printArray(arr, n);
+		// Build table K[][] in bottom up manner
+		for (i = 0; i <= n; i++) {
+			for (w = 0; w <= W; w++) {
+				if (i == 0 || w == 0)
+					K[i][w] = 0;
+				else if (weight[i - 1] <= w)
+					K[i][w]
+						= max(profit[i - 1]
+								+ K[i - 1][w - weight[i - 1]],
+							K[i - 1][w]);
+				else
+					K[i][w] = K[i - 1][w];
+			}
+		}
+
+		System.out.println(K[n][W]);
 	}
 }
-
+/*This code is contributed by Rajat Mishra */

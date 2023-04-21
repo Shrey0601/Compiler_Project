@@ -3,6 +3,8 @@ public class Singleton {
     int d;
     Singleton(int i, int c)
     {
+        // g = i;
+        d = c;
     }
     int yo(int a,int b)
     {
@@ -12,6 +14,7 @@ public class Singleton {
     public static void main()
     {
         Singleton s=new Singleton(5,1);
+        System.out.println(s.g);
     }
     void a()
     {

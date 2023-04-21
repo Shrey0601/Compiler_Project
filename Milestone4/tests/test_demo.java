@@ -1,12 +1,35 @@
-public class Main
-{
-        int sum(int a, int b, int c){
-                return a + b + c ;
-        }
-	public static void main() {
-        int a = 1, b = 2, c = 3 ;
-        int d = sum(a,b*c, c) ;
-        System.out.println(d) ;
-        return ;
-	}
+public class Test{  
+    int x=1,y=2,z=3;
+    Test(int a)
+    {
+        x=a;
+    }
+    void yo1(int x,int y,int z)
+    {
+        
+    }
+    void yo(int x,int y,int z)
+    {
+       
+    }
+public static void main(String args[]){
+    System.out.println(90);
+} 
+}
+
+public class Demo{  
+    int x=1,y=2,z=3;
+    Demo(int a)
+    {
+        x=a;
+    }
+    void yo(int x,int y,int z)
+    {
+        
+    }
+    void yo1(int x,int y,int z)
+    {
+        
+    }
+
 }
