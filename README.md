@@ -19,7 +19,7 @@ This contains our current work which we have built a java compiler from scratch 
 
 ## Marks Obtained:
 * Milestone 1: 96%
-* Milestone 1: 100%
-* Milestone 1: 98%
-* Milestone 1: 100%
+* Milestone 2: 100%
+* Milestone 3: 98%
+* Milestone 4: 100%
 * Overall: 98.5%
